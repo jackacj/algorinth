@@ -1,0 +1,4 @@
+# Entrypoint for backend
+
+[tool.fastapi]
+entrypoint = "backend.main:app"
