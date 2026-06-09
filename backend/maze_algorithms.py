@@ -79,6 +79,52 @@ class Grid():
     def set_cell(self, y: int, x: int, cell: Cell) -> None:
         self.cell_grid[y][x] = cell
 
+# Create ASCII of a Grid
+def create_grid_ascii(grid: Grid) -> tuple:
+    height, width = grid.get_dimensions()
+    tops = []
+    mids = []
+
+    for y in range(height):
+        # Top Wall
+        top = ""
+        mid = ""
+        for x in range(width):
+            cell = grid.get_cell(y, x)
+            top += "+"
+            top += "   " if 'N' in cell.get_paths() else "---"
+            
+            # Left Wall or Space
+            mid += " " if 'W' in cell.get_paths() else "|"
+            mid += "   "
+        # Rightmost Wall
+        top += "+"
+        mid += "|"
+        tops.append(top)
+        mids.append(mid)
+
+    # Bottom Wall for Last Row
+    bottom = ""
+    for x in range(width):
+        bottom += "+"
+        bottom += "   " if 'S' in grid.get_cell(height - 1, x).get_paths() else "---"
+    bottom += "+"
+
+    # Assemble into Rows
+    ascii_rows = []
+    for i in range(len(tops)):
+        ascii_rows.append(tops[i])
+        ascii_rows.append(mids[i])
+    ascii_rows.append(bottom)
+    return ascii_rows
+
+# Print a Grid as ASCII for Debugging
+def print_grid_ascii(grid: Grid):
+    ascii_rows = create_grid_ascii(grid)
+
+    for row in ascii_rows:
+        print(row)
+
 # Test Response
 def test_output(algorithm: str, seed: str = "No Seed") -> str:
     return f"Maze w/ {algorithm}, Seeded w/ {seed}"

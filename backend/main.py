@@ -29,4 +29,6 @@ async def generate_request(algorithm: str, seed: str | None = None):
     if seed:
         response.update({ "Seed": seed })
     response.update({ "Output": maze_algorithms.test_output(algorithm, seed)})
+    ascii_rows = maze_algorithms.create_grid_ascii(maze_algorithms.Grid(10, 10))
+    response.update({ "Output ASCII": ascii_rows} )
     return response
