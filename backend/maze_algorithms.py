@@ -3,16 +3,18 @@ from typing import Annotated
 
 # Cell Object
 class Cell():
-    def __init__(self, paths: set = set(), is_visited: bool = False):
+    def __init__(self, paths: set[str] = {}, y: int = -1, x: int = -1, is_visited: bool = False):
         self.paths = paths
+        self.loc_y = y
+        self.loc_x = x
         self.is_visited = is_visited
 
     # Get the Cell's Paths
-    def get_paths(self) -> set:
+    def get_paths(self) -> set[str]:
         return self.paths
     
     # Set the Cell's Paths with New Path Set
-    def set_paths(self, paths: set) -> None:
+    def set_paths(self, paths: set[str]) -> None:
         self.paths = paths
 
     # Set an Individual Cell Path as 'True' (Connected) or 'False' (Not Connected)
@@ -32,6 +34,10 @@ class Cell():
     def set_visited(self) -> None:
         self.is_visited = True
 
+    # Get a Cell's Location within a Grid
+    def get_location(self) -> tuple:
+        return (self.loc_y, self.loc_x)
+
 # Grid Object
 class Grid():
     def __init__(self, height: int, width: int, is_open: bool = False):
@@ -45,7 +51,7 @@ class Grid():
             for x in range(width):
                 if is_open:
                     # Open Grid Logic
-                    paths = set('N','S','E','W')
+                    paths = {'N','S','E','W'}
 
                     if y == 0:
                         # Top Row -> Remove North Connection
@@ -60,10 +66,10 @@ class Grid():
                         # Last in Row -> Remove East Connection
                         paths.discard('E')
 
-                    row.append(Cell(paths))
+                    row.append(Cell(paths, y, x))
                 else:
                     # Closed Grid Logic
-                    row.append(Cell())
+                    row.append(Cell(set(), y, x))
             cell_grid.append(row)
         self.cell_grid = cell_grid
 
@@ -78,6 +84,38 @@ class Grid():
     # Set a Grid's Cell via Coordinates
     def set_cell(self, y: int, x: int, cell: Cell) -> None:
         self.cell_grid[y][x] = cell
+
+    # Create a Connection between Two Grid Cells
+    def modify_path(self, cell_1: Cell, cell_2: Cell, is_path: bool) -> None:
+        # Find Direction between Cells
+        y1, x1 = cell_1.get_location()
+        y2, x2 = cell_2.get_location()
+        dy, dx = (y2 - y1), (x2 - x1)
+        match (dy, dx):
+            case (-1, 0):
+                # Cell_2 is North of Cell_1
+                cell_1.set_path('N', is_path)
+                cell_2.set_path('S', is_path)
+            case (1, 0):
+                # Cell_2 is South of Cell_1
+                cell_1.set_path('S', is_path)
+                cell_2.set_path('N', is_path)
+            case (0, -1):
+                # Cell_2 is West of Cell_1
+                cell_1.set_path('W', is_path)
+                cell_2.set_path('E', is_path)
+            case (0, 1):
+                # Cell 2 is East of Cell_1
+                cell_1.set_path('E', is_path)
+                cell_2.set_path('W', is_path)
+
+    # Create a Connection between Two Grid Cells
+    def create_path(self, cell_1: Cell, cell_2: Cell) -> None:
+        self.modify_path(cell_1, cell_2, True)
+
+    # Remove a Connection between Two grid Cells at a Specified Location
+    def remove_path(self, cell_1: Cell, cell_2: Cell) -> None:
+        self.modify_path(cell_1, cell_2, False)
 
 # Create ASCII of a Grid
 def create_grid_ascii(grid: Grid) -> tuple:

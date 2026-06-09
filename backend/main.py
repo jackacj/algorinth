@@ -9,7 +9,7 @@ from pydantic import BaseModel
 import pandas as pd
 import json
 # Maze Generation Logic
-import maze_algorithms
+import maze_algorithms as ma
 
 app = FastAPI()
 
@@ -24,11 +24,14 @@ app.add_middleware(
 
 # Request a Maze
 @app.get("/generate")
-async def generate_request(algorithm: str, seed: str | None = None):
+async def generate_request(algorithm: str, height: int, width: int, seed: str | None = None):
     response = { "Algorithm": algorithm }
     if seed:
         response.update({ "Seed": seed })
-    response.update({ "Output": maze_algorithms.test_output(algorithm, seed)})
-    ascii_rows = maze_algorithms.create_grid_ascii(maze_algorithms.Grid(10, 10))
+    response.update({ "Output": ma.test_output(algorithm, seed)})
+    # Some Debug Logic
+    grid = ma.Grid(height, width)
+    grid.create_path(grid.get_cell(5, 5), grid.get_cell(5, 6))
+    ascii_rows = ma.create_grid_ascii(grid)
     response.update({ "Output ASCII": ascii_rows} )
     return response
