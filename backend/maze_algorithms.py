@@ -117,6 +117,25 @@ class Grid():
     def remove_path(self, cell_1: Cell, cell_2: Cell) -> None:
         self.modify_path(cell_1, cell_2, False)
 
+    # Get a Cell's Neighbourhood, All or Just Unvisited
+    def get_cell_neighbours(self, cell: Cell, just_unvisited: bool = False) -> list[Cell]:
+        y, x = cell.get_location()
+        height, width = self.get_dimensions()
+        dirs = [(-1,0),(1,0),(0,-1),(0,1)]
+        neighbours = []
+
+        # Find Valid Neighbours
+        for dy, dx in dirs:
+            ny, nx = (y + dy), (x + dx)
+            # Within Bounds
+            if (0 <= ny < height) and (0 <= nx < width):
+                neighbour_cell = self.get_cell(ny, nx)
+                # Visited or Not
+                if (not just_unvisited) or (neighbour_cell.get_visited() == False):
+                    neighbours.append(neighbour_cell)
+            
+        return neighbours
+
 # Create ASCII of a Grid
 def create_grid_ascii(grid: Grid) -> tuple:
     height, width = grid.get_dimensions()
