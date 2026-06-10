@@ -4,7 +4,7 @@ from ..grid import Grid
 
 class Kruskal_Generator(Generator):
     
-    # Generate an Kruskal's Maze
+    # Generate a Kruskal's Maze
     def generate(self, height: int, width: int) -> Grid:
         # Generate Closed Grid
         grid = Grid(height, width)
