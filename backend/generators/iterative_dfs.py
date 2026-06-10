@@ -42,5 +42,5 @@ class Iterative_DFS_Generator(Generator):
             curr_cell_unvisited_neighbour.set_visited()
             stack.append(curr_cell_unvisited_neighbour)
 
-        # Return Maze
+        # Return Grid
         return grid

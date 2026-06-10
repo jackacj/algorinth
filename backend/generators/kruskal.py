@@ -50,5 +50,5 @@ class Kruskal_Generator(Generator):
                 grid.create_path(cell_1, cell_2)
                 union(cell_1, cell_2)
 
-        # Return Logical Maze
+        # Return Grid
         return grid

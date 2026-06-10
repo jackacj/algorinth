@@ -118,6 +118,14 @@ class Grid():
             
         return neighbours
     
+    # Check if Every Cell within the Grid has been "Visited"
+    def get_all_visited(self) -> bool:
+        return all(
+            cell.get_visited()
+            for row in self.cell_grid
+            for cell in row
+        )
+    
     # Create ASCII of a Grid
     def create_grid_ascii(self) -> tuple:
         height, width = self.get_dimensions()

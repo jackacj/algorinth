@@ -10,7 +10,7 @@ class Prim_Simple_Generator(Generator):
         grid = Grid(height, width)
         walls: list[tuple[Cell]] = []
 
-        # Select Random Initial Cell, Mark as Visited & Start Wall List
+        # Select Random Initial Cell
         rand_y = self.rng.randint(0, height - 1)
         rand_x = self.rng.randint(0, width - 1)
         rand_cell = grid.get_cell(rand_y, rand_x)
@@ -47,5 +47,5 @@ class Prim_Simple_Generator(Generator):
             # Remove Wall from Wall List
             walls.remove(curr_wall)
         
-        # Return logical Maze
+        # Return Grid
         return grid
