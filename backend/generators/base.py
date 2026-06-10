@@ -1,6 +1,10 @@
 import random
 from typing import Annotated
+from abc import ABC, abstractmethod
+from ..cell import Cell
+from ..grid import Grid
 
+"""
 # Cell Object
 class Cell():
     def __init__(self, paths: set[str] = {}, y: int = -1, x: int = -1, is_visited: bool = False):
@@ -135,9 +139,9 @@ class Grid():
                     neighbours.append(neighbour_cell)
             
         return neighbours
-
+"""
 # Generator Object
-class Generator():
+class Generator(ABC):
     def __init__(self, seed: str | None = None):
         self.seed = seed
         self.rng = random.Random(seed)
@@ -159,7 +163,13 @@ class Generator():
             return None
         else:
             return self.rng.choice(neighbours)
+        
+    # Abstract Method for Maze Generation
+    @abstractmethod
+    def generate(self, height: int, width: int) -> Grid:
+        pass
 
+    """
     # Generate an IterativeDFS Maze
     def generate_iterativeDFS_maze(self, height: int, width: int) -> Grid:
         # Generate Closed Grid
@@ -201,7 +211,9 @@ class Generator():
 
         # Return Maze
         return grid
-
+    """
+    
+"""
 # Create ASCII of a Grid
 def create_grid_ascii(grid: Grid) -> tuple:
     height, width = grid.get_dimensions()
@@ -252,3 +264,4 @@ def print_grid_ascii(grid: Grid):
 def test_output(algorithm: str, seed: str = "No Seed") -> str:
     return f"Maze w/ {algorithm}, Seeded w/ {seed}"
 
+"""
