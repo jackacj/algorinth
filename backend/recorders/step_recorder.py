@@ -2,7 +2,7 @@ from typing import Annotated
 
 # Base Step Recorder Interface
 class Step_Recorder():
-    def __init__(self, enabled: bool):
+    def __init__(self, enabled: bool = True):
         self.steps = []
         self.enabled = enabled
 
