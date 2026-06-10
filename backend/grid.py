@@ -80,6 +80,25 @@ class Grid():
     def remove_path(self, cell_1: Cell, cell_2: Cell) -> None:
         self.modify_path(cell_1, cell_2, False)
 
+    # Get a Cell's Neighbour, Specified w/ Direction
+    def get_cell_neighbour(self, cell: Cell, direction: chr) -> Cell | None:
+        y, x = cell.get_location()
+        height, width = self.get_dimensions()
+        dirs = {
+            "N": (-1,0),
+            "S": (1,0),
+            "E": (0,1),
+            "W": (0,-1)
+        }
+        dy, dx = dirs[direction]
+        ny, nx = (y + dy), (x + dx)
+
+        # Out of Bounds
+        if ny < 0 or ny >= height or nx < 0 or nx >= width:
+            return None
+        
+        return self.get_cell(ny, nx)
+
     # Get a Cell's Neighbourhood, All or Just Unvisited
     def get_cell_neighbours(self, cell: Cell, just_unvisited: bool = False) -> list[Cell]:
         y, x = cell.get_location()
