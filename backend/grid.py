@@ -126,6 +126,21 @@ class Grid():
             for cell in row
         )
     
+    # Find Cell Set Coordinates -> Union-Find Datastructure
+    def find(self, cell: Cell, parent_map: dict[tuple[int], tuple[int]]) -> tuple:
+        y, x = cell.get_location()
+        if parent_map[(y, x)] != (y, x):
+            py, px = parent_map[(y, x)]
+            parent_map[(y, x)] = self.find(self.get_cell(py, px), parent_map)
+        return parent_map[(y, x)]
+
+    # Combine Two Sets via Cells -> Union-Find Datastructure
+    def union(self, cell_1: Cell, cell_2: Cell, parent_map: dict[tuple[int], tuple[int]]) -> None:
+        root_coords_1 = self.find(cell_1, parent_map)
+        root_coords_2 = self.find(cell_2, parent_map)
+        if (root_coords_1 != root_coords_2):
+            parent_map[root_coords_2] = root_coords_1
+    
     # Create ASCII of a Grid
     def create_grid_ascii(self) -> tuple:
         height, width = self.get_dimensions()

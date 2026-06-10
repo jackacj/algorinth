@@ -15,20 +15,6 @@ class Kruskal_Generator(Generator):
             for x in range(width):
                 parent_map[(y, x)] = (y, x)
 
-        # Set Up Union-Find Datastructure
-        def find(cell: Cell) -> tuple:
-            y, x = cell.get_location()
-            if parent_map[(y, x)] != (y, x):
-                py, px = parent_map[(y, x)]
-                parent_map[(y, x)] = find(grid.get_cell(py, px))
-            return parent_map[(y, x)]
-
-        def union(cell_1: Cell, cell_2: Cell) -> None:
-            root_coords_1 = find(cell_1)
-            root_coords_2 = find(cell_2)
-            if (root_coords_1 != root_coords_2):
-                parent_map[root_coords_2] = root_coords_1
-
         # Generate List of Walls (Random Order)
         walls = [] # e.g. (cell_1, cell_2)
         for y in range(height):
@@ -45,10 +31,10 @@ class Kruskal_Generator(Generator):
         # Iterate through Every Wall
         for (cell_1, cell_2) in walls:
             # If Both Cells are in Different Sets -> Disconnected
-            if (find(cell_1) != find(cell_2)):
+            if (grid.find(cell_1, parent_map) != grid.find(cell_2, parent_map)):
                 # Create Connection & Join Sets
                 grid.create_path(cell_1, cell_2)
-                union(cell_1, cell_2)
+                grid.union(cell_1, cell_2, parent_map)
 
         # Return Grid
         return grid
