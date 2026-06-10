@@ -1,5 +1,4 @@
 from .base import Generator
-from ..cell import Cell
 from ..grid import Grid
 
 class Wilson_Generator(Generator):
