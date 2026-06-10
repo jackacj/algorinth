@@ -30,12 +30,8 @@ async def generate_request(algorithm: str, height: int, width: int, seed: str | 
         response.update({ "Seed": seed })
     response.update({ "Output": ma.test_output(algorithm, seed)})
     # Some Debug Logic
-    grid = ma.Grid(height, width)
     gen = ma.Generator(seed)
-    for i in range(10):
-        rand_cell_1 = gen.pick_random_cell(grid) 
-        rand_cell_2 = gen.pick_random_cell_neighbour(rand_cell_1, grid)
-        grid.create_path(rand_cell_1, rand_cell_2)
+    grid = gen.generate_iterativeDFS_maze(height, width)
     ascii_rows = ma.create_grid_ascii(grid)
     response.update({ "Output ASCII": ascii_rows} )
     return response
