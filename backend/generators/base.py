@@ -12,13 +12,12 @@ class Generator(ABC):
     
     # Pick a Random Cell within a Grid, All or Just Unvisited
     def pick_random_cell(self, grid: Grid, just_unvisited: bool = False) -> Cell:
-        height, width = grid.get_dimensions()
-        while(True):
-            rand_y = self.rng.randint(0, height - 1)
-            rand_x = self.rng.randint(0, width - 1)
-            rand_cell = grid.get_cell(rand_y, rand_x)
-            if (not just_unvisited) or (rand_cell.get_visited == False):
-                return rand_cell
+        cells = [
+            c for row in grid.cell_grid
+            for c in row
+            if (not c.get_visited()) or (not just_unvisited)
+        ]
+        return self.rng.choice(cells)
 
     # Pick a Random Neighbour of a Cell, All or Just Unvisited
     def pick_random_cell_neighbour(self, cell: Grid, grid: Grid, just_unvisited: bool = False) -> Cell | None:
