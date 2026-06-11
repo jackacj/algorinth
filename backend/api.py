@@ -10,6 +10,7 @@ import pandas as pd
 import json
 # Maze Generation Logic
 from .generators.registry import GENERATORS
+from .recorders.step_recorder import Step_Recorder
 
 app = FastAPI()
 
@@ -41,8 +42,16 @@ async def generate_request(
     except:
         return { "Error": "Unknown Algorithm" }
     
-    generator = generator_cls(seed)
+    recorder = Step_Recorder()
+    generator = generator_cls(seed, recorder)
     grid = generator.generate(height, width)
+    steps = recorder.get_steps()
+    steps_output = { 
+        "Count": len(steps),
+        "List": steps 
+        }
+
     response.update({ "Output ASCII": grid.create_grid_ascii() })
+    response.update({ "Output Steps": steps_output })
 
     return response

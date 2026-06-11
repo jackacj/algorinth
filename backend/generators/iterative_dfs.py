@@ -14,7 +14,8 @@ class Iterative_DFS_Generator(Generator):
         rand_cell = grid.get_cell(rand_y, rand_x)
 
         # Mark as Visited, Add to Stack
-        rand_cell.set_visited()
+        # rand_cell.set_visited() ######################################################################################################
+        self.super_set_visited(rand_cell) # Record Action
         stack = []
         stack.append(rand_cell)
 
@@ -36,10 +37,12 @@ class Iterative_DFS_Generator(Generator):
                 stack.append(curr_cell)
 
             # Create Connection Between Current & Random Neighbour
-            grid.create_path(curr_cell, curr_cell_unvisited_neighbour)
+            # grid.create_path(curr_cell, curr_cell_unvisited_neighbour) #################################################################
+            self.super_create_path(curr_cell, curr_cell_unvisited_neighbour, grid) # Record Action
 
             # Mark Neighbour as Visited and Add to Stack
-            curr_cell_unvisited_neighbour.set_visited()
+            # curr_cell_unvisited_neighbour.set_visited() ################################################################################
+            self.super_set_visited(curr_cell_unvisited_neighbour)
             stack.append(curr_cell_unvisited_neighbour)
 
         # Return Grid
