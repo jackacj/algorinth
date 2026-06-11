@@ -1,0 +1,5 @@
+/* Grid Styling */
+.grid {
+  display: grid;
+  gap: 0;
+}
