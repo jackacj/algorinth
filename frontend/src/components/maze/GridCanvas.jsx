@@ -10,6 +10,9 @@ export default function GridCanvas(){
             <div className="container">
                 <p className="debugMarker"> Playback Pane </p>
             </div>
+            <div className="container">
+                <p className="debugMarker"> Config Pane </p>
+            </div>
         </div>
     );
 }
