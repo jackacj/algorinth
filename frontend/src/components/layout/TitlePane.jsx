@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './TitlePane.css'
+import '../../styles/TitlePane.css'
 
 export default function TitlePane(){
     return (

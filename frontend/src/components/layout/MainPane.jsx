@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './MainPane.css'
+import '../../styles/MainPane.css'
 
 export default function MainPain(){
     return (
