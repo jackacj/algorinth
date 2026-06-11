@@ -1,5 +1,7 @@
 /* Grid Styling */
 .grid {
+    width: min-content;
+    margin: 0px auto;
     display: grid;
     gap: 0;
 }

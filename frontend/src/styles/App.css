@@ -1,3 +1,8 @@
+/* Ensure Padding is Within Width */
+* {
+  box-sizing: border-box;
+}
+
 /* Main Title */
 h1 {
     font-size: 32px;
