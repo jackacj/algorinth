@@ -16,7 +16,8 @@ class Prim_Simple_Generator(Generator):
         rand_cell = grid.get_cell(rand_y, rand_x)
 
         # Mark as Visited & Add Walls Between Neighbours to Walls List
-        rand_cell.set_visited()
+        # rand_cell.set_visited() ####################################################################################################
+        self.super_set_visited(rand_cell)
 
         # Add Walls Between Unvisited Neighbours to Walls List
         def add_unvisited_neighbour_walls(cell: Cell):
@@ -36,9 +37,14 @@ class Prim_Simple_Generator(Generator):
             # Check if Only One Cell in Wall Visited
             if (curr_cell_1.get_visited() != curr_cell_2.get_visited()):
                 # Create Connection & Mark Both Cells as Visited
-                grid.create_path(curr_cell_1, curr_cell_2)
-                curr_cell_1.set_visited()
-                curr_cell_2.set_visited()
+                # grid.create_path(curr_cell_1, curr_cell_2) ##########################################################################
+                self.super_create_path(curr_cell_1, curr_cell_2, grid)
+                if not curr_cell_1.get_visited():
+                    # curr_cell_1.set_visited() #######################################################################################
+                    self.super_set_visited(curr_cell_1)
+                if not curr_cell_2.get_visited():
+                    # curr_cell_2.set_visited() #######################################################################################
+                    self.super_set_visited(curr_cell_2)
 
                 # Add Neighbouring Walls to Wall List
                 add_unvisited_neighbour_walls(curr_cell_1)

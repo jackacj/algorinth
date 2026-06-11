@@ -12,7 +12,8 @@ class Wilson_Generator(Generator):
         rand_y = self.rng.randint(0, height - 1)
         rand_x = self.rng.randint(0, width - 1)
         rand_cell = grid.get_cell(rand_y, rand_x)
-        rand_cell.set_visited()
+        # rand_cell.set_visited() ##################################################################################################
+        self.super_set_visited(rand_cell)
 
         # Repeat Until Every Cell is Visited
         while (not(grid.get_all_visited())):
@@ -51,11 +52,13 @@ class Wilson_Generator(Generator):
             
             # Add All Path Cells to Visited
             for cell in path:
-                cell.set_visited()
+                # cell.set_visited() ##############################################################################################
+                self.super_set_visited(cell)
 
             # Create Connections Between Path Cells
             for idx in range(len(path)-1):
-                grid.create_path(path[idx], path[idx + 1])
+                # grid.create_path(path[idx], path[idx + 1]) ######################################################################
+                self.super_create_path(path[idx], path[idx + 1], grid)
 
         # Return Grid
         return grid
