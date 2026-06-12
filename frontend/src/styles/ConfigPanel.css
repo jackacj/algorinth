@@ -1,0 +1,54 @@
+#configPanel {
+    background-color: white;
+    width: 100%;
+    margin: 0px auto;
+}
+
+input[type='number'] {
+    width: 70px;
+}
+
+.configForm {
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+}
+
+.topArea {
+    display: flex;
+    flex-direction: row;
+}
+
+/*
+.bottomArea {
+
+}
+*/
+
+.settingsArea {
+    display: flex;
+    flex-direction: column;
+}
+
+/*
+.contentArea {
+
+}
+*/
+
+.dimensionsRow {
+    display: flex;
+    flex-direction: row;
+}
+
+/*
+.algorithmRow {
+
+}
+*/
+
+/*
+.seedRow {
+
+}
+*/
