@@ -1,0 +1,5 @@
+#playbackPanel {
+    display: flex;
+    flex-direction: row;
+    font-family: sans-serif;
+}
