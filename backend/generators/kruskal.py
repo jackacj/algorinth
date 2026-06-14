@@ -7,7 +7,8 @@ class Kruskal_Generator(Generator):
     # Generate a Kruskal's Maze
     def generate(self, height: int, width: int) -> Grid:
         # Generate Closed Grid
-        grid = Grid(height, width)
+        # grid = Grid(height, width) ###################################################################################################
+        grid = self.super_create_grid(height, width)
 
         # Populate a "Parent Mapping" with Cell Coords pointing to themselves
         parent_map = {}

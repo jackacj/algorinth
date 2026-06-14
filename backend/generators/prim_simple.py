@@ -7,7 +7,8 @@ class Prim_Simple_Generator(Generator):
     # Generate a Prim's Maze with No Weights (Simplification)
     def generate(self, height: int, width: int) -> Grid:
         # Generate Closed Grid & Walls List
-        grid = Grid(height, width)
+        # grid = Grid(height, width) ###################################################################################################
+        grid = self.super_create_grid(height, width)
         walls: list[tuple[Cell]] = []
 
         # Select Random Initial Cell

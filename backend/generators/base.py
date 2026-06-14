@@ -12,6 +12,10 @@ class Generator(ABC):
         self.rng = random.Random(seed)
         self.recorder = recorder or Step_Recorder(enabled = False)
 
+    def super_create_grid(self, height: int, width: int, is_open: bool = False) -> Grid:
+        self.recorder.record("Initialise", is_open = is_open)
+        return Grid(height, width, is_open)
+
     # Create a Connection between Two Grid Cells & Record Event
     def super_create_path(self, cell_1: Cell, cell_2: Cell, grid: Grid) -> None:
         grid.create_path(cell_1, cell_2)

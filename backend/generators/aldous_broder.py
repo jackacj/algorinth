@@ -7,7 +7,8 @@ class Aldous_Broder_Generator(Generator):
     # Generate an Aldous-Broder Maze
     def generate(self, height: int, width: int) -> Grid:
         # Generate Closed Grid
-        grid = Grid(height, width)
+        # grid = Grid(height, width) ###################################################################################################
+        grid = self.super_create_grid(height, width)
       
         # Select Initial Cell & Mark as Visited
         rand_y = self.rng.randint(0, height - 1)

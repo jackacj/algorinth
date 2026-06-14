@@ -53,7 +53,8 @@ class Recursive_Division_Generator(Generator):
     # Generate an Aldous-Broder Maze
     def generate(self, height: int, width: int) -> Grid:
         # Generate Open Grid
-        grid = Grid(height, width, True)
+        # grid = Grid(height, width) ###################################################################################################
+        grid = self.super_create_grid(height, width, True)
 
         # Begin Recursive Division   
         grid = self.recursive_divide(height, width, 0, 0, grid)
