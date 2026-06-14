@@ -6,7 +6,7 @@ import ConfigPanel from '../config/ConfigPanel'
 import PlaybackPanel from '../config/PlaybackPanel';
 
 export default function GridCanvas(){
-    // Grid Usage State
+    // "Run" Usage State
     const [isRunActive, setIsRunActive] = useState(false);
 
     // "Run" Settings State
@@ -19,12 +19,15 @@ export default function GridCanvas(){
 
     // "Run" Grid State
     const[grid, setGrid] = useState(null);
+    const[command, setCommand] = useState("");
 
     // "Run" Playback State
-    const[steps, setSteps] = useState([]);
-    const[currentStep, setCurrentStep] = useState(-1);
-    const[isAutostep, setIsAutostep] = useState(false);
-    const[command, setCommand] = useState("");
+    const[playback, setPlayback] = useState({
+        steps: [],
+        stepCount: 0,
+        currentStep: -1,
+        isAuto: false
+    });
 
     // Debug Function for Playback Panel Button Pressing
     function handlePlayback(command) {
@@ -62,8 +65,10 @@ export default function GridCanvas(){
                 cols={settings.cols} 
             />
             {/* Placeholder 'Playback Pane' Div */}
-            {/* Change Playback State w/ Prop Function */}
-            <PlaybackPanel 
+            {/* Pass Down Steps Change Playback State w/ Prop Function */}
+            <PlaybackPanel
+                isRunActive={isRunActive}
+                playback={playback} 
                 onPressPlayback={handlePlayback}
             />
             {/* Config Pane */}
