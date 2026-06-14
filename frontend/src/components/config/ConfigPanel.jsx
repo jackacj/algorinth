@@ -22,7 +22,7 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
         // Prevent Form Submission, Unnecessary
         event.preventDefault()
 
-        // Update State of Grid Canvas
+        // Communicate New Settings Change back to Grid Canvas
         onSettingsChange({
             ...localSettings,
             // Make Sure 'Rows' & 'Cols' are Passed as Numbers

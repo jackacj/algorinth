@@ -23,9 +23,43 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Request a Maze
-@app.get("/generate")
-async def generate_request(
+# Request a Maze from Frontend
+@app.post("/generate")
+async def generate_request(settings: dict):
+    # Unpack Request
+    height = settings["rows"]
+    width = settings["cols"]
+    algorithm = settings["algorithm"]
+    
+    # Check for Seed
+    if (settings["seed"] == ""):
+        seed = None
+    else:
+        seed = settings["seed"]
+
+    # Generate Maze
+    generator_cls = GENERATORS[algorithm] 
+    recorder = Step_Recorder()
+    generator = generator_cls(seed, recorder)
+    grid =  generator.generate(height, width)
+    steps = recorder.get_steps()
+
+    # Create Response
+    response = {
+        "settings": {
+            **settings
+        }, 
+        "steps": {
+            "count": len(steps),
+            "list": steps
+        }
+    }
+
+    return response
+
+# Debug: Request a Maze
+@app.post("/generate_debug")
+async def generate_debug_request(
     algorithm: str, 
     height: int, 
     width: int, 

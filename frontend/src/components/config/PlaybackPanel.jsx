@@ -1,33 +1,28 @@
 import { useState } from 'react'
 import '../../styles/PlaybackPanel.css'
 
-export default function PlaybackPanel({ 
-    onPressStepForward, 
-    onPressStepBackward, 
-    onPressAutostepPlay, 
-    onPressAutostepPause 
-}) {
+export default function PlaybackPanel({ onPressPlayback }) {
     return (
         <div id="playbackPanel" className="container">
             <p className="debugMarker"> Playback Pane </p>
             {/* Playback Buttons */}
             <button
-                onClick={() => onPressStepForward("Step Forward")}
+                onClick={() => onPressPlayback("STEP_FORWARD")}
             >
                 Step Forward
             </button>
             <button
-                onClick={() => onPressStepBackward("Step Backward")}
+                onClick={() => onPressPlayback("STEP_BACKWARD")}
             >
                 Step Backward
             </button>
             <button
-                onClick={() => onPressAutostepPlay("Autostep Play")}
+                onClick={() => onPressPlayback("AUTOSTEP PLAY")}
             >
                 Autostep Play
             </button>
             <button
-                onClick={() => onPressAutostepPause("Autostep Pause")}
+                onClick={() => onPressPlayback("AUTOSTEP PAUSE")}
             >
                 Autostep Pause
             </button>
