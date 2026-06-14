@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import '../../styles/GridCanvas.css'
 import Grid from './Grid'
-// For Some Reason Won't Shut Up Unless 'configPanel' instead of 'ConfigPanel'
-import ConfigPanel from '../config/configPanel'
+import ConfigPanel from '../config/ConfigPanel'
 import PlaybackPanel from '../config/PlaybackPanel';
 
 export default function GridCanvas(){
