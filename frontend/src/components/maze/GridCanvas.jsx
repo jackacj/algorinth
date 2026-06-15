@@ -1,15 +1,17 @@
 import { useState } from 'react'
 import { generateMaze } from '../../services/mazeApi'
 import '../../styles/GridCanvas.css'
+
 import Grid from './Grid'
 import ConfigPanel from '../config/ConfigPanel'
 import PlaybackPanel from '../config/PlaybackPanel';
 
 export default function GridCanvas(){
-    // "Run" Usage State
-    const [isRunActive, setIsRunActive] = useState(false);
 
-    // "Run" Settings State
+    // // Grid Canvas State
+
+    // Settings State
+    // Initialise w/ Stock Settings
     const[settings, setSettings] = useState({
         rows: 10,
         cols: 10,
@@ -17,66 +19,134 @@ export default function GridCanvas(){
         seed: ""
     });
 
-    // "Run" Grid State
-    const[grid, setGrid] = useState(null);
-    const[command, setCommand] = useState("");
+    // Grid State & "Run" State
+    // Initialise w/ Empty Grid & No "Run"
+    const[grid, setGrid] = useState([]);
+    const [isRunActive, setIsRunActive] = useState(false);
 
-    // "Run" Playback State
+    // Playback State
+    // Initialise w/ Empty Playback & No Command
     const[playback, setPlayback] = useState({
         steps: [],
-        stepCount: 0,
-        currentStep: -1,
+        currentStep: 0,
         isAuto: false
     });
+    const[command, setCommand] = useState("");
 
-    // Debug Function for Playback Panel Button Pressing
-    function handlePlayback(command) {
-        setCommand(command)
+    // // Grid Building Functions
+
+    // Create a "Closed" Grid (No Paths)
+    function createClosedGrid(rows, cols) {
+        return Array.from({ length: rows }, (_, row) =>
+            Array.from({ length: cols }, (_, col) => ({
+                row: row,
+                col: col,
+                visited: false,
+                paths: {
+                    north: false,
+                    south: false,
+                    east: false,
+                    west: false
+                }
+            }))
+        );
     }
 
-    // Handle Settings Update from Config Panel
+    // Create an "Open" Grid (All Paths Except Edges)
+    function createOpenGrid(rows, cols) {
+        return Array.from({ length: rows }, (_, row) =>
+            Array.from({ length: cols }, (_, col) => ({
+                row,
+                col,
+                visited: false,
+                paths: {
+                    north: !(row === 0),
+                    south: !(row === rows - 1),
+                    east: !(col === cols - 1),
+                    west: !(col === 0)
+                }
+            }))
+        );
+    }
+
+    // // Settings & Backend Flow
+
+    // Process Settings Update from Config Panel
     async function handleSettingsChange(newSettings) {
-        // Update Internal Settings State
+        // Update Config State
         setSettings(newSettings);
 
-        // Make Call to Generate Maze
         try {
-            // If Successful... Output Response JSON & Set "Run" as Active
+            // Request New Maze from Backend
             const mazeRun = await generateMaze(newSettings);
+
+            // Create Initial Grid from First Step Information
+            const steps = mazeRun.steps.list;
+            const firstStep = steps[0];
+            const initialGrid =
+                firstStep?.Data?.is_open 
+                    ? createOpenGrid(newSettings.rows, newSettings.cols)
+                    : createClosedGrid(newSettings.rows, newSettings.cols);
+            
+            // Update All Appropriate States
+            // Grid, Playback, Run & Command
+            setGrid(initialGrid);
+            setPlayback({
+                steps: steps,
+                currentStep: 0,
+                isAuto: false
+            });
             setIsRunActive(true);
-            console.log(mazeRun);
-        }
-        catch(error) {
-            // If Unsuccessful... Log Error & Set "Run" as Inactive
-            setIsRunActive(false);
+            setCommand("");
+
+        } catch (error) {
+            // If Error... Report & Update Run State
             console.error(error);
+            setIsRunActive(false);
         }
     }
 
+    // Playback Controls
+    // TO BE EXPANDED
+    function handlePlayback(cmd) {
+        // Update Command & Playback States
+        // TEMPORARY
+        setCommand(cmd);
+        setPlayback( prev => ({
+            ...prev,
+            currentStep: prev.currentStep
+        }));
+    }
+
+    // Rendering
     return (
         <div id="gridCanvas" className="container">
-            <p className="debugMarker"> 
-                Grid Canvas - {settings.rows} x {settings.cols}, {settings.algorithm} w/ {settings.seed}, Current Command - {command}, Run Active - {isRunActive} 
+
+            <p className="debugMarker">
+                Grid Canvas - {settings.rows} x {settings.cols}
+                {" "}| {settings.algorithm}
+                {" "}| {settings.seed}
+                {" "}| {command}
+                {" "}| Run: {isRunActive ? "active" : "inactive"}
             </p>
-            {/* Render Grid */}
-            {/* Pass Down Settings' Rows & Cols Props -> In Future, Pass Down 'Grid' State */}
-            <Grid 
-                rows={settings.rows} 
-                cols={settings.cols} 
-            />
-            {/* Placeholder 'Playback Pane' Div */}
-            {/* Pass Down Steps Change Playback State w/ Prop Function */}
-            <PlaybackPanel
-                isRunActive={isRunActive}
-                playback={playback} 
-                onPressPlayback={handlePlayback}
-            />
-            {/* Config Pane */}
-            {/* Pass Down Settings Prop, Change Settings State w/ Prop Function */}
-            <ConfigPanel  
+
+            {/* Grid */}
+            <Grid grid={grid} />
+
+            {/* Playback Panel - Conditionally Rendered */}
+            {isRunActive && (
+                <PlaybackPanel
+                    playback={playback}
+                    onPressPlayback={handlePlayback}
+                />
+            )}
+
+            {/* Config Panel */}
+            <ConfigPanel
                 settings={settings}
                 onSettingsChange={handleSettingsChange}
             />
+
         </div>
     );
 }

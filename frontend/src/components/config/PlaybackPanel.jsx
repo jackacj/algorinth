@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import '../../styles/PlaybackPanel.css'
 
-export default function PlaybackPanel({ isRunActive, playback, onPressPlayback }) {
+export default function PlaybackPanel({ playback, onPressPlayback }) {
     return (
         <div id="playbackPanel" className="container">
             <p className="debugMarker"> Playback Pane </p>
@@ -27,7 +27,7 @@ export default function PlaybackPanel({ isRunActive, playback, onPressPlayback }
                 Autostep Pause
             </button>
             {/* Step Counter - Very Rough */}
-            <p> {isRunActive ? "Steps: " + playback.currentStep + " / " + playback.stepCount : null} </p>
+            <p> {"Steps: " + playback.currentStep + " / " + (playback.steps).length} </p>
         </div>
     );
 }

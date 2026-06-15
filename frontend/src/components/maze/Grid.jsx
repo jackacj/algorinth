@@ -1,40 +1,16 @@
 import '../../styles/Grid.css'
 import Cell from './Cell';
 
-// Create Default (Closed) Grid from Dimensions
-function createGrid(rows, cols) {
-    const grid = []
-
-    // For Each Row...
-    for (let row = 0; row < rows; row++) {
-        const currentRow = [];
-
-        // For Each Column... (Individual Cell)
-        for (let col = 0; col < cols; col++) {
-            // Add Cell Data to (Row,Col) Position in Current Row
-            currentRow.push({
-                row,
-                col,
-                visited: false,
-                paths: {
-                    north: false,
-                    south: false,
-                    east: false,
-                    west: false
-                }
-            });
-        }
-
-        // Add Current Row to Grid
-        grid.push(currentRow)
+export default function Grid({ grid }) {
+    // Guard Against No Grid State
+    if (!grid || grid.length === 0) {
+        // Return Null or Loading Placeholder
+        return null;
     }
 
-    return grid
-}
-
-export default function Grid({ rows, cols }) {
-    // Create Default (Closed) Grid
-    const grid = createGrid(rows, cols);
+    // Derive Dimensions from Grid State
+    const rows = grid.length;
+    const cols = grid[0].length;
 
     // Return Grid, Visually Arranged into Columns via CSS
     return(
