@@ -7,7 +7,6 @@ import ConfigPanel from '../config/ConfigPanel'
 import PlaybackPanel from '../config/PlaybackPanel';
 
 export default function GridCanvas(){
-
     // // Grid Canvas State
 
     // Settings State
@@ -69,6 +68,89 @@ export default function GridCanvas(){
         );
     }
 
+    // // Grid Mutation Functions
+    // TYPES & DATA
+    // "Initialise" - is_open: bool
+    // "Create Path" - from_cell: (y,x), to_cell: (y,x)
+    // "Remove Path" - from_cell: (y,x), to_cell: (y,x)
+    // "Visit" - cell: (y,x)
+    // "Union" - set_a: (y,x), set_b: (y,x)
+    function mutateGrid(step, localGrid) {
+        // Select Mutation Type
+        switch(step.Type) {
+            case "Initialise":
+                // Create New Open/Closed Grid
+                localGrid = step.Data.is_open 
+                    ? createOpenGrid(settings.rows, settings.cols)
+                    : createClosedGrid(settings.rows, settings.cols);
+                break;
+
+            case "Create Path":
+                // Create Path in Grid
+                localGrid = modifyPath(
+                    step.Data.from_cell,
+                    step.Data.to_cell,
+                    true,
+                    localGrid
+                );
+                break;
+
+
+            case "Remove Path":
+                // Remove Path in Grid
+                localGrid = modifyPath(
+                    step.Data.from_cell,
+                    step.Data.to_cell,
+                    false,
+                    localGrid
+                );
+                break;
+
+            case "Visit":
+                // Set Cell's "Visited Status" to True
+                localGrid[cell[0]][cell[1]].visited = true;
+                break;
+
+            case "Union":
+                // Future Union Rendering
+        }
+
+        // Return Mutated Grid
+        return localGrid;
+    }
+
+    // Creating a Path in a given LocalGrid
+    function modifyPath(fromCell, toCell, isPath, localGrid) {
+        // Find Direction between Cells
+        let dy = toCell[0] - fromCell[0];
+        let dx = toCell[1] - fromCell[1];
+
+        // Modify Cell Entries in LocalGrid
+        if (dy === -1 && dx === 0) {
+            // toCell is North of fromCell
+            localGrid[fromCell[0]][fromCell[1]].paths.north = isPath;
+            localGrid[toCell[0]][toCell[1]].paths.south = isPath;
+
+        } else if (dy === 1 && dx === 0) {
+            // toCell is South of fromCell
+            localGrid[fromCell[0]][fromCell[1]].paths.south = isPath;
+            localGrid[toCell[0]][toCell[1]].paths.north = isPath;
+            
+        } else if (dy === 0 && dx === -1) {
+            // toCell is West of fromCell
+            localGrid[fromCell[0]][fromCell[1]].paths.west = isPath;
+            localGrid[toCell[0]][toCell[1]].paths.east = isPath;
+
+        } else if (dy === 0 && dx === 1) {
+            // toCell is East of fromCell
+            localGrid[fromCell[0]][fromCell[1]].paths.east = isPath;
+            localGrid[toCell[0]][toCell[1]].paths.west = isPath;
+        }
+
+        // Return LocalGrid w/ Modified Path
+        return localGrid;
+    }
+
     // // Settings & Backend Flow
 
     // Process Settings Update from Config Panel
@@ -79,6 +161,7 @@ export default function GridCanvas(){
         try {
             // Request New Maze from Backend
             const mazeRun = await generateMaze(newSettings);
+            console.log(mazeRun)
 
             // Create Initial Grid from First Step Information
             const steps = mazeRun.steps.list;
@@ -107,14 +190,56 @@ export default function GridCanvas(){
     }
 
     // Playback Controls
-    // TO BE EXPANDED
     function handlePlayback(cmd) {
-        // Update Command & Playback States
-        // TEMPORARY
+        // Get Current Playback & Grid State
+        let localPlayback = playback;
+        let localGrid = grid;
+
+        // Select Command -> Expand In Future
+        switch(cmd) {
+            case "STEP_FORWARD":
+                // Increment Step
+                // Check Bounds
+                if (localPlayback.currentStep >= (localPlayback.steps).length) {
+                    // If No Future Steps Left... Abandon Command
+                    break;
+                }
+                localPlayback.currentStep += 1
+
+                // Mutate Grid Based On Command
+                localGrid = mutateGrid(localPlayback.steps[localPlayback.currentStep], localGrid);
+
+                // Set New Grid State
+                setGrid(localGrid);
+                break;
+
+            case "STEP_BACKWARD":
+                // Decrement Step
+                // Check Bounds
+                if (localPlayback.currentStep <= 0) {
+                    // If No Previous Steps Left... Abandon Command
+                    break;
+                }
+                localPlayback.currentStep -= 1
+
+                // Mutation Loop
+
+                // Set New Grid State
+                setGrid(localGrid);
+                break;
+
+            case "AUTOSTEP_PLAY":
+                // COME BACK TO
+            case "AUTOSTEP_PAUSE":
+                // COME BACK TO
+        }
+
+        // Set Command & Playback States
         setCommand(cmd);
         setPlayback( prev => ({
             ...prev,
-            currentStep: prev.currentStep
+            currentStep: localPlayback.currentStep,
+            isAuto: localPlayback.isAuto
         }));
     }
 
