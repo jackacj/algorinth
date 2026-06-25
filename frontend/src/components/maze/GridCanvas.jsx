@@ -75,10 +75,11 @@ export default function GridCanvas(){
     // "Remove Path" - from_cell: (y,x), to_cell: (y,x)
     // "Visit" - cell: (y,x)
     // "Union" - set_a: (y,x), set_b: (y,x)
-    function mutateGrid(step, localGrid) {
+    function mutateGridForward(step, localGrid) {
         // Select Mutation Type
         switch(step.Type) {
             case "Initialise":
+                // PROBABLY NEVER EXECUTED
                 // Create New Open/Closed Grid
                 localGrid = step.Data.is_open 
                     ? createOpenGrid(settings.rows, settings.cols)
@@ -108,11 +109,51 @@ export default function GridCanvas(){
 
             case "Visit":
                 // Set Cell's "Visited Status" to True
-                localGrid[cell[0]][cell[1]].visited = true;
+                localGrid[step.Data.cell[0]][step.Data.cell[1]].visited = true;
                 break;
 
             case "Union":
                 // Future Union Rendering
+        }
+
+        // Return Mutated Grid
+        return localGrid;
+    }
+
+    function mutateGridBackward(step, localGrid) {
+        // Select Mutation Type
+        switch (step.Type) {
+            case "Create Path":
+                // Perform Inverse Action
+                // Remove Path in Grid
+                localGrid = modifyPath(
+                    step.Data.from_cell,
+                    step.Data.to_cell,
+                    false,
+                    localGrid
+                );
+                break;
+
+            case "Remove Path":
+                // Perform Inverse Action
+                // Create Path in Grid
+                localGrid = modifyPath(
+                    step.Data.from_cell,
+                    step.Data.to_cell,
+                    true,
+                    localGrid
+                );
+                break;
+
+            case "Visit":
+                // Perform Inverse Action
+                // Set Cell's "Visited Status" to False
+                localGrid[step.Data.cell[0]][step.Data.cell[1]].visited = false;
+                break; 
+
+            case "Union":
+                // Perform Inverse Action
+                // Future "Dis-Union" Rendering
         }
 
         // Return Mutated Grid
@@ -206,23 +247,25 @@ export default function GridCanvas(){
                 }
                 localPlayback.currentStep += 1
 
-                // Mutate Grid Based On Command
-                localGrid = mutateGrid(localPlayback.steps[localPlayback.currentStep], localGrid);
+                // Mutate Grid Forwards Based On Command
+                localGrid = mutateGridForward(localPlayback.steps[localPlayback.currentStep], localGrid);
 
                 // Set New Grid State
                 setGrid(localGrid);
                 break;
 
             case "STEP_BACKWARD":
-                // Decrement Step
                 // Check Bounds
                 if (localPlayback.currentStep <= 0) {
                     // If No Previous Steps Left... Abandon Command
                     break;
                 }
-                localPlayback.currentStep -= 1
 
-                // Mutation Loop
+                // Mutation Grid Backwards Based On Command
+                localGrid = mutateGridBackward(localPlayback.steps[localPlayback.currentStep], localGrid);
+
+                // Decrement Step
+                localPlayback.currentStep -= 1
 
                 // Set New Grid State
                 setGrid(localGrid);
