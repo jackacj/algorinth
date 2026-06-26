@@ -17,12 +17,12 @@ export default function PlaybackPanel({ playback, onPressPlayback }) {
                 Step Backward
             </button>
             <button
-                onClick={() => onPressPlayback("AUTOSTEP PLAY")}
+                onClick={() => onPressPlayback("AUTOSTEP_PLAY")}
             >
                 Autostep Play
             </button>
             <button
-                onClick={() => onPressPlayback("AUTOSTEP PAUSE")}
+                onClick={() => onPressPlayback("AUTOSTEP_PAUSE")}
             >
                 Autostep Pause
             </button>

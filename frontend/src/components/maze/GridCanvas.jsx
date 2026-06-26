@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { generateMaze } from '../../services/mazeApi'
 import '../../styles/GridCanvas.css'
 
@@ -31,6 +31,50 @@ export default function GridCanvas(){
         isAuto: false
     });
     const[command, setCommand] = useState("");
+
+    // // Grid Canvas Effects
+
+    // Autostep Effect
+    /*
+    useEffect(() => {
+        // If not isAuto... Do Nothing
+        if (!playback.isAuto) {
+            return;
+        }
+
+        // Create Time Interval to Trigger Phantom Button Press
+        const interval = setInterval(() => {
+            // Trigger a Forward Step Phantom Button Press every 100ms
+            handlePlayback("STEP_FORWARD");
+
+        }, 100);
+
+        return () => clearInterval(interval);
+
+    }, [
+        // Dependent State(s)
+        playback.isAuto,
+    ]);
+    */
+
+    useEffect(() => {
+        // If not isAuto... Do Nothing
+        if (!playback.isAuto) {
+            return;
+        }
+
+        // Create Timeout to Trigger Phantom Button Press every 100ms
+        const timeout = setTimeout(() => {
+            handlePlayback("STEP_FORWARD");
+        }, 100);
+
+        return () => clearTimeout(timeout);
+    }, [
+        // Dependent States
+        playback.isAuto, 
+        playback.currentStep, 
+        grid
+    ]);
 
     // // Grid Building Functions
 
@@ -233,12 +277,18 @@ export default function GridCanvas(){
     // // Playback Functions
 
     // Stepping Forward
-    function stepForward(localPlayback, localGrid) {
+    function stepForward() {
+        // Create Local Clones of 'Playback' & 'Grid' States
+        let localPlayback = {
+            ...playback
+        };
+        let localGrid = structuredClone(grid);
+
         // Increment Step
         // Check Bounds
         if (localPlayback.currentStep >= (localPlayback.steps).length) {
             // If No Future Steps Left... Abandon Command
-            break;
+            return [localPlayback, localGrid];
         }
         localPlayback.currentStep += 1
 
@@ -250,11 +300,17 @@ export default function GridCanvas(){
     }
 
     // Stepping Backward
-    function stepBackward(localPlayback, localGrid) {
+    function stepBackward() {
+        // Create Local Clones of 'Playback' & 'Grid' States
+        let localPlayback = {
+            ...playback
+        };
+        let localGrid = structuredClone(grid);
+
         // Check Bounds
         if (localPlayback.currentStep <= 0) {
             // If No Previous Steps Left... Abandon Command
-            break;
+            return [localPlayback, localGrid];
         }
 
         // Mutation Grid Backwards Based On Command
@@ -269,6 +325,9 @@ export default function GridCanvas(){
 
     // Playback Controls
     function handlePlayback(cmd) {
+        // Debug
+        console.log(playback.currentStep);
+
         // Create Local Clones of 'Playback' & 'Grid' States
         let localPlayback = {
             ...playback
@@ -279,18 +338,22 @@ export default function GridCanvas(){
         switch(cmd) {
             case "STEP_FORWARD":
                 // Step Forward
-                [localPlayback, localGrid] = stepForward(localPlayback, localGrid);
+                [localPlayback, localGrid] = stepForward();
                 break;
 
             case "STEP_BACKWARD":
                 // Step Backward
-                [localPlayback, localGrid] = stepBackward(localPlayback, localGrid);
+                [localPlayback, localGrid] = stepBackward();
                 break;
 
             case "AUTOSTEP_PLAY":
-                // COME BACK TO
+                // Enable Autostep
+                localPlayback.isAuto = true;
+                break;
             case "AUTOSTEP_PAUSE":
-                // COME BACK TO
+                // Disable Autostep
+                localPlayback.isAuto = false;
+                break;
         }
 
         // Set Command ,Playback & Grid States
