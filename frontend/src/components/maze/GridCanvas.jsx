@@ -230,45 +230,61 @@ export default function GridCanvas(){
         }
     }
 
+    // // Playback Functions
+
+    // Stepping Forward
+    function stepForward(localPlayback, localGrid) {
+        // Increment Step
+        // Check Bounds
+        if (localPlayback.currentStep >= (localPlayback.steps).length) {
+            // If No Future Steps Left... Abandon Command
+            break;
+        }
+        localPlayback.currentStep += 1
+
+        // Mutate Grid Forwards Based On Command
+        localGrid = mutateGridForward(localPlayback.steps[localPlayback.currentStep], localGrid);
+
+        // Return Modified localPlayback & localGrid
+        return [localPlayback, localGrid];
+    }
+
+    // Stepping Backward
+    function stepBackward(localPlayback, localGrid) {
+        // Check Bounds
+        if (localPlayback.currentStep <= 0) {
+            // If No Previous Steps Left... Abandon Command
+            break;
+        }
+
+        // Mutation Grid Backwards Based On Command
+        localGrid = mutateGridBackward(localPlayback.steps[localPlayback.currentStep], localGrid);
+
+        // Decrement Step
+        localPlayback.currentStep -= 1
+
+        // Return Modified localPlayback & localGrid
+        return [localPlayback, localGrid];
+    }
+
     // Playback Controls
     function handlePlayback(cmd) {
-        // Get Current Playback & Grid State
-        let localPlayback = playback;
-        let localGrid = grid;
+        // Create Local Clones of 'Playback' & 'Grid' States
+        let localPlayback = {
+            ...playback
+        };
+        let localGrid = structuredClone(grid);
 
         // Select Command -> Expand In Future
         switch(cmd) {
             case "STEP_FORWARD":
-                // Increment Step
-                // Check Bounds
-                if (localPlayback.currentStep >= (localPlayback.steps).length) {
-                    // If No Future Steps Left... Abandon Command
-                    break;
-                }
-                localPlayback.currentStep += 1
-
-                // Mutate Grid Forwards Based On Command
-                localGrid = mutateGridForward(localPlayback.steps[localPlayback.currentStep], localGrid);
-
-                // Set New Grid State
-                setGrid(localGrid);
+                // Step Forward
+                [localPlayback, localGrid] = stepForward(localPlayback, localGrid);
                 break;
 
             case "STEP_BACKWARD":
-                // Check Bounds
-                if (localPlayback.currentStep <= 0) {
-                    // If No Previous Steps Left... Abandon Command
-                    break;
-                }
-
-                // Mutation Grid Backwards Based On Command
-                localGrid = mutateGridBackward(localPlayback.steps[localPlayback.currentStep], localGrid);
-
-                // Decrement Step
-                localPlayback.currentStep -= 1
-
-                // Set New Grid State
-                setGrid(localGrid);
+                // Step Backward
+                [localPlayback, localGrid] = stepBackward(localPlayback, localGrid);
                 break;
 
             case "AUTOSTEP_PLAY":
@@ -277,7 +293,8 @@ export default function GridCanvas(){
                 // COME BACK TO
         }
 
-        // Set Command & Playback States
+        // Set Command ,Playback & Grid States
+        setGrid(localGrid);
         setCommand(cmd);
         setPlayback( prev => ({
             ...prev,
