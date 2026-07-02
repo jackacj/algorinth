@@ -186,3 +186,34 @@ class Grid():
 
         for row in ascii_rows:
             print(row)
+
+    # Return a JSON Serialisable Grid State
+    def get_json(self) -> list[list[dict]]:
+        json_grid = []
+
+        # Enumerate through Each Cell
+        for y, row in enumerate(self.cell_grid):
+            json_row = []
+            for x, cell in enumerate(row):
+                # Get Cell Paths
+                cell_paths = cell.get_paths()
+
+                # Build Serialisable Cell
+                json_cell = {
+                    "row": y,
+                    "col": x,
+                    "visited": cell.get_visited(),
+                    "paths": {
+                        "north": 'N' in cell_paths,
+                        "south": 'S' in cell_paths,
+                        "east": 'E' in cell_paths,
+                        "west": 'W' in cell_paths
+                    }
+                }
+
+                # Add to Row
+                json_row.append(json_cell)
+            # Add to Grid
+            json_grid.append(json_row)
+
+        return json_grid

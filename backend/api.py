@@ -3,6 +3,8 @@ from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 # Annotated Python Hints
 from typing import Annotated
+# UUIDs
+import uuid
 # Base for Data Bodies
 from pydantic import BaseModel
 # Pandas for Data Processing
@@ -26,6 +28,9 @@ app.add_middleware(
 # Request a Maze from Frontend
 @app.post("/generate")
 async def generate_request(settings: dict):
+    # Create UUID for Request & Generated Maze
+    maze_id = str(uuid.uuid4())
+
     # Unpack Request
     height = settings["rows"]
     width = settings["cols"]
@@ -46,13 +51,15 @@ async def generate_request(settings: dict):
 
     # Create Response
     response = {
+        "maze_id": maze_id,
         "settings": {
             **settings
         }, 
         "steps": {
             "count": len(steps),
             "list": steps
-        }
+        },
+        "final_maze": grid.get_json()
     }
 
     return response

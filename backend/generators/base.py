@@ -12,6 +12,7 @@ class Generator(ABC):
         self.rng = random.Random(seed)
         self.recorder = recorder or Step_Recorder(enabled = False)
 
+    # Create a Grid & Record Event
     def super_create_grid(self, height: int, width: int, is_open: bool = False) -> Grid:
         self.recorder.record("Initialise", is_open = is_open)
         return Grid(height, width, is_open)
