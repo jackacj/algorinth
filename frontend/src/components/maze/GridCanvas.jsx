@@ -109,11 +109,11 @@ export default function GridCanvas(){
     // "Union" - set_a: (y,x), set_b: (y,x)
     function mutateGridForward(step, localGrid) {
         // Select Mutation Type
-        switch(step.Type) {
+        switch(step.type) {
             case "Initialise":
                 // PROBABLY NEVER EXECUTED
                 // Create New Open/Closed Grid
-                localGrid = step.Data.is_open 
+                localGrid = step.data.is_open 
                     ? createOpenGrid(settings.rows, settings.cols)
                     : createClosedGrid(settings.rows, settings.cols);
                 break;
@@ -121,8 +121,8 @@ export default function GridCanvas(){
             case "Create Path":
                 // Create Path in Grid
                 localGrid = modifyPath(
-                    step.Data.from_cell,
-                    step.Data.to_cell,
+                    step.data.from_cell,
+                    step.data.to_cell,
                     true,
                     localGrid
                 );
@@ -132,8 +132,8 @@ export default function GridCanvas(){
             case "Remove Path":
                 // Remove Path in Grid
                 localGrid = modifyPath(
-                    step.Data.from_cell,
-                    step.Data.to_cell,
+                    step.data.from_cell,
+                    step.data.to_cell,
                     false,
                     localGrid
                 );
@@ -141,7 +141,7 @@ export default function GridCanvas(){
 
             case "Visit":
                 // Set Cell's "Visited Status" to True
-                localGrid[step.Data.cell[0]][step.Data.cell[1]].visited = true;
+                localGrid[step.data.cell[0]][step.data.cell[1]].visited = true;
                 break;
 
             case "Union":
@@ -154,13 +154,13 @@ export default function GridCanvas(){
 
     function mutateGridBackward(step, localGrid) {
         // Select Mutation Type
-        switch (step.Type) {
+        switch (step.type) {
             case "Create Path":
                 // Perform Inverse Action
                 // Remove Path in Grid
                 localGrid = modifyPath(
-                    step.Data.from_cell,
-                    step.Data.to_cell,
+                    step.data.from_cell,
+                    step.data.to_cell,
                     false,
                     localGrid
                 );
@@ -170,8 +170,8 @@ export default function GridCanvas(){
                 // Perform Inverse Action
                 // Create Path in Grid
                 localGrid = modifyPath(
-                    step.Data.from_cell,
-                    step.Data.to_cell,
+                    step.data.from_cell,
+                    step.data.to_cell,
                     true,
                     localGrid
                 );
@@ -180,7 +180,7 @@ export default function GridCanvas(){
             case "Visit":
                 // Perform Inverse Action
                 // Set Cell's "Visited Status" to False
-                localGrid[step.Data.cell[0]][step.Data.cell[1]].visited = false;
+                localGrid[step.data.cell[0]][step.data.cell[1]].visited = false;
                 break; 
 
             case "Union":
@@ -239,7 +239,7 @@ export default function GridCanvas(){
             const steps = mazeRun.steps.list;
             const firstStep = steps[0];
             const initialGrid =
-                firstStep?.Data?.is_open 
+                firstStep?.data?.is_open 
                     ? createOpenGrid(newSettings.rows, newSettings.cols)
                     : createClosedGrid(newSettings.rows, newSettings.cols);
             

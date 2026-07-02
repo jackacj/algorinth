@@ -5,6 +5,7 @@ class Step_Recorder():
     def __init__(self, enabled: bool = True):
         self.steps: list[dict] = []
         self.enabled = enabled
+        self.currentIndex: int = 0
 
         if self.enabled:
             self.record = self._record
@@ -17,10 +18,15 @@ class Step_Recorder():
 
     # Record Generation Actions
     def _record(self, step_type: str, **data) -> None:
+        # Record Step
         self.steps.append({
-            "Type": step_type,
-            "Data": data
+            "index": self.currentIndex,
+            "type": step_type,
+            "data": data
         })
+
+        # Increment Internal Index
+        self.currentIndex += 1
 
     # No-op if Recorder is Disabled
     def _noop(self, step_type: str, **data) -> None:
