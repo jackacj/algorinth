@@ -25,12 +25,13 @@ export default function GridCanvas(){
 
     // Playback State
     // Stock Playback StepsPerSecond - Temporary
-    let stockStepsPerSecond = 2;
+    let stockStepsPerSecond = 5;
     // Initialise w/ Empty Playback & No Command
     const[playback, setPlayback] = useState({
         steps: [],
         currentStep: 0,
         isAuto: false,
+        isAutoForward: true,
         stepsPerSecond: stockStepsPerSecond
     });
     const[command, setCommand] = useState("");
@@ -47,14 +48,18 @@ export default function GridCanvas(){
 
         // Create Timeout to Trigger Phantom Button Press every 100ms
         const timeout = setTimeout(() => {
-            console.log("Timeout Fired");
-            handlePlayback("STEP_FORWARD");
+            if (playback.isAutoForward) {
+                handlePlayback("STEP_FORWARD");
+            } else {
+                handlePlayback("STEP_BACKWARD");
+            }
         }, 1000 / playback.stepsPerSecond);
 
         return () => clearTimeout(timeout);
     }, [
         // Dependent States
-        playback.isAuto, 
+        playback.isAuto,
+        playback.isAutoForward, 
         playback.currentStep, 
         playback.stepsPerSecond
     ]);
@@ -245,7 +250,8 @@ export default function GridCanvas(){
                 ...prev,
                 steps: steps,
                 currentStep: 0,
-                isAuto: false
+                isAuto: false,
+                isAutoForward: true
             }));
             setIsRunActive(true);
             setCommand("");
@@ -281,7 +287,8 @@ export default function GridCanvas(){
     function stepBackward(localPlayback, localGrid) {
         // Check Bounds
         if (localPlayback.currentStep <= 0) {
-            // If No Previous Steps Left... Abandon Command
+            // If No Previous Steps Left... Stop Autostep as Precaution & Abandon Command
+            localPlayback.isAuto = false;
             return [localPlayback, localGrid];
         }
 
@@ -317,9 +324,19 @@ export default function GridCanvas(){
                 [localPlayback, localGrid] = stepBackward(localPlayback, localGrid);
                 break;
 
-            case "AUTOSTEP_PLAY":
+            case "AUTOSTEP_PLAY_FORWARD":
                 // Enable Autostep
                 localPlayback.isAuto = true;
+                // Set Direction to Forward
+                localPlayback.isAutoForward = true;
+                // Set Autostep Speed to Stock Speed = Temporary
+                localPlayback.stepsPerSecond = stockStepsPerSecond;
+                break;
+            case "AUTOSTEP_PLAY_BACKWARD":
+                // Enable Autostep
+                localPlayback.isAuto = true;
+                // Set Direction to Backward
+                localPlayback.isAutoForward = false;
                 // Set Autostep Speed to Stock Speed = Temporary
                 localPlayback.stepsPerSecond = stockStepsPerSecond;
                 break;
@@ -336,6 +353,7 @@ export default function GridCanvas(){
             ...prev,
             currentStep: localPlayback.currentStep,
             isAuto: localPlayback.isAuto,
+            isAutoForward: localPlayback.isAutoForward,
             stepsPerSecond: localPlayback.stepsPerSecond
         }));
     }

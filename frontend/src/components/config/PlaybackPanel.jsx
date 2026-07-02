@@ -29,9 +29,14 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
                 Step Backward
             </button>
             <button
-                onClick={() => onPressPlayback("AUTOSTEP_PLAY")}
+                onClick={() => onPressPlayback("AUTOSTEP_PLAY_FORWARD")}
             >
-                Autostep Play
+                Autostep Play Forward
+            </button>
+            <button
+                onClick={() => onPressPlayback("AUTOSTEP_PLAY_BACKWARD")}
+            >
+                Autostep Play Backward
             </button>
             <button
                 onClick={() => onPressPlayback("AUTOSTEP_PAUSE")}
@@ -41,28 +46,18 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
             {/* Step Counter - Very Rough */}
             <p> {"Steps: " + playback.currentStep + " / " + (playback.steps.length - 1)} </p>
             {/* Speed Controller - Rough & Conditionally Rendered */}
-            {/*
             {playback.isAuto && (
-                <Slider 
-                    value={playback.stepsPerSecond}
-                    onChange={onSpeedChange}
-                    valueLabelDisplay="on"
-                    step={1}
-                    marks
-                    min={1}
-                    max={10}
-                />    
-            )}
-            */}
-            {playback.isAuto && (
-                <input
-                    type="range"
-                    min="1"
-                    max="10"
-                    step="1"
-                    value={playback.stepsPerSecond}
-                    onChange={handleSpeedChange}
-                />  
+                <div>
+                    <input
+                        type="range"
+                        min="1"
+                        max="30"
+                        step="1"
+                        value={playback.stepsPerSecond}
+                        onChange={handleSpeedChange}
+                    />
+                    <p> {"Speed: " + playback.stepsPerSecond + " Steps per Second"} </p>
+                </div>  
             )}
         </div>
     );
