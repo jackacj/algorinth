@@ -27,7 +27,7 @@ export default function PlaybackPanel({ playback, onPressPlayback }) {
                 Autostep Pause
             </button>
             {/* Step Counter - Very Rough */}
-            <p> {"Steps: " + playback.currentStep + " / " + (playback.steps).length} </p>
+            <p> {"Steps: " + playback.currentStep + " / " + (playback.steps.length - 1)} </p>
         </div>
     );
 }
