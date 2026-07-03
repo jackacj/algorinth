@@ -3,16 +3,17 @@ from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 # Annotated Python Hints
 from typing import Annotated
-# UUIDs
-import uuid
 # Base for Data Bodies
 from pydantic import BaseModel
 # Pandas for Data Processing
 import pandas as pd
 import json
 # Maze Generation Logic
+from .services.gen_service import generate_maze
 from .generators.registry import GENERATORS
 from .recorders.step_recorder import Step_Recorder
+# Models
+from .models.maze import Maze
 
 app = FastAPI()
 
@@ -28,38 +29,15 @@ app.add_middleware(
 # Request a Maze from Frontend
 @app.post("/generate")
 async def generate_request(settings: dict):
-    # Create UUID for Request & Generated Maze
-    maze_id = str(uuid.uuid4())
-
-    # Unpack Request
-    height = settings["rows"]
-    width = settings["cols"]
-    algorithm = settings["algorithm"]
-    
-    # Check for Seed
-    if (settings["seed"] == ""):
-        seed = None
-    else:
-        seed = settings["seed"]
-
-    # Generate Maze
-    generator_cls = GENERATORS[algorithm] 
-    recorder = Step_Recorder()
-    generator = generator_cls(seed, recorder)
-    grid =  generator.generate(height, width)
-    steps = recorder.get_steps()
+    # Generate a Maze based on Request Settings
+    maze = generate_maze(settings)
 
     # Create Response
     response = {
-        "maze_id": maze_id,
-        "settings": {
-            **settings
-        }, 
-        "steps": {
-            "count": len(steps),
-            "list": steps
-        },
-        "final_maze": grid.get_json()
+        "maze_id": maze.get_id(),
+        "settings": maze.get_settings(), 
+        "steps": maze.get_steps(),
+        "final_maze": maze.get_final_maze()
     }
 
     return response
