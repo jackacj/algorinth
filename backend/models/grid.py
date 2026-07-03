@@ -188,7 +188,7 @@ class Grid():
             print(row)
 
     # Return a JSON Serialisable Grid State
-    def get_json(self) -> list[list[dict]]:
+    def get_json(self) -> list[list[dict[str, any]]]:
         json_grid = []
 
         # Enumerate through Each Cell

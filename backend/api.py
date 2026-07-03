@@ -1,10 +1,6 @@
 # FastAPI Imports
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
-# Annotated Python Hints
-from typing import Annotated
-# Base for Data Bodies
-from pydantic import BaseModel
 # Pandas for Data Processing
 import pandas as pd
 import json
@@ -14,6 +10,8 @@ from .generators.registry import GENERATORS
 from .recorders.step_recorder import Step_Recorder
 # Models
 from .models.maze import Maze
+from .schemas.request import MazeGenerationRequest
+from .schemas.response import MazeResponse, MazeSteps
 
 app = FastAPI()
 
@@ -27,20 +25,24 @@ app.add_middleware(
 )
 
 # Request a Maze from Frontend
-@app.post("/generate")
-async def generate_request(settings: dict):
-    # Generate a Maze based on Request Settings
+# Response Model -> MazeResponse
+@app.post("/generate", response_model = MazeResponse)
+# Request Model -> MazeGenerationRequest 
+async def generate_request(settings: MazeGenerationRequest):
+    # Generate a Maze based on Request Settings -> Convert Request Body to Dictionary
     maze = generate_maze(settings)
+    maze_steps = maze.get_steps()
 
-    # Create Response
-    response = {
-        "maze_id": maze.get_id(),
-        "settings": maze.get_settings(), 
-        "steps": maze.get_steps(),
-        "final_maze": maze.get_final_maze()
-    }
-
-    return response
+    # Return a Maze Response
+    return MazeResponse(
+        maze_id = maze.get_id(),
+        settings = maze.get_settings(),
+        steps = MazeSteps(
+            count = len(maze_steps),
+            list = maze_steps
+        ),
+        final_maze = maze.get_final_maze().get_json()
+    )
 
 # Debug: Request a Maze
 @app.post("/generate_debug")
