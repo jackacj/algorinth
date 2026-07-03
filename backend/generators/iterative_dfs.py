@@ -1,5 +1,5 @@
 from .base import Generator
-from ..grid import Grid
+from ..models.grid import Grid
 
 class Iterative_DFS_Generator(Generator):
     

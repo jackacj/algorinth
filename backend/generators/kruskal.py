@@ -1,6 +1,5 @@
 from .base import Generator
-from ..cell import Cell
-from ..grid import Grid
+from ..models.grid import Grid
 
 class Kruskal_Generator(Generator):
     

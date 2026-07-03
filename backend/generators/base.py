@@ -1,8 +1,8 @@
 import random
 from typing import Annotated
 from abc import ABC, abstractmethod
-from ..cell import Cell
-from ..grid import Grid
+from ..models.cell import Cell
+from ..models.grid import Grid
 from ..recorders.step_recorder import Step_Recorder
 
 # Generator Object

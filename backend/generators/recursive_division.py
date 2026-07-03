@@ -1,5 +1,5 @@
 from .base import Generator
-from ..grid import Grid
+from ..models.grid import Grid
 
 """
 "recursive_divide" may be a visually interesting event.
