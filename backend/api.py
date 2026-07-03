@@ -31,17 +31,16 @@ app.add_middleware(
 async def generate_request(settings: MazeGenerationRequest):
     # Generate a Maze based on Request Settings -> Convert Request Body to Dictionary
     maze = generate_maze(settings)
-    maze_steps = maze.get_steps()
 
     # Return a Maze Response
     return MazeResponse(
-        maze_id = maze.get_id(),
-        settings = maze.get_settings(),
+        maze_id = maze.id,
+        settings = maze.settings,
         steps = MazeSteps(
-            count = len(maze_steps),
-            list = maze_steps
+            count = len(maze.steps),
+            list = maze.steps
         ),
-        final_maze = maze.get_final_maze().get_json()
+        final_maze = maze.final_maze.get_json()
     )
 
 # Debug: Request a Maze
