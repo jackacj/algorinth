@@ -8,3 +8,7 @@ class MazeGenerationRequest(BaseModel):
     cols: int
     algorithm: str
     seed: Optional[str] = None
+
+# Maze Request by Id Data Model
+class MazeRequestById(BaseModel):
+    uuid: str

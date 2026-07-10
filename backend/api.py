@@ -7,10 +7,10 @@ import json
 # Maze Generation Logic
 from .services.gen_service import generate_maze
 # Database Logic
-from .services.db_service import save_maze
+from .services.db_service import save_maze, get_maze_by_uuid
 # Models
 from .models.maze import Maze
-from .schemas.request import MazeGenerationRequest
+from .schemas.request import MazeGenerationRequest, MazeRequestById
 from .schemas.response import MazeResponse, MazeSteps
 
 app = FastAPI()
@@ -24,7 +24,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Request a Maze from Frontend
+# Request to Generate Maze from Frontend
 # Response Model -> MazeResponse
 @app.post("/generate", response_model = MazeResponse)
 # Request Model -> MazeGenerationRequest 
@@ -43,5 +43,24 @@ async def generate_request(settings: MazeGenerationRequest):
             count = len(maze.steps),
             list = maze.steps
         ),
-        final_maze = maze.final_maze.get_json()
+        final_maze = maze.final_maze.to_json()
+    )
+
+# Request a Specific Maze from Frontend
+# Response Model -> MazeResponse
+@app.post("/mazes", response_model = MazeResponse)
+# Request Model -> MazeRequestbyId
+async def request_maze_by_id(request: MazeRequestById):
+    # Get Maze Object for UUID -> Could Be Empty
+    maze = get_maze_by_uuid(request.uuid)
+
+    # Return a Maze Response
+    return MazeResponse(
+        maze_id = maze.id,
+        settings = maze.settings,
+        steps = MazeSteps(
+            count = len(maze.steps),
+            list = maze.steps
+        ),
+        final_maze = maze.final_maze.to_json()
     )

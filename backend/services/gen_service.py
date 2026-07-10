@@ -24,5 +24,5 @@ def generate_maze(settings: MazeGenerationRequest) -> Maze:
     steps = recorder.get_steps()
 
     # Create Maze Object and Return
-    maze = Maze(settings.model_dump(), steps, grid)
+    maze = Maze(settings = settings.model_dump(), steps = steps, final_maze = grid)
     return maze

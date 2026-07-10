@@ -36,3 +36,43 @@ class Cell():
     # Get a Cell's Location within a Grid
     def get_location(self) -> tuple:
         return (self.loc_y, self.loc_x)
+    
+    # Return a JSON Serialisable Grid State
+    def to_json(self) -> dict:
+        return {
+            "row": self.loc_y,
+            "col": self.loc_x,
+            "visited": self.is_visited,
+            "paths": {
+                "north": 'N' in self.paths,
+                "south": 'S' in self.paths,
+                "east": 'E' in self.paths,
+                "west": 'W' in self.paths
+            }
+        }
+    
+    # Turn a JSON Grid State into a Cell Object
+    # Use Decorator to Call without Instance
+    @classmethod
+    def from_json(cls, data: dict):
+        # Construct Paths Set
+        path_lookup = {
+            "north": "N",
+            "south": "S",
+            "east": "E",
+            "west": "W",
+        }
+
+        paths = {
+            direction
+            for json_name, direction in path_lookup.items()
+            if data["paths"][json_name]
+        }
+
+        # Return Cell Instance
+        return Cell(
+            y = data["row"],
+            x = data["col"],
+            is_visited = data["visited"],
+            paths = paths
+        )

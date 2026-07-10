@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { generateMaze } from '../../services/mazeApi'
+import { generateMaze, requestMazeById } from '../../services/mazeApi'
 import '../../styles/GridCanvas.css'
 
 import Grid from './Grid'
 import ConfigPanel from '../config/ConfigPanel'
-import PlaybackPanel from '../config/PlaybackPanel';
+import PlaybackPanel from '../config/PlaybackPanel'
+import RequestPanel from '../config/RequestPanel'
 
 export default function GridCanvas(){
     // // Grid Canvas State
@@ -21,6 +22,7 @@ export default function GridCanvas(){
     // Grid State & "Run" State
     // Initialise w/ Empty Grid & No "Run"
     const[grid, setGrid] = useState([]);
+    const[gridId, setGridId] = useState("");
     const [isRunActive, setIsRunActive] = useState(false);
 
     // Playback State
@@ -236,6 +238,7 @@ export default function GridCanvas(){
             const mazeRun = await generateMaze(newSettings);
 
             // Create Initial Grid from First Step Information
+            const mazeId = mazeRun.maze_id;
             const steps = mazeRun.steps.list;
             const firstStep = steps[0];
             const initialGrid =
@@ -255,6 +258,7 @@ export default function GridCanvas(){
             }));
             setIsRunActive(true);
             setCommand("");
+            setGridId(mazeId);
 
         } catch (error) {
             // If Error... Report & Update Run State
@@ -367,12 +371,53 @@ export default function GridCanvas(){
         }));
     }
 
+    // Request Maze via UUID
+    async function handleMazeRequestById(request) {
+        try {
+            // Request an Existing Maze from Backend via Id
+            const mazeRun = await requestMazeById(request);
+
+            // Create Initial Settings
+            const newSettings = mazeRun.settings;
+
+            // Create Initial Grid from First Step Information
+            const mazeId = mazeRun.maze_id;
+            const steps = mazeRun.steps.list;
+            const firstStep = steps[0];
+            const initialGrid =
+                firstStep?.data?.is_open 
+                    ? createOpenGrid(newSettings.rows, newSettings.cols)
+                    : createClosedGrid(newSettings.rows, newSettings.cols);
+            
+            // Update All Appropriate States
+            // Grid, Playback, Run & Command
+            setGrid(initialGrid);
+            setSettings(newSettings);
+            setPlayback(prev => ({
+                ...prev,
+                steps: steps,
+                currentStep: 0,
+                isAuto: false,
+                isAutoForward: true
+            }));
+            setIsRunActive(true);
+            setCommand("");
+            setGridId(mazeId);
+
+        } catch (error) {
+            // If Error... Report & Update Run State
+            console.error(error);
+            setIsRunActive(false);
+        }
+    }
+
     // Rendering
     return (
         <div id="gridCanvas" className="container">
 
             <p className="debugMarker">
                 Grid Canvas - {settings.rows} x {settings.cols}
+                {" "}| {gridId}
                 {" "}| {settings.algorithm}
                 {" "}| {settings.seed}
                 {" "}| {command}
@@ -397,6 +442,11 @@ export default function GridCanvas(){
                 onSettingsChange={handleSettingsChange}
             />
 
+            {/* Request Panel */}
+            <RequestPanel
+                gridId={gridId}
+                onRequest={handleMazeRequestById}
+            />
         </div>
     );
 }

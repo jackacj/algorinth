@@ -1,0 +1,11 @@
+#requestPanel {
+    background-color: white;
+    width: 100%;
+    margin: 0px auto;
+}
+
+.requestForm {
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+}

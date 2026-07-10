@@ -188,32 +188,29 @@ class Grid():
             print(row)
 
     # Return a JSON Serialisable Grid State
-    def get_json(self) -> list[list[dict[str, any]]]:
-        json_grid = []
+    def to_json(self) -> list[list[dict[str, any]]]:
+        # Return a 2D Array of Cell JSON States
+        return [
+            [cell.to_json() for cell in row]
+            for row in self.cell_grid
+        ]
+    
 
-        # Enumerate through Each Cell
-        for y, row in enumerate(self.cell_grid):
-            json_row = []
-            for x, cell in enumerate(row):
-                # Get Cell Paths
-                cell_paths = cell.get_paths()
+    # Turn a JSON Grid State into a Grid Object
+    # Use Decorator to Call without Instance
+    @classmethod
+    def from_json(cls, data):
+        # Extract Dimenions & Create Empty Grid
+        height = len(data)
+        width = len(data[0])
+        grid = Grid(height, width)
 
-                # Build Serialisable Cell
-                json_cell = {
-                    "row": y,
-                    "col": x,
-                    "visited": cell.get_visited(),
-                    "paths": {
-                        "north": 'N' in cell_paths,
-                        "south": 'S' in cell_paths,
-                        "east": 'E' in cell_paths,
-                        "west": 'W' in cell_paths
-                    }
-                }
+        # For Each Cell Json, Create Cell Object & Insert in Grid
+        for row in data:
+            for cell_json in row:
+                cell = Cell.from_json(cell_json)
+                cell_y, cell_x = cell.get_location()
+                grid.set_cell(cell_y, cell_x, cell)
 
-                # Add to Row
-                json_row.append(json_cell)
-            # Add to Grid
-            json_grid.append(json_row)
-
-        return json_grid
+        # Return Grid State
+        return grid
