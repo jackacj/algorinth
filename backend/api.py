@@ -6,8 +6,8 @@ import pandas as pd
 import json
 # Maze Generation Logic
 from .services.gen_service import generate_maze
-from .generators.registry import GENERATORS
-from .recorders.step_recorder import Step_Recorder
+# Database Logic
+from .services.db_service import save_maze
 # Models
 from .models.maze import Maze
 from .schemas.request import MazeGenerationRequest
@@ -32,6 +32,9 @@ async def generate_request(settings: MazeGenerationRequest):
     # Generate a Maze based on Request Settings -> Convert Request Body to Dictionary
     maze = generate_maze(settings)
 
+    # Save Generated Maze to Database
+    save_maze(maze)
+
     # Return a Maze Response
     return MazeResponse(
         maze_id = maze.id,
@@ -42,36 +45,3 @@ async def generate_request(settings: MazeGenerationRequest):
         ),
         final_maze = maze.final_maze.get_json()
     )
-
-# Debug: Request a Maze
-@app.post("/generate_debug")
-async def generate_debug_request(
-    algorithm: str, 
-    height: int, 
-    width: int, 
-    seed: str | None = None
-):
-
-    response = { "Algorithm": algorithm }
-    if seed:
-        response.update({ "Seed": seed })
-
-    # Some Debug Logic
-    try:
-        generator_cls = GENERATORS[algorithm]
-    except:
-        return { "Error": "Unknown Algorithm" }
-    
-    recorder = Step_Recorder()
-    generator = generator_cls(seed, recorder)
-    grid = generator.generate(height, width)
-    steps = recorder.get_steps()
-    steps_output = { 
-        "Count": len(steps),
-        "List": steps 
-        }
-
-    response.update({ "Output ASCII": grid.create_grid_ascii() })
-    response.update({ "Output Steps": steps_output })
-
-    return response
