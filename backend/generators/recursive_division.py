@@ -8,6 +8,15 @@ May be worth coming back and creating a "super_recursive_divide" function.
 
 class Recursive_Division_Generator(Generator):
 
+    # Region Visiting Function -> Purely Visual
+    def visit_region(self, height: int, width: int, top: int, left: int, grid: Grid):
+        for y in range(height):
+            for x in range(width):
+                cell = grid.get_cell(top + y, left + x)
+
+                if not cell.get_visited():
+                    self.super_set_visited(cell) ###########################################################################################
+    
     # Recursive Division Function
     def recursive_divide(self, height: int, width: int, top: int, left: int, grid: Grid) -> Grid:
         # Minimum Size to Divide -> Exit Recursion
@@ -48,6 +57,9 @@ class Recursive_Division_Generator(Generator):
             grid = self.recursive_divide(vert_wall, width, top, left, grid)
             grid = self.recursive_divide(height - vert_wall, width, top + vert_wall, left, grid)
 
+
+        # Visit All Cells within Region -> Purely Visual
+        self.visit_region(height, width, top, left, grid)
         return grid    
 
     # Generate an Aldous-Broder Maze
