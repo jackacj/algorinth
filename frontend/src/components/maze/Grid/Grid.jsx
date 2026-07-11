@@ -1,5 +1,5 @@
-import '../../styles/Grid.css'
-import Cell from './Cell';
+import './Grid.css'
+import Cell from '../Cell/Cell';
 
 export default function Grid({ grid }) {
     // Guard Against No Grid State

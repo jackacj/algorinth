@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import ContentPanel from './ContentPanel';
-import TitlePanel from './TitlePanel';
-import '../../styles/App.css'
+import ContentPanel from '../ContentPanel/ContentPanel';
+import TitlePanel from '../TitlePanel/TitlePanel';
+import './App.css'
 
 export default function App() {
   return (

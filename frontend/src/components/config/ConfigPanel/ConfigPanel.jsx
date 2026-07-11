@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import '../../styles/ConfigPanel.css'
+import './ConfigPanel.css'
 
 export default function ConfigPanel({ settings, onSettingsChange }) {
     // Maintain Local Settings & Error State

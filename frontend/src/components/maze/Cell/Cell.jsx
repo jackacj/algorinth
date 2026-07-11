@@ -1,4 +1,4 @@
-import '../../styles/Cell.css'
+import './Cell.css'
 
 export default function Cell({ cell }) {
     // Unpack Cell Data

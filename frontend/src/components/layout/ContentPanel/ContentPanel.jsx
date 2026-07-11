@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import { generateMaze, requestMazeById } from '../../services/mazeApi'
-import '../../styles/ContentPanel.css'
+import { generateMaze, requestMazeById } from '../../../services/mazeApi'
+import './ContentPanel.css'
 
-import Grid from '../maze/Grid'
-import ConfigPanel from '../config/ConfigPanel'
-import PlaybackPanel from '../config/PlaybackPanel'
-import RequestPanel from '../config/RequestPanel'
+import Grid from '../../maze/Grid/Grid'
+import ConfigPanel from '../../config/ConfigPanel/ConfigPanel'
+import PlaybackPanel from '../../config/PlaybackPanel/PlaybackPanel'
+import RequestPanel from '../../config/RequestPanel/RequestPanel'
 
 export default function GridCanvas(){
     // // Grid Canvas State
@@ -416,7 +416,7 @@ export default function GridCanvas(){
         <div id="gridCanvas" className="container">
 
             <p className="debugMarker">
-                Grid Canvas - {settings.rows} x {settings.cols}
+                ContentPanel - {settings.rows} x {settings.cols}
                 {" "}| {gridId}
                 {" "}| {settings.algorithm}
                 {" "}| {settings.seed}

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import '../../styles/RequestPanel.css'
+import './RequestPanel.css'
 
 export default function RequestPanel({ gridId, onRequest }) {
     // Maintain Local Uuid Request State & Error State

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import '../../styles/PlaybackPanel.css'
+import './PlaybackPanel.css'
 
 export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange }) {
     // Handle Local Speed Change
