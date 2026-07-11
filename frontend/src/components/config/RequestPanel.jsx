@@ -44,7 +44,7 @@ export default function RequestPanel({ gridId, onRequest }) {
                 <div className="container submitRow">
                     {/* Submit Button */}
                     <button type="submit">
-                        Apply Settings
+                        Load Maze
                     </button>
                 </div>
             </form>

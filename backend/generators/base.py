@@ -35,7 +35,7 @@ class Generator(ABC):
     # Combine Two Sets via Cells & Record Event
     def super_union(self, cell_1: Cell, cell_2: Cell, parent_map: dict[tuple[int], tuple[int]], grid: Grid):
         grid.union(cell_1, cell_2, parent_map)
-        self.recorder.record("Union", set_a = cell_1.get_location, set_b = cell_2.get_location())
+        self.recorder.record("Union", set_a = cell_1.get_location(), set_b = cell_2.get_location())
     
     # Pick a Random Cell within a Grid, All or Just Unvisited
     def pick_random_cell(self, grid: Grid, just_unvisited: bool = False) -> Cell:
