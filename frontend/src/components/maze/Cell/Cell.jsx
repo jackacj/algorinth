@@ -9,10 +9,10 @@ export default function Cell({ cell }) {
             className="cell"
             style={{
                 // Render Border when No Path Exists
-                "borderTop": paths.north ? "none" : "2px solid",
-                "borderBottom": paths.south ? "none" : "2px solid",
-                "borderRight": paths.east ? "none" : "2px solid",
-                "borderLeft": paths.west ? "none" : "2px solid",
+                "borderTop": paths.north ? "none" : "2px solid black",
+                "borderBottom": paths.south ? "none" : "2px solid black",
+                "borderRight": paths.east ? "none" : "2px solid black",
+                "borderLeft": paths.west ? "none" : "2px solid black",
                 // Highlight Cell when Visited
                 "backgroundColor": visited ? "lightskyblue" : "white"
             }} 

@@ -1,0 +1,18 @@
+:root {
+    /* Colours */
+    --colour-background: #264653;
+    --colour-surface: #2a9d8f;
+    --colour-cta: #e9c46a;
+    --colour-error: #cc0000;
+
+    --colour-text-on-surface: #ffffff;
+    --colour-text-on-cta: #000000;
+    --colour-border: #195e56;
+
+    /* Typographu */
+    --font-primary: sans-serif;
+
+    /* Borders */
+    --border-radius: 6px;
+    --border-width: 1px;
+}

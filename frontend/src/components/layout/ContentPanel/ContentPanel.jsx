@@ -413,40 +413,42 @@ export default function GridCanvas(){
 
     // Rendering
     return (
-        <div id="gridCanvas" className="container">
-
-            <p className="debugMarker">
-                ContentPanel - {settings.rows} x {settings.cols}
-                {" "}| {gridId}
-                {" "}| {settings.algorithm}
-                {" "}| {settings.seed}
-                {" "}| {command}
-                {" "}| Run: {isRunActive ? "active" : "inactive"}
-            </p>
-
-            {/* Grid */}
-            <Grid grid={grid} />
-
-            {/* Playback Panel - Conditionally Rendered */}
-            {isRunActive && (
-                <PlaybackPanel
-                    playback={playback}
-                    onPressPlayback={handlePlayback}
-                    onSpeedChange={handleSpeedChange}
+        <div id="contentPanel">
+            {/* Maze Panel */}
+            <div id="mazePanel">
+                {/* Grid Panel */}
+                <div id="gridPanel">
+                    {/* UUID/Name */}
+                    <p id="gridName">{gridId}</p>
+                    {/* Grid */}
+                    <Grid grid={grid} />
+                </div>
+                {/* Playback Panel - Conditionally Rendered */}
+                {isRunActive && (
+                    <div>
+                        <p>{command}</p>
+                        <PlaybackPanel
+                            playback={playback}
+                            onPressPlayback={handlePlayback}
+                            onSpeedChange={handleSpeedChange}
+                        />
+                    </div>
+                )}
+            </div>
+            
+            {/* IO Panel */}
+            <div id="ioPanel">
+                {/* Config Panel */}
+                <ConfigPanel
+                    settings={settings}
+                    onSettingsChange={handleSettingsChange}
                 />
-            )}
-
-            {/* Config Panel */}
-            <ConfigPanel
-                settings={settings}
-                onSettingsChange={handleSettingsChange}
-            />
-
-            {/* Request Panel */}
-            <RequestPanel
-                gridId={gridId}
-                onRequest={handleMazeRequestById}
-            />
+                {/* Request Panel */}
+                <RequestPanel
+                    gridId={gridId}
+                    onRequest={handleMazeRequestById}
+                />
+            </div>
         </div>
     );
 }

@@ -1,0 +1,46 @@
+html,
+body,
+/* Root Styling */
+#root {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100vh;
+
+    background: var(--colour-background);
+}
+
+/* Overall Text Styling */
+body {
+    font-family: var(--font-primary);
+    color: var(--colour-text-on-surface);
+}
+
+/* Overall Button Styling */
+button {
+    font: inherit;
+
+    background: var(--colour-cta);
+    color: var(--colour-text-on-cta);
+
+    border: none;
+    border-radius: var(--border-radius);
+
+    cursor: pointer;
+
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    filter: brightness(110%);
+}
+
+/* Overall Panel Styling */
+.panel {
+    background: var(--colour-surface);
+    border: var(--border-width) solid var(--colour-border);
+    border-radius: var(--border-radius);
+    padding: 0.75rem;
+    margin: 2px;
+}

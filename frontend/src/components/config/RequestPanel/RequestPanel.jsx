@@ -40,30 +40,31 @@ export default function RequestPanel({ gridId, onRequest }) {
     }
 
     return (
-        <div id="requestPanel" className="container">
-            <p className="debugMarker"> Request Panel </p>
-            <form onSubmit={handleSubmit} className="container requestForm">
-                {/* Top Row - UUID Input */}
-                    <div className="container uuidRow">
-                        {/* Seed Input */}
-                        <input
-                            type="text"
-                            name="uuid"
-                            value={localRequestUuid}
-                            placeholder="Retrieve Maze via UUID"
-                            onChange={handleChange} 
-                        />
-                    </div>
-                {/* Bottom Row - Submit Button */}
-                <div className="container submitRow">
-                    {/* Submit Button */}
-                    <button type="submit">
-                        Load Maze
-                    </button>
+        <div id="requestPanel">
+            <form onSubmit={handleSubmit}>
+                {/* Top Row - Header */}
+                <div id="requestHeaderRow">
+                    <p> Load </p>
                     {/* Error Message - Conditionally Rendered*/}
                     {error && (
                         <span class="errorMessage">{error}</span>
                     )}
+                </div>
+                {/* Bottom Row - Input & Submit */}
+                <div id="requestInputRow">
+                    {/* UUID Input */}
+                    <input
+                        id="uuidInput"
+                        type="text"
+                        name="uuid"
+                        value={localRequestUuid}
+                        placeholder="Retrieve Maze via UUID"
+                        onChange={handleChange} 
+                    />
+                    {/* Submit Button */}
+                    <button type="submit">
+                        Load Maze
+                    </button>
                 </div>
             </form>
         </div>

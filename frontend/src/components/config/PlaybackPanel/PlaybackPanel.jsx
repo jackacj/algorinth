@@ -12,8 +12,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
     }
 
     return (
-        <div id="playbackPanel" className="container">
-            <p className="debugMarker"> Playback Pane </p>
+        <div id="playbackPanel" className="panel">
             {/* Playback Buttons */}
             {/* Step Forward & Backward Disabled when Autoplaying */}
             <button
