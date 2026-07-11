@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import GridCanvas from '../maze/GridCanvas';
-import TitlePane from './TitlePane';
+import TitlePanel from './TitlePanel';
 import '../../styles/App.css'
 
 export default function App() {
   return (
     <div>
-      <TitlePane />
+      <TitlePanel />
       <GridCanvas />
     </div>
   );
