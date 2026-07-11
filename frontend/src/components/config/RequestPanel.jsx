@@ -2,8 +2,12 @@ import { useState } from 'react'
 import '../../styles/RequestPanel.css'
 
 export default function RequestPanel({ gridId, onRequest }) {
-    // Maintain Local Uuid Request
+    // Maintain Local Uuid Request State & Error State
     const [localRequestUuid, setLocalRequestUuid] = useState(gridId);
+    const [error, setError] = useState("");
+
+    // Constants
+    const uuidRegexExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
 
     // Update Local Uuid Request based on Keystrokes
     function handleChange(event) {
@@ -19,10 +23,20 @@ export default function RequestPanel({ gridId, onRequest }) {
         // Prevent Form Submission, Unnecessary
         event.preventDefault()
 
-        // Communicate New Settings Change back to Grid Canvas
-        onRequest({
-            "uuid": localRequestUuid
-        });
+        // Error Handling - Valid UUID
+        if (uuidRegexExp.test(localRequestUuid)) {
+            // If Valid UUID...
+            // Communicate New Settings Change back to Grid Canvas
+            onRequest({
+                "uuid": localRequestUuid
+            });
+            // Clear Error State
+            setError("");
+        } else {
+            // If Invalid UUID...
+            // Update Error State
+            setError("Invalid UUID, Must be in form 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' using Hexidecimal Characters")
+        }
     }
 
     return (
@@ -46,6 +60,10 @@ export default function RequestPanel({ gridId, onRequest }) {
                     <button type="submit">
                         Load Maze
                     </button>
+                    {/* Error Message - Conditionally Rendered*/}
+                    {error && (
+                        <span class="errorMessage">{error}</span>
+                    )}
                 </div>
             </form>
         </div>

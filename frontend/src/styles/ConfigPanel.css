@@ -19,11 +19,10 @@ input[type='number'] {
     flex-direction: row;
 }
 
-/*
 .bottomArea {
-
+    display: flex;
+    flex-direction: row;
 }
-*/
 
 .settingsArea {
     display: flex;

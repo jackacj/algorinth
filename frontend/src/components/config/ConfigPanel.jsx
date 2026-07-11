@@ -2,8 +2,13 @@ import { useState } from 'react'
 import '../../styles/ConfigPanel.css'
 
 export default function ConfigPanel({ settings, onSettingsChange }) {
-    // Maintain Local Settings
+    // Maintain Local Settings & Error State
     const [localSettings, setLocalSettings] = useState(settings);
+    const [error, setError] = useState("");
+
+    // Constants - Input Validation/Settings
+    const maxSeedLength = 32;
+    const dimBounds = [2, 50]
 
     // Update Local Settings based on Keystrokes
     function handleChange(event) {
@@ -46,6 +51,8 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
                                 type="number"
                                 name="rows"
                                 value={localSettings.rows}
+                                min={dimBounds[0]}
+                                max={dimBounds[1]}
                                 onChange={handleChange} 
                             />
                             <p>x</p>
@@ -53,6 +60,8 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
                             <input
                                 type="number"
                                 name="cols"
+                                min={dimBounds[0]}
+                                max={dimBounds[1]}
                                 value={localSettings.cols}
                                 onChange={handleChange} 
                             />
@@ -81,6 +90,7 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
                                 type="text"
                                 name="seed"
                                 value={localSettings.seed}
+                                maxlength={maxSeedLength}
                                 placeholder="Leave Blank for None"
                                 onChange={handleChange} 
                             />
