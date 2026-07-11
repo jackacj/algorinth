@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { generateMaze, requestMazeById } from '../../services/mazeApi'
-import '../../styles/GridCanvas.css'
+import '../../styles/ContentPanel.css'
 
-import Grid from './Grid'
+import Grid from '../maze/Grid'
 import ConfigPanel from '../config/ConfigPanel'
 import PlaybackPanel from '../config/PlaybackPanel'
 import RequestPanel from '../config/RequestPanel'
