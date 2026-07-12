@@ -1,18 +1,23 @@
+@font-face {
+    font-family: space-grotesk;
+    src: url(space-grotesk-latin-wght-normal.woff2);
+}
+
 :root {
     /* Colours */
     --colour-background: #264653;
     --colour-surface: #2a9d8f;
     --colour-cta: #e9c46a;
-    --colour-error: #cc0000;
+    --colour-error: #ec0707;
 
     --colour-text-on-surface: #ffffff;
     --colour-text-on-cta: #000000;
     --colour-border: #195e56;
 
-    /* Typographu */
-    --font-primary: sans-serif;
+    /* Typography */
+    --font-primary: space-grotesk;
 
     /* Borders */
     --border-radius: 6px;
-    --border-width: 1px;
+    --border-width: 2px;
 }

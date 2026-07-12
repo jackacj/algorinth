@@ -1,4 +1,26 @@
 #playbackPanel {
     display: flex;
     flex-direction: row;
+    gap: 0.5rem;
+
+    justify-content: center;
+    align-items: center;
+}
+
+#stepCounter {
+    width: 120px;
+
+    text-align: center;
+
+    font-weight: bold;
+    font-size: large;
+    background-color: var(--colour-background);
+}
+
+.playbackButton {
+    height: 50px;
+    width: 50px;
+}
+.playbackButton:disabled {
+    background: var(--colour-background);
 }

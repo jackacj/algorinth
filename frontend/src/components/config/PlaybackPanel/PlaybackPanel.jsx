@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import './PlaybackPanel.css'
 
+// Icon Imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faForwardStep, faBackwardStep, faForwardFast, faBackwardFast, faPause } from '@fortawesome/free-solid-svg-icons'
+
 export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange }) {
     // Handle Local Speed Change
     function handleSpeedChange(event) {
@@ -15,35 +19,37 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
         <div id="playbackPanel" className="panel">
             {/* Playback Buttons */}
             {/* Step Forward & Backward Disabled when Autoplaying */}
-            <button
+            <button class="playbackButton"
                 onClick={() => onPressPlayback("STEP_FORWARD")}
                 disabled={playback.isAuto}
             >
-                Step Forward
+                <FontAwesomeIcon icon={faForwardStep} />
             </button>
-            <button
+            <button class="playbackButton"
                 onClick={() => onPressPlayback("STEP_BACKWARD")}
                 disabled={playback.isAuto}
             >
-                Step Backward
+                <FontAwesomeIcon icon={faBackwardStep} />
             </button>
-            <button
+            <button class="playbackButton"
                 onClick={() => onPressPlayback("AUTOSTEP_PLAY_FORWARD")}
             >
-                Autostep Play Forward
+                <FontAwesomeIcon icon={faForwardFast} />
             </button>
-            <button
+            <button class="playbackButton"
                 onClick={() => onPressPlayback("AUTOSTEP_PLAY_BACKWARD")}
             >
-                Autostep Play Backward
+                <FontAwesomeIcon icon={faBackwardFast} />
             </button>
-            <button
+            <button class="playbackButton"
                 onClick={() => onPressPlayback("AUTOSTEP_PAUSE")}
             >
-                Autostep Pause
+                <FontAwesomeIcon icon={faPause} />
             </button>
             {/* Step Counter - Very Rough */}
-            <p> {"Steps: " + playback.currentStep + " / " + (playback.steps.length - 1)} </p>
+            <div id="stepCounter" className="panel">
+                {playback.currentStep + " / " + (playback.steps.length - 1)}
+            </div>
             {/* Speed Controller - Rough & Conditionally Rendered */}
             {playback.isAuto && (
                 <div>

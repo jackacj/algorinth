@@ -40,16 +40,13 @@ export default function RequestPanel({ gridId, onRequest }) {
     }
 
     return (
-        <div id="requestPanel">
+        <div id="requestPanel" className="panel section">
             <form onSubmit={handleSubmit}>
                 {/* Top Row - Header */}
                 <div id="requestHeaderRow">
-                    <p> Load </p>
-                    {/* Error Message - Conditionally Rendered*/}
-                    {error && (
-                        <span class="errorMessage">{error}</span>
-                    )}
+                    <h3> Load </h3>
                 </div>
+                <hr/>
                 {/* Bottom Row - Input & Submit */}
                 <div id="requestInputRow">
                     {/* UUID Input */}
@@ -62,10 +59,14 @@ export default function RequestPanel({ gridId, onRequest }) {
                         onChange={handleChange} 
                     />
                     {/* Submit Button */}
-                    <button type="submit">
+                    <button id="submitButton" type="submit">
                         Load Maze
                     </button>
                 </div>
+                {/* Error Message - Conditionally Rendered*/}
+                {error && (
+                    <p class="errorMessage">{error}</p>
+                )}
             </form>
         </div>
     );

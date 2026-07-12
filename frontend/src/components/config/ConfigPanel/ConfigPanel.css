@@ -28,9 +28,15 @@
 /* Dynamic Content Row -> Expands w/ Flex Grow */
 #configContentRow {
     flex-grow: 1;
+    background-color: var(--colour-background);
 }
 
 /* Config Submit Button -> Entire Width of Config Submit Row */
 #configSubmit {
     width: 100%;
+}
+
+/* Margin Between Rows */
+#configHeaderRow, #configInputRow, #configContentRow {
+    margin-bottom: 0.5rem;
 }

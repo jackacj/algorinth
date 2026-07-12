@@ -20,6 +20,7 @@ body {
 /* Overall Button Styling */
 button {
     font: inherit;
+    font-weight: bold;
 
     background: var(--colour-cta);
     color: var(--colour-text-on-cta);
@@ -36,11 +37,54 @@ button:hover {
     filter: brightness(110%);
 }
 
+/* Overall Input Styling */
+input, select {
+    font: inherit;
+
+    color: var(--colour-text-on-cta);
+
+    border: none;
+    border-radius: var(--border-radius);
+
+    padding-left: 0.5rem; 
+}
+
+/* Overall Fieldset (Input Border) Styling */
+fieldset {
+    background-color: var(--colour-background);
+
+    border: none;
+    border-radius: var(--border-radius);
+}
+
+legend {
+    font-weight: bold;
+}
+
+/* Overall Line Break Styling */
+hr { 
+    width:100%; 
+    height:3px; 
+    background: var(--colour-background); 
+
+    border: none;
+    border-radius: var(--border-radius);
+}
+
 /* Overall Panel Styling */
 .panel {
     background: var(--colour-surface);
     border: var(--border-width) solid var(--colour-border);
     border-radius: var(--border-radius);
     padding: 0.75rem;
+}
+
+/* Overall Section Styling */
+.section {
     margin: 2px;
+}
+
+/* Overall Error Message Styling */
+.errorMessage {
+    color: var(--colour-error);
 }

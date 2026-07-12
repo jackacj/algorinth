@@ -37,18 +37,21 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
     }
 
     return (
-        <div id="configPanel" className="panel">
+        <div id="configPanel" className="panel section">
             <form onSubmit={handleSubmit}>
                 {/* Top Row - Header*/}
                 <div id="configHeaderRow">
-                    <p> Generate </p>
-                    <span class="errorMessage"> Placeholder Error </span>
+                    <h3> Generate </h3>
+                    <p class="errorMessage">{error}</p>
                 </div>
+                <hr/>
                 {/* 2nd Row - Settings Input */}
                 <div id="configInputRow">
                     {/* Height/Rows Input */}
                     <div id="configDimensions">
-                        <input
+                        <fieldset>
+                            <legend>Height</legend>
+                            <input
                             id="heightInput"
                             type="number"
                             name="rows"
@@ -56,10 +59,13 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
                             min={dimBounds[0]}
                             max={dimBounds[1]}
                             onChange={handleChange} 
-                        />
-                        <p>x</p>
+                            />
+                        </fieldset>
+                        <p>X</p>
                         {/* Width/Cols Input */}
-                        <input
+                        <fieldset>
+                            <legend>Width</legend>
+                            <input
                             id="widthInput"
                             type="number"
                             name="cols"
@@ -67,37 +73,45 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
                             max={dimBounds[1]}
                             value={localSettings.cols}
                             onChange={handleChange} 
-                        />
+                            />
+                        </fieldset>
                     </div>
                     {/* Algorithm Dropdown */}
-                    <select
-                        id="algorithmInput"
-                        name="algorithm"
-                        value={localSettings.algorithm}
-                        onChange={handleChange}
-                    >
-                        <option value="" disabled selected hidden>Choose an Algorithm...</option>
-                        <option value="iterative_dfs">Iterative DFS</option>
-                        <option value="kruskal">Kruskal's</option>
-                        <option value="prim_simple">Simplified Prim's</option>
-                        <option value="wilson">Wilson's</option>
-                        <option value="aldous_broder">Aldous-Broder</option>
-                        <option value="recursive_division">Recursive Division</option>
-                    </select>
+                    <fieldset>
+                        <legend>Algorithm</legend>
+                        <select
+                            id="algorithmInput"
+                            name="algorithm"
+                            value={localSettings.algorithm}
+                            onChange={handleChange}
+                        >
+                            <option value="" disabled selected hidden>Choose an Algorithm...</option>
+                            <option value="iterative_dfs">Iterative DFS</option>
+                            <option value="kruskal">Kruskal's</option>
+                            <option value="prim_simple">Simplified Prim's</option>
+                            <option value="wilson">Wilson's</option>
+                            <option value="aldous_broder">Aldous-Broder</option>
+                            <option value="recursive_division">Recursive Division</option>
+                        </select>
+                    </fieldset>
+                    
                     {/* Seed Input */}
-                    <input
-                        id="seedInput"
-                        type="text"
-                        name="seed"
-                        value={localSettings.seed}
-                        maxlength={maxSeedLength}
-                        placeholder="Leave Blank for None"
-                        onChange={handleChange} 
-                    />
+                    <fieldset>
+                        <legend>Seed</legend>
+                        <input
+                            id="seedInput"
+                            type="text"
+                            name="seed"
+                            value={localSettings.seed}
+                            maxlength={maxSeedLength}
+                            placeholder="Leave Blank for None"
+                            onChange={handleChange} 
+                        />
+                    </fieldset>
                 </div>
                 {/* 3rd Row - Dynamic Content */}
-                <div id="configContentRow">
-                    Dynamic Content Placeholder
+                <div id="configContentRow" className="panel">
+                    {localSettings.algorithm + " (Placeholder)"}
                 </div>
                 {/* Bottom Row - Submit Button */}
                 <div id="configButtonRow">

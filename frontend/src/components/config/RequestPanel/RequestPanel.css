@@ -1,3 +1,25 @@
 #requestPanel {
     flex-grow: 1;
 }
+
+/* Request Header Row -> Left to Right */
+#requestHeaderRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* Config Input Row -> Left to Right, Flex in Favour of Button */
+#requestInputRow {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+#uuidInput {
+    flex-grow: 2;
+}
+
+#submitButton {
+    flex-grow: 1;
+}

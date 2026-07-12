@@ -415,9 +415,9 @@ export default function GridCanvas(){
     return (
         <div id="contentPanel">
             {/* Maze Panel */}
-            <div id="mazePanel">
+            <div id="mazePanel" className="section">
                 {/* Grid Panel */}
-                <div id="gridPanel">
+                <div id="gridPanel" className="section">
                     {/* UUID/Name */}
                     <p id="gridName">{gridId}</p>
                     {/* Grid */}
@@ -426,7 +426,6 @@ export default function GridCanvas(){
                 {/* Playback Panel - Conditionally Rendered */}
                 {isRunActive && (
                     <div>
-                        <p>{command}</p>
                         <PlaybackPanel
                             playback={playback}
                             onPressPlayback={handlePlayback}

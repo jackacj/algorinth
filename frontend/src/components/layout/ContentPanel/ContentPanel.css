@@ -10,11 +10,12 @@
     flex-direction:column;
 }
 
-/* Grid Panel -> Favoured in Flex Size */
+/* Grid Panel -> Favoured in Flex Size, Centre Align Items */
 #gridPanel {
     flex-grow: 1;
     display:flex;
     flex-direction:column;
+    align-items: center;
 }
 
 /* IO Panel -> Top to Bottom w/ Focus on Upper Area */

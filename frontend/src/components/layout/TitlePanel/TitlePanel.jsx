@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import './TitlePanel.css'
+import logo from '../../../assets/noun-maze.svg'
 
 export default function TitlePane(){
     return (
         <div className="panel" id="titlePanel">
-            <h1> Algorinth </h1>
-            <h3> by Jack Hartley, 2026</h3>
+            <div id="titleText">
+                Algorinth.
+            </div>
         </div>
     );
 }

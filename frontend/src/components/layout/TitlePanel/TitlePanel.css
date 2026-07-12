@@ -1,0 +1,14 @@
+/* Title Panel */
+#titlePanel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Title Text */
+#titleText {
+  font-size: xx-large;
+  font-weight: bold;
+}
