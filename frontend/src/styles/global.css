@@ -25,7 +25,7 @@ button {
     background: var(--colour-cta);
     color: var(--colour-text-on-cta);
 
-    border: none;
+    border: var(--border-width) solid var(--colour-border-on-cta);
     border-radius: var(--border-radius);
 
     cursor: pointer;
@@ -40,7 +40,7 @@ button {
     background: var(--colour-cta);
     color: var(--colour-text-on-cta);
 
-    border: none;
+    border: var(--border-width) solid var(--colour-border-on-cta);
     border-radius: var(--border-radius);
 }
 
@@ -64,7 +64,7 @@ input, select {
 fieldset {
     background-color: var(--colour-background);
 
-    border: none;
+border: var(--border-width) solid var(--colour-border-on-surface);
     border-radius: var(--border-radius);
 }
 
@@ -76,7 +76,7 @@ legend {
 hr { 
     width:100%; 
     height:3px; 
-    background: var(--colour-background); 
+    background: var(--colour-border-on-surface); 
 
     border: none;
     border-radius: var(--border-radius);
@@ -85,7 +85,7 @@ hr {
 /* Overall Panel Styling */
 .panel {
     background: var(--colour-surface);
-    border: var(--border-width) solid var(--colour-border);
+    border: var(--border-width) solid var(--colour-border-on-surface);
     border-radius: var(--border-radius);
     padding: 0.75rem;
 }

@@ -12,7 +12,9 @@
 
     --colour-text-on-surface: #ffffff;
     --colour-text-on-cta: #000000;
-    --colour-border: #195e56;
+
+    --colour-border-on-surface: #195e56;
+    --colour-border-on-cta: #b89a51;
 
     /* Typography */
     --font-primary: space-grotesk;

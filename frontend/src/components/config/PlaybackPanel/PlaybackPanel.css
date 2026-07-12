@@ -29,7 +29,7 @@
 #speedControllerCounter {
     font-weight: bold;
     font-size: large;
-    
+
     margin-bottom: 0px;
 }
 
@@ -45,4 +45,5 @@
 
 .playbackButton:disabled {
     background: var(--colour-background);
+    border: var(--border-width) solid var(--colour-border-on-surface);
 }

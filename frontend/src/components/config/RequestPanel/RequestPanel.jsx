@@ -50,14 +50,17 @@ export default function RequestPanel({ gridId, onRequest }) {
                 {/* Bottom Row - Input & Submit */}
                 <div id="requestInputRow">
                     {/* UUID Input */}
-                    <input
-                        id="uuidInput"
-                        type="text"
-                        name="uuid"
-                        value={localRequestUuid}
-                        placeholder="Retrieve Maze via UUID"
-                        onChange={handleChange} 
-                    />
+                    <fieldset id="uuidInput">
+                        <legend>UUID</legend>
+                        <input
+                            id="uuidInputField"
+                            type="text"
+                            name="uuid"
+                            value={localRequestUuid}
+                            placeholder="Retrieve Maze via UUID"
+                            onChange={handleChange} 
+                        />
+                    </fieldset>
                     {/* Submit Button */}
                     <button id="submitButton" type="submit">
                         Load Maze
