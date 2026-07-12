@@ -17,10 +17,32 @@
     background-color: var(--colour-background);
 }
 
+#speedController {
+    height: 50px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#speedControllerCounter {
+    font-weight: bold;
+    font-size: large;
+    
+    margin-bottom: 0px;
+}
+
+#speedControllerRange {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
 .playbackButton {
     height: 50px;
     width: 50px;
 }
+
 .playbackButton:disabled {
     background: var(--colour-background);
 }

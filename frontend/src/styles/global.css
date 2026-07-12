@@ -33,6 +33,17 @@ button {
     transition: background-color 0.2s;
 }
 
+.buttonStyle {
+    font: inherit;
+    font-weight: bold;
+
+    background: var(--colour-cta);
+    color: var(--colour-text-on-cta);
+
+    border: none;
+    border-radius: var(--border-radius);
+}
+
 button:hover {
     filter: brightness(110%);
 }
@@ -87,4 +98,35 @@ hr {
 /* Overall Error Message Styling */
 .errorMessage {
     color: var(--colour-error);
+    font-weight: bold;
+}
+
+/* Overall Range Styling (Mess for Multiple Browsers) */
+
+input[type=range] {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  height: 10px; /* Specified height */
+  background: var(--colour-background);
+  outline: none; /* Remove outline */
+  border-radius: var(--border-radius);
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 15px; /* Set a specific slider handle width */
+  height: 15px; /* Slider handle height */
+  background: var(--colour-surface); /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 50%;
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 15px; /* Set a specific slider handle width */
+  height: 15px; /* Slider handle height */
+  background: var(--colour-surface); /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 50%;
 }

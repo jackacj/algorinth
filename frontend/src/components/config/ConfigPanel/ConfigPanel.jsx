@@ -42,7 +42,6 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
                 {/* Top Row - Header*/}
                 <div id="configHeaderRow">
                     <h3> Generate </h3>
-                    <p class="errorMessage">{error}</p>
                 </div>
                 <hr/>
                 {/* 2nd Row - Settings Input */}
@@ -120,6 +119,10 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
                         Apply Settings
                     </button>
                 </div>
+                {/* Error Message - Conditionally Rendered*/}
+                {error && (
+                    <p class="errorMessage">{error}</p>
+                )}
             </form>
         </div>
     );
