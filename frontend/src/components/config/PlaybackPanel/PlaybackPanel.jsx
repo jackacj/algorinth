@@ -3,7 +3,7 @@ import './PlaybackPanel.css'
 
 // Icon Imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faForwardStep, faBackwardStep, faForwardFast, faBackwardFast, faPause } from '@fortawesome/free-solid-svg-icons'
+import { faForwardStep, faBackwardStep, faForwardFast, faBackwardFast, faPause, faHourglassStart, faHourglassEnd } from '@fortawesome/free-solid-svg-icons'
 
 export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange }) {
     // Speed Controller HTML
@@ -74,12 +74,31 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
                    </span>
                 </button>
             )}
+            {/* Autostep Pause -> Disabled when Not Autoplaying */}
             <button class="playbackButton pushableButton"
                 disabled={!playback.isAuto}
                 onClick={() => onPressPlayback("AUTOSTEP_PAUSE")}
             >
                 <span className="playbackButtonFront pushableButtonFront">
                     <FontAwesomeIcon icon={faPause} />
+                </span>
+            </button>
+            {/* Jump to Start */}
+            <button class="playbackButton pushableButton"
+                disabled={playback.isAuto}
+                onClick={() => onPressPlayback("JUMP_START")}
+            >
+                <span className="playbackButtonFront pushableButtonFront">
+                    <FontAwesomeIcon icon={faHourglassStart} />
+                </span>
+            </button>
+            {/* Jump to End */}
+            <button class="playbackButton pushableButton"
+                disabled={playback.isAuto}
+                onClick={() => onPressPlayback("JUMP_END")}
+            >
+                <span className="playbackButtonFront pushableButtonFront">
+                    <FontAwesomeIcon icon={faHourglassEnd} />
                 </span>
             </button>
             {/* Step Counter */}

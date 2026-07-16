@@ -22,6 +22,7 @@ export default function GridCanvas(){
     // Grid State & "Run" State
     // Initialise w/ Empty Grid & No "Run"
     const[grid, setGrid] = useState([]);
+    const[finalGrid, setFinalGrid] = useState([]);
     const[gridId, setGridId] = useState("");
     const [isRunActive, setIsRunActive] = useState(false);
 
@@ -245,9 +246,10 @@ export default function GridCanvas(){
                 firstStep?.data?.is_open 
                     ? createOpenGrid(newSettings.rows, newSettings.cols)
                     : createClosedGrid(newSettings.rows, newSettings.cols);
+            const localFinalGrid = mazeRun.final_maze;
             
             // Update All Appropriate States
-            // Grid, Playback, Run & Command
+            // Grids, Playback, Run & Command
             setGrid(initialGrid);
             setPlayback(prev => ({
                 ...prev,
@@ -259,6 +261,7 @@ export default function GridCanvas(){
             setIsRunActive(true);
             setCommand("");
             setGridId(mazeId);
+            setFinalGrid(localFinalGrid);
 
         } catch (error) {
             // If Error... Report & Update Run State
@@ -306,6 +309,45 @@ export default function GridCanvas(){
         return [localPlayback, localGrid];
     }
 
+    // Jumping to Initial Step in Generation
+    function jumpToStart(localPlayback, localGrid) {
+        // Check Bounds -> Redundant Action
+        if (localPlayback.currentStep == 0) {
+            // Return Existing
+            return [localPlayback, localGrid]
+        }
+
+        // Instantiate Grid Again at First Step
+        localGrid = 
+            localPlayback.steps[0].data.is_open 
+                ? createOpenGrid(settings.rows, settings.cols) 
+                : createClosedGrid(settings.rows, settings.cols);
+
+        // Set Step to Initial Step
+        localPlayback.currentStep = 0;
+
+        // Return Modified localPlayback & localGrid
+        return [localPlayback, localGrid];
+    }
+
+    // Jumping to Final Step in Generation
+    function jumpToEnd(localPlayback, localGrid) {
+        // Check Bounds -> Redundant Action
+        if (localPlayback.currentStep == (localPlayback.steps.length - 1)) {
+            // Return Existing
+            return [localPlayback, localGrid]
+        }
+
+        // Set Local Grid to the Final Grid State
+        localGrid = finalGrid;
+
+        // Set Step to Final Step
+        localPlayback.currentStep = localPlayback.steps.length - 1;
+
+        // Return Modified localPlayback & localGrid
+        return [localPlayback, localGrid];
+    }
+
     // Playback Controls
     function handlePlayback(cmd) {
         console.log("handlePlayback:", cmd, performance.now());
@@ -336,6 +378,7 @@ export default function GridCanvas(){
                 // Set Autostep Speed to Stock Speed = Temporary
                 localPlayback.stepsPerSecond = stockStepsPerSecond;
                 break;
+
             case "AUTOSTEP_PLAY_BACKWARD":
                 // Enable Autostep
                 localPlayback.isAuto = true;
@@ -344,9 +387,20 @@ export default function GridCanvas(){
                 // Set Autostep Speed to Stock Speed = Temporary
                 localPlayback.stepsPerSecond = stockStepsPerSecond;
                 break;
+
             case "AUTOSTEP_PAUSE":
                 // Disable Autostep
                 localPlayback.isAuto = false;
+                break;
+
+            case "JUMP_START":
+                // Jump to First Position
+                [localPlayback, localGrid] = jumpToStart(localPlayback, localGrid);
+                break;
+
+            case "JUMP_END":
+                // Jump to End Position
+                [localPlayback, localGrid] = jumpToEnd(localPlayback, localGrid);
                 break;
         }
 
