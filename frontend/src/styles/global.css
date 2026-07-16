@@ -33,6 +33,29 @@ button {
     transition: background-color 0.2s;
 }
 
+/* Styling for "Pushable" Buttons */
+.pushableButton {
+    padding: 0;
+
+    background: var(--colour-border-on-cta);
+}
+
+.pushableButtonFront {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: var(--colour-cta);
+
+    transform: translateY(-6px); /* Size of "Edge" */
+    
+    border-radius: var(--border-radius);
+}
+
+.pushableButton:active .pushableButtonFront {
+    transform: translateY(-2px); /* On Press -> Move Down */
+}
+
 .buttonStyle {
     font: inherit;
     font-weight: bold;
@@ -64,7 +87,7 @@ input, select {
 fieldset {
     background-color: var(--colour-background);
 
-border: var(--border-width) solid var(--colour-border-on-surface);
+    border: var(--border-width) solid var(--colour-border-on-surface);
     border-radius: var(--border-radius);
 }
 
@@ -88,6 +111,7 @@ hr {
     border: var(--border-width) solid var(--colour-border-on-surface);
     border-radius: var(--border-radius);
     padding: 0.75rem;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 /* Overall Section Styling */
@@ -110,6 +134,7 @@ input[type=range] {
   background: var(--colour-background);
   outline: none; /* Remove outline */
   border-radius: var(--border-radius);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.2);
 }
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */

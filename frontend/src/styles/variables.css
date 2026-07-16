@@ -16,6 +16,10 @@
     --colour-border-on-surface: #195e56;
     --colour-border-on-cta: #b89a51;
 
+    --colour-cell-unvisited: #ffffff;
+    --colour-cell-visited: #eedaa9;
+    --colour-cell-border: #000000;
+
     /* Typography */
     --font-primary: space-grotesk;
 

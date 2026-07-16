@@ -5,8 +5,6 @@
     box-sizing: border-box;
 }
 
-/* Debug Position Text */
-.cellPosition {
-    font-size: 9px;
-    text-align: center;
+.cell:hover {
+    filter: brightness(110%);
 }

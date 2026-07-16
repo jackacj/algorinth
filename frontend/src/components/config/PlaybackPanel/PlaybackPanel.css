@@ -34,16 +34,26 @@
 }
 
 #speedControllerRange {
-    margin-top: 0px;
     margin-bottom: 10px;
 }
 
+#speedControllerCounter, #speedControllerRange {
+    margin-top: 5px;
+}
+
 .playbackButton {
-    height: 50px;
     width: 50px;
+}
+
+.playbackButtonFront {
+    height: 45px;
 }
 
 .playbackButton:disabled {
     background: var(--colour-background);
     border: var(--border-width) solid var(--colour-border-on-surface);
+}
+
+.playbackButton:disabled .pushableButtonFront {
+    background: var(--colour-border-on-surface);
 }
