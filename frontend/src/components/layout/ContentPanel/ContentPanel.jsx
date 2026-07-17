@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { generateMaze, requestMazeById } from '../../../services/mazeApi'
 import './ContentPanel.css'
 
@@ -7,7 +7,12 @@ import ConfigPanel from '../../config/ConfigPanel/ConfigPanel'
 import PlaybackPanel from '../../config/PlaybackPanel/PlaybackPanel'
 import RequestPanel from '../../config/RequestPanel/RequestPanel'
 
+import html2canvas from 'html2canvas';
+
 export default function GridCanvas(){
+    // Reference for Export
+    const exportRef = useRef();
+
     // // Grid Canvas State
 
     // Settings State
@@ -465,20 +470,55 @@ export default function GridCanvas(){
         }
     }
 
+    // Download Maze via 'html-2-canvas' -> Not Service Due to Reference Hook
+    async function handleDownload() {
+        // Abandon Command if No Active Run
+        if (!isRunActive) {
+            return;
+        }
+
+        // Grab Grid by Reference & Create Canvas from JSX
+        const element = exportRef.current;
+        const canvas = await html2canvas(element);
+
+        // Create a DataURL using Canvas & Download
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = `maze_${gridId}.png`;
+        link.click();
+    }
+
     // Rendering
     return (
         <div id="contentPanel">
-            {/* Maze Panel */}
-            <div id="mazePanel" className="section">
-                {/* Grid Panel */}
-                <div id="gridPanel" className="section">
-                    {/* UUID/Name */}
-                    <p id="gridName">{gridId}</p>
-                    {/* Grid */}
-                    <Grid grid={grid} />
-                </div>
-                {/* Playback Panel - Conditionally Rendered */}
-                {isRunActive && (
+            {/* Maze Panel -> Conditionally Rendered */}
+            {isRunActive && (
+                <div id="mazePanel" className="section">
+                    {/* Grid Panel */}
+                    <div id="gridPanel" className="section">
+                        {/* UUID/Name & Export Button */}
+                        <div id="gridLabel">
+                            <p>{gridId}</p>
+                            <button 
+                                id="exportButton"
+                                onClick={() => handleDownload()}
+                            >
+                                Export Maze 
+                            </button>
+                        </div>
+                        {/* Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
+                        <Grid grid={grid} />
+                        <div id="hiddenFinalGrid">
+                            <div ref={exportRef}>
+                                <Grid grid={finalGrid} />
+                            </div>
+                        </div>
+                        <div ref={exportRef}>
+                            <Grid grid={finalGrid} />
+                        </div>
+                    </div>
+                    {/* Playback Panel - Conditionally Rendered */}
                     <div>
                         <PlaybackPanel
                             playback={playback}
@@ -486,8 +526,8 @@ export default function GridCanvas(){
                             onSpeedChange={handleSpeedChange}
                         />
                     </div>
-                )}
-            </div>
+                </div>
+            )}
             
             {/* IO Panel */}
             <div id="ioPanel">

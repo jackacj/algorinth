@@ -1,7 +1,8 @@
 import './Grid.css'
 import Cell from '../Cell/Cell';
+import { forwardRef } from 'react';
 
-export default function Grid({ grid }) {
+const Grid = forwardRef(function Grid({ grid }, ref) {
     // Guard Against No Grid State
     if (!grid || grid.length === 0) {
         // Return Null or Loading Placeholder
@@ -25,4 +26,6 @@ export default function Grid({ grid }) {
             )}
         </div>
     );
-}
+});
+
+export default Grid;
