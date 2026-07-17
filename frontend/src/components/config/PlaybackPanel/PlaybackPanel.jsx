@@ -1,11 +1,18 @@
 import { useState } from 'react'
 import './PlaybackPanel.css'
 
-// Icon Imports
+// Import Custom Audio Hook
+import { useWithSound } from '../../../hooks/useWithSound'
+
+// Icon & Audio Imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faForwardStep, faBackwardStep, faForwardFast, faBackwardFast, faPause, faHourglassStart, faHourglassEnd } from '@fortawesome/free-solid-svg-icons'
+import click from '../../../assets/click.wav'
 
 export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange }) {
+    // 'Click' Audio Hook
+    const { playSound } = useWithSound(click);
+    
     // Speed Controller HTML
     const speedController = (
         <div id="speedController" className="buttonStyle">
@@ -31,12 +38,21 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
         onSpeedChange(value);
     }
 
+    // Handle Button Press
+    function handleButtonPress(localCmd) {
+        // Play 'Click' Audio
+        playSound();
+
+        // Inverse Data Flow
+        onPressPlayback(localCmd);
+    }
+
     return (
         <div id="playbackPanel" className="panel">
             {/* Playback Buttons */}
             {/* Step Forward Button -> Disabled when Autoplaying */}
             <button className="playbackButton pushableButton"
-                onClick={() => onPressPlayback("STEP_FORWARD")}
+                onClick={() => handleButtonPress("STEP_FORWARD")}
                 disabled={playback.isAuto}
             >
                 <span className="playbackButtonFront pushableButtonFront">
@@ -45,7 +61,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
             </button>
             {/* Step Backward Button -> Disabled when Autoplaying */}
             <button className="playbackButton pushableButton"
-                onClick={() => onPressPlayback("STEP_BACKWARD")}
+                onClick={() => handleButtonPress("STEP_BACKWARD")}
                 disabled={playback.isAuto}
             >
                 <span className="playbackButtonFront pushableButtonFront">
@@ -56,7 +72,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
             {playback.isAuto && playback.isAutoForward && (speedController)}
             {(!playback.isAuto || !playback.isAutoForward) && (
                 <button class="playbackButton pushableButton"
-                    onClick={() => onPressPlayback("AUTOSTEP_PLAY_FORWARD")}
+                    onClick={() => handleButtonPress("AUTOSTEP_PLAY_FORWARD")}
                 >
                     <span className="playbackButtonFront pushableButtonFront">
                         <FontAwesomeIcon icon={faForwardFast} />
@@ -67,7 +83,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
             {playback.isAuto && !playback.isAutoForward && (speedController)}
             {(!playback.isAuto || playback.isAutoForward) && (
                 <button class="playbackButton pushableButton"
-                    onClick={() => onPressPlayback("AUTOSTEP_PLAY_BACKWARD")}
+                    onClick={() => handleButtonPress("AUTOSTEP_PLAY_BACKWARD")}
                 >
                     <span className="playbackButtonFront pushableButtonFront">
                         <FontAwesomeIcon icon={faBackwardFast} />
@@ -77,7 +93,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
             {/* Autostep Pause -> Disabled when Not Autoplaying */}
             <button class="playbackButton pushableButton"
                 disabled={!playback.isAuto}
-                onClick={() => onPressPlayback("AUTOSTEP_PAUSE")}
+                onClick={() => handleButtonPress("AUTOSTEP_PAUSE")}
             >
                 <span className="playbackButtonFront pushableButtonFront">
                     <FontAwesomeIcon icon={faPause} />
@@ -86,7 +102,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
             {/* Jump to Start */}
             <button class="playbackButton pushableButton"
                 disabled={playback.isAuto}
-                onClick={() => onPressPlayback("JUMP_START")}
+                onClick={() => handleButtonPress("JUMP_START")}
             >
                 <span className="playbackButtonFront pushableButtonFront">
                     <FontAwesomeIcon icon={faHourglassStart} />
@@ -95,7 +111,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
             {/* Jump to End */}
             <button class="playbackButton pushableButton"
                 disabled={playback.isAuto}
-                onClick={() => onPressPlayback("JUMP_END")}
+                onClick={() => handleButtonPress("JUMP_END")}
             >
                 <span className="playbackButtonFront pushableButtonFront">
                     <FontAwesomeIcon icon={faHourglassEnd} />
