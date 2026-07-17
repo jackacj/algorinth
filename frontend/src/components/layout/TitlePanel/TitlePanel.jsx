@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import './TitlePanel.css'
-import logo from '../../../assets/noun-maze.svg'
 
 export default function TitlePane(){
     return (

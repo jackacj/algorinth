@@ -17,6 +17,18 @@ body {
     color: var(--colour-text-on-surface);
 }
 
+/* Overall Input Styling */
+input, select {
+    font: inherit;
+
+    color: var(--colour-text-on-field);
+
+    border: none;
+    border-radius: var(--border-radius);
+
+    padding-left: 0.5rem; 
+}
+
 /* Overall Button Styling */
 button {
     font: inherit;
@@ -69,18 +81,6 @@ button {
 
 button:hover {
     filter: brightness(110%);
-}
-
-/* Overall Input Styling */
-input, select {
-    font: inherit;
-
-    color: var(--colour-text-on-cta);
-
-    border: none;
-    border-radius: var(--border-radius);
-
-    padding-left: 0.5rem; 
 }
 
 /* Overall Fieldset (Input Border) Styling */
