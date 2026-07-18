@@ -10,21 +10,25 @@
 }
 
 /* Config Input Row -> Left to Right, Flex in Favour of Button */
-#requestInputRow {
+.requestInputRow {
     display: flex;
     flex-direction: row;
     gap: 1rem;
 }
 
-#uuidInput {
-    flex-grow: 2;
+.requestInput {
+    flex-grow: 3;
 }
 
 #uuidInputField {
-    width: 97.825%
+    width: 98.75%;
 }
 
-#submitButton {
+#exportTypeSelect {
+    width: 100%;
+}
+
+.submitButton {
     flex-grow: 1;
 
     height: 50px;

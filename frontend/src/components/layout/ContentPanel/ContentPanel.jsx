@@ -447,6 +447,7 @@ export default function GridCanvas(){
                 firstStep?.data?.is_open 
                     ? createOpenGrid(newSettings.rows, newSettings.cols)
                     : createClosedGrid(newSettings.rows, newSettings.cols);
+            const localFinalGrid = mazeRun.final_maze;
             
             // Update All Appropriate States
             // Grid, Playback, Run & Command
@@ -462,6 +463,7 @@ export default function GridCanvas(){
             setIsRunActive(true);
             setCommand("");
             setGridId(mazeId);
+            setFinalGrid(localFinalGrid);
 
         } catch (error) {
             // If Error... Report & Update Run State
@@ -471,7 +473,7 @@ export default function GridCanvas(){
     }
 
     // Download Maze via 'html-2-canvas' -> Not Service Due to Reference Hook
-    async function handleDownload() {
+    async function handleDownload(request) {
         // Abandon Command if No Active Run
         if (!isRunActive) {
             return;
@@ -482,10 +484,10 @@ export default function GridCanvas(){
         const canvas = await html2canvas(element);
 
         // Create a DataURL using Canvas & Download
-        const dataUrl = canvas.toDataURL('image/png');
+        const dataUrl = canvas.toDataURL(`image/${request.type}`);
         const link = document.createElement("a");
         link.href = dataUrl;
-        link.download = `maze_${gridId}.png`;
+        link.download = `maze_${gridId}.${request.type}`;
         link.click();
     }
 
@@ -500,12 +502,6 @@ export default function GridCanvas(){
                         {/* UUID/Name & Export Button */}
                         <div id="gridLabel">
                             <p>{gridId}</p>
-                            <button 
-                                id="exportButton"
-                                onClick={() => handleDownload()}
-                            >
-                                Export Maze 
-                            </button>
                         </div>
                         {/* Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
                         <Grid grid={grid} />
@@ -537,7 +533,8 @@ export default function GridCanvas(){
                 {/* Request Panel */}
                 <RequestPanel
                     gridId={gridId}
-                    onRequest={handleMazeRequestById}
+                    onUUIDRequest={handleMazeRequestById}
+                    onExportRequest={handleDownload}
                 />
             </div>
         </div>
