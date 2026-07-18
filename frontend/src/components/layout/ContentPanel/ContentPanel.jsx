@@ -509,13 +509,11 @@ export default function GridCanvas(){
                         </div>
                         {/* Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
                         <Grid grid={grid} />
-                        <div id="hiddenFinalGrid">
-                            <div ref={exportRef}>
-                                <Grid grid={finalGrid} />
-                            </div>
-                        </div>
-                        <div ref={exportRef}>
-                            <Grid grid={finalGrid} />
+                        <div 
+                            id="hiddenFinalGrid"
+                            ref={exportRef}    
+                        >
+                            <Grid grid={finalGrid}/>
                         </div>
                     </div>
                     {/* Playback Panel - Conditionally Rendered */}

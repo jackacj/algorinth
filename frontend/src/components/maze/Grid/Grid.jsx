@@ -2,7 +2,7 @@ import './Grid.css'
 import Cell from '../Cell/Cell';
 import { forwardRef } from 'react';
 
-const Grid = forwardRef(function Grid({ grid }, ref) {
+export default function Grid({ grid }) {
     // Guard Against No Grid State
     if (!grid || grid.length === 0) {
         // Return Null or Loading Placeholder
@@ -20,12 +20,11 @@ const Grid = forwardRef(function Grid({ grid }, ref) {
             grid.map((row, rowIdx) =>
                 row.map((cell, cellIdx) => (
                     <Cell
+                        key={`${cell.row},${cell.col}`}
                         cell={cell}
                     />
                 ))
             )}
         </div>
     );
-});
-
-export default Grid;
+};

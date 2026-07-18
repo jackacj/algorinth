@@ -102,7 +102,7 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
                             type="text"
                             name="seed"
                             value={localSettings.seed}
-                            maxlength={maxSeedLength}
+                            maxLength={maxSeedLength}
                             placeholder="Leave Blank for None"
                             onChange={handleChange} 
                         />

@@ -71,7 +71,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
             {/* Autostep Forward -> Replaced w/ Speed Controller when Autoplaying Forward */}
             {playback.isAuto && playback.isAutoForward && (speedController)}
             {(!playback.isAuto || !playback.isAutoForward) && (
-                <button class="playbackButton pushableButton"
+                <button className="playbackButton pushableButton"
                     onClick={() => handleButtonPress("AUTOSTEP_PLAY_FORWARD")}
                 >
                     <span className="playbackButtonFront pushableButtonFront">
@@ -82,7 +82,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
             {/* Autostep Backward -> Replaced w/ Speed Controller when Autoplaying Backward */}
             {playback.isAuto && !playback.isAutoForward && (speedController)}
             {(!playback.isAuto || playback.isAutoForward) && (
-                <button class="playbackButton pushableButton"
+                <button className="playbackButton pushableButton"
                     onClick={() => handleButtonPress("AUTOSTEP_PLAY_BACKWARD")}
                 >
                     <span className="playbackButtonFront pushableButtonFront">
@@ -91,7 +91,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
                 </button>
             )}
             {/* Autostep Pause -> Disabled when Not Autoplaying */}
-            <button class="playbackButton pushableButton"
+            <button className="playbackButton pushableButton"
                 disabled={!playback.isAuto}
                 onClick={() => handleButtonPress("AUTOSTEP_PAUSE")}
             >
@@ -100,7 +100,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
                 </span>
             </button>
             {/* Jump to Start */}
-            <button class="playbackButton pushableButton"
+            <button className="playbackButton pushableButton"
                 disabled={playback.isAuto}
                 onClick={() => handleButtonPress("JUMP_START")}
             >
@@ -109,7 +109,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
                 </span>
             </button>
             {/* Jump to End */}
-            <button class="playbackButton pushableButton"
+            <button className="playbackButton pushableButton"
                 disabled={playback.isAuto}
                 onClick={() => handleButtonPress("JUMP_END")}
             >
