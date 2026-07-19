@@ -363,6 +363,8 @@ export default function GridCanvas(){
         };
         let localGrid = structuredClone(grid);
 
+        console.log("handlePlayback:", "CURRENT STEP BEFORE:", localPlayback.currentStep)
+
         // Select Command -> Expand In Future
         switch(cmd) {
             case "STEP_FORWARD":
@@ -408,6 +410,8 @@ export default function GridCanvas(){
                 [localPlayback, localGrid] = jumpToEnd(localPlayback, localGrid);
                 break;
         }
+
+        console.log("handlePlayback:", "CURRENT STEP BEFORE:", localPlayback.currentStep)
 
         // Set Command ,Playback & Grid States
         setGrid(localGrid);
@@ -519,6 +523,13 @@ export default function GridCanvas(){
                             onPressPlayback={handlePlayback}
                             onSpeedChange={handleSpeedChange}
                         />
+                    </div>
+                </div>
+            )}
+            {!isRunActive && (
+                <div id="mazePlaceholder" className="section">
+                    <div className="bounceText">
+                        <span>No Maze Loaded</span>
                     </div>
                 </div>
             )}

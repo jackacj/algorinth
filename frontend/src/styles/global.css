@@ -8,7 +8,23 @@ body,
     width: 100%;
     min-height: 100vh;
 
-    background: var(--colour-background);
+    /* background: var(--colour-background); */
+
+    background-color: var(--colour-background);
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: scrollGrid 10s linear infinite;
+}
+
+@keyframes scrollGrid {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100px 100px;
+  }
 }
 
 /* Overall Text Styling */
@@ -154,4 +170,20 @@ input[type=range]::-moz-range-thumb {
   background: var(--colour-surface); /* Green background */
   cursor: pointer; /* Cursor on hover */
   border-radius: 50%;
+}
+
+/* Bouncing Text Effect */
+.bounceText span {
+    display: inline-block;
+    animation: bounce 2.0s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(+15px);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
 }

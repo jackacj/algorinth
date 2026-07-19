@@ -10,6 +10,16 @@
     flex-direction:column;
 }
 
+/* Maze Placeholder */
+#mazePlaceholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: large;
+    font-weight: bold;
+}
+
 /* Grid Panel -> Favoured in Flex Size, Centre Align Items */
 #gridPanel {
     flex-grow: 1;

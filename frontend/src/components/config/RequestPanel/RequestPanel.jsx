@@ -101,9 +101,9 @@ export default function RequestPanel({ gridId, onUUIDRequest, onExportRequest })
                         value={exportType}
                         onChange={handleExportTypeChange}
                     >
-                        <option value="png">png</option>
-                        <option value="jpeg">jpeg</option>
-                        <option value="webp">webp</option>
+                        <option value="png">Image - PNG</option>
+                        <option value="jpeg">Image - JPEG</option>
+                        <option value="webp">Image - WEBP</option>
                     </select>
                 </fieldset>
                 {/* Export Button */}

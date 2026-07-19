@@ -3,6 +3,7 @@
     height: 25px;
     width: 25px;
     box-sizing: border-box;
+    transition-duration: 0.2s;
 }
 
 .cell:hover {
