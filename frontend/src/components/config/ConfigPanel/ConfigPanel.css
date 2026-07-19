@@ -25,10 +25,38 @@
     gap: 1rem;
 }
 
+#configDimensionsDivider {
+    margin-top: 25px;
+}
+
 /* Dynamic Content Row -> Expands w/ Flex Grow */
 #configContentRow {
     flex-grow: 1;
     background-color: var(--colour-background);
+        
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.trait {
+    color: var(--colour-text-on-cta);
+    border-radius: var(--border-radius);
+    background: var(--colour-cta-light);
+    padding: 5px;
+}
+
+.trait:hover {
+    filter: brightness(110%);
+}
+
+#traitRow span + span {
+    margin-left: 15px;
+}
+
+#configContentTextUseCase {
+    font-weight: bold;
+    margin-right: 20px;
 }
 
 /* Config Submit Button -> Entire Width of Config Submit Row */
