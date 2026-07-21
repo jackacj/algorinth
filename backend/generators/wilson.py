@@ -54,7 +54,8 @@ class Wilson_Generator(Generator):
             # Add All Path Cells to Visited
             for cell in path:
                 # cell.set_visited() ##############################################################################################
-                self.super_set_visited(cell)
+                if (not cell.get_visited()):
+                    self.super_set_visited(cell)
 
             # Create Connections Between Path Cells
             for idx in range(len(path)-1):
