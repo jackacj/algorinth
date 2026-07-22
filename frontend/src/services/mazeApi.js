@@ -18,7 +18,7 @@ export async function generateMaze(settings) {
     );
 
     // Print Request Body
-    console.log(JSON.stringify(settings))
+    console.log("mazeApi:", "REQUEST BODY:", settings)
 
     // Throw Error if Request Fails
     if (!response.ok) {

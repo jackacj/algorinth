@@ -8,8 +8,8 @@ from ..recorders.step_recorder import Step_Recorder
 # Generator Object
 class Generator(ABC):
     def __init__(self, seed: str | None = None, recorder: Step_Recorder = None):
-        self.seed = seed
-        self.rng = random.Random(seed)
+        self.seed = seed if seed else None
+        self.rng = random.Random(self.seed)
         self.recorder = recorder or Step_Recorder(enabled = False)
 
     # Create a Grid & Record Event
