@@ -9,7 +9,7 @@ import RequestPanel from '../../config/RequestPanel/RequestPanel'
 
 import html2canvas from 'html2canvas';
 
-export default function GridCanvas(){
+export default function GridCanvas({ playClick }){
     // Reference for Export
     const exportRef = useRef();
 
@@ -522,6 +522,7 @@ export default function GridCanvas(){
                             playback={playback}
                             onPressPlayback={handlePlayback}
                             onSpeedChange={handleSpeedChange}
+                            playClick={playClick}
                         />
                     </div>
                 </div>

@@ -12,3 +12,15 @@
   font-size: xx-large;
   font-weight: bold;
 }
+
+/* Audio Button */
+.audioButton {
+    width: 45px;
+
+    position: absolute;
+    left: 1rem;
+}
+
+.audioButtonFront {
+    height: 40px;
+}

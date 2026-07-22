@@ -1,17 +1,11 @@
 import { useState } from 'react'
 import './PlaybackPanel.css'
 
-// Import Custom Audio Hook
-import { useWithSound } from '../../../hooks/useWithSound'
-
-// Icon & Audio Imports
+// Icon Imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faForwardStep, faBackwardStep, faForwardFast, faBackwardFast, faPause, faHourglassStart, faHourglassEnd } from '@fortawesome/free-solid-svg-icons'
-import click from '../../../assets/click.wav'
 
-export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange }) {
-    // 'Click' Audio Hook
-    const { playSound } = useWithSound(click);
+export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange, playClick }) {
     
     // Speed Controller HTML
     const speedController = (
@@ -41,7 +35,7 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
     // Handle Button Press
     function handleButtonPress(localCmd) {
         // Play 'Click' Audio
-        playSound();
+        playClick();
 
         // Inverse Data Flow
         onPressPlayback(localCmd);
