@@ -52,6 +52,9 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
                 <span className="playbackButtonFront pushableButtonFront">
                     <FontAwesomeIcon icon={faForwardStep} />
                 </span>
+                <p className="tooltip">
+                    Step Forward
+                </p>
             </button>
             {/* Step Backward Button -> Disabled when Autoplaying */}
             <button className="playbackButton pushableButton"
@@ -61,6 +64,9 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
                 <span className="playbackButtonFront pushableButtonFront">
                     <FontAwesomeIcon icon={faBackwardStep} />
                 </span>
+                <p className="tooltip">
+                    Step Back
+                </p>
             </button>
             {/* Autostep Forward -> Replaced w/ Speed Controller when Autoplaying Forward */}
             {playback.isAuto && playback.isAutoForward && (speedController)}
@@ -71,6 +77,9 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
                     <span className="playbackButtonFront pushableButtonFront">
                         <FontAwesomeIcon icon={faForwardFast} />
                     </span>
+                    <p className="tooltip">
+                        Auto Forward
+                    </p>
                 </button>
             )}
             {/* Autostep Backward -> Replaced w/ Speed Controller when Autoplaying Backward */}
@@ -81,7 +90,10 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
                 >
                     <span className="playbackButtonFront pushableButtonFront">
                         <FontAwesomeIcon icon={faBackwardFast} />
-                   </span>
+                    </span>
+                    <p className="tooltip">
+                        Auto Backward
+                    </p>
                 </button>
             )}
             {/* Autostep Pause -> Disabled when Not Autoplaying */}
@@ -92,6 +104,9 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
                 <span className="playbackButtonFront pushableButtonFront">
                     <FontAwesomeIcon icon={faPause} />
                 </span>
+                <p className="tooltip">
+                    Pause
+                </p>
             </button>
             {/* Jump to Start */}
             <button className="playbackButton pushableButton"
@@ -101,6 +116,9 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
                 <span className="playbackButtonFront pushableButtonFront">
                     <FontAwesomeIcon icon={faHourglassStart} />
                 </span>
+                <p className="tooltip">
+                    Start
+                </p>
             </button>
             {/* Jump to End */}
             <button className="playbackButton pushableButton"
@@ -110,6 +128,9 @@ export default function PlaybackPanel({ playback, onPressPlayback, onSpeedChange
                 <span className="playbackButtonFront pushableButtonFront">
                     <FontAwesomeIcon icon={faHourglassEnd} />
                 </span>
+                <p className="tooltip">
+                    End
+                </p>
             </button>
             {/* Step Counter */}
             <div id="stepCounter" className="panel">

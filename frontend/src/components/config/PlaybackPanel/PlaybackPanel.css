@@ -43,6 +43,7 @@
 
 .playbackButton {
     width: 50px;
+    position: relative;
 }
 
 .playbackButtonFront {
@@ -56,4 +57,25 @@
 
 .playbackButton:disabled .pushableButtonFront {
     background: var(--colour-border-on-surface);
+}
+
+.tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 0.5rem);
+    transform: translateX(-50%);
+
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+
+    font-size: small;
+    color: var(--colour-text-on-surface);
+    background-color: rgba(0, 0, 0, 0.1);
+
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.playbackButton:hover .tooltip {
+    opacity: 1;
 }
