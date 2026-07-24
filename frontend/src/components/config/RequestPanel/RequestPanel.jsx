@@ -33,9 +33,8 @@ export default function RequestPanel({ gridId, onUUIDRequest, onExportRequest })
         if (uuidRegexExp.test(localRequestUuid)) {
             // If Valid UUID...
             // Communicate Load Request Change back to Grid Canvas
-            onUUIDRequest({
-                "uuid": localRequestUuid
-            });
+            onUUIDRequest(localRequestUuid);
+            
             // Clear Error State
             setError("");
         } else {

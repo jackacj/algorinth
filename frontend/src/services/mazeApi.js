@@ -5,7 +5,7 @@ export async function generateMaze(settings) {
     // Create Request
     const response = await fetch(
         // Backend Maze Generation Endpoint
-        `${API_BACKEND_BASE_URL}/generate`,
+        `${API_BACKEND_BASE_URL}/mazes`,
         // Request Itself
         {
             method: "POST",
@@ -29,24 +29,19 @@ export async function generateMaze(settings) {
     return await response.json();
 }
 
-export async function requestMazeById(request) {
+export async function requestMazeById(requestUuid) {
     // Create Request
     const response = await fetch(
         // Backend Maze Generation Endpoint
-        `${API_BACKEND_BASE_URL}/mazes`,
+        `${API_BACKEND_BASE_URL}/mazes/${requestUuid}`,
         // Request Itself
         {
-            method: "POST",
+            method: "GET",
             headers: {
                 "Content-Type": "application/json"
-            },
-            // Request Body
-            body: JSON.stringify(request)
+            }
         }
     );
-
-    // Print Request Body
-    console.log(JSON.stringify(request))
 
     // Throw Error if Request Fails
     if (!response.ok) {

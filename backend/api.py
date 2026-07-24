@@ -10,8 +10,8 @@ from .services.gen_service import generate_maze
 from .services.db_service import save_maze, get_maze_by_uuid
 # Models
 from .models.maze import Maze
-from .schemas.request import MazeGenerationRequest, MazeRequestById
-from .schemas.response import MazeResponse, MazeSteps
+from .schemas.request import MazeGenerationRequest
+from .schemas.response import MazeResponse
 
 app = FastAPI()
 
@@ -24,11 +24,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+## '/mazes' Endpoints
+
 # Request to Generate Maze from Frontend
 # Response Model -> MazeResponse
-@app.post("/generate", response_model = MazeResponse)
+@app.post("/mazes", response_model = MazeResponse)
 # Request Model -> MazeGenerationRequest 
-async def generate_request(settings: MazeGenerationRequest):
+async def maze_generate_request(settings: MazeGenerationRequest):
     # Generate a Maze based on Request Settings -> Convert Request Body to Dictionary
     maze = generate_maze(settings)
 
@@ -36,31 +38,14 @@ async def generate_request(settings: MazeGenerationRequest):
     save_maze(maze)
 
     # Return a Maze Response
-    return MazeResponse(
-        maze_id = maze.id,
-        settings = maze.settings,
-        steps = MazeSteps(
-            count = len(maze.steps),
-            list = maze.steps
-        ),
-        final_maze = maze.final_maze.to_json()
-    )
+    return MazeResponse.from_maze(maze)
 
-# Request a Specific Maze from Frontend
+# Get a Specific Maze w/ UUID
 # Response Model -> MazeResponse
-@app.post("/mazes", response_model = MazeResponse)
-# Request Model -> MazeRequestbyId
-async def request_maze_by_id(request: MazeRequestById):
+@app.get("/mazes/{uuid}", response_model = MazeResponse)
+async def get_maze_by_id(uuid: str):
     # Get Maze Object for UUID -> Could Be Empty
-    maze = get_maze_by_uuid(request.uuid)
-
+    maze = get_maze_by_uuid(uuid)
+    
     # Return a Maze Response
-    return MazeResponse(
-        maze_id = maze.id,
-        settings = maze.settings,
-        steps = MazeSteps(
-            count = len(maze.steps),
-            list = maze.steps
-        ),
-        final_maze = maze.final_maze.to_json()
-    )
+    return MazeResponse.from_maze(maze)

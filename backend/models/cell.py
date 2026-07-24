@@ -54,7 +54,7 @@ class Cell():
     # Turn a JSON Grid State into a Cell Object
     # Use Decorator to Call without Instance
     @classmethod
-    def from_json(cls, data: dict):
+    def from_json(cls, data: dict) -> "Cell":
         # Construct Paths Set
         path_lookup = {
             "north": "N",

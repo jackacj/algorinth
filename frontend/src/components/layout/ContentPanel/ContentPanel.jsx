@@ -435,10 +435,10 @@ export default function GridCanvas({ playClick }){
     }
 
     // Request Maze via UUID
-    async function handleMazeRequestById(request) {
+    async function handleMazeRequestById(requestUuid) {
         try {
             // Request an Existing Maze from Backend via Id
-            const mazeRun = await requestMazeById(request);
+            const mazeRun = await requestMazeById(requestUuid);
 
             // Create Initial Settings
             const newSettings = mazeRun.settings;

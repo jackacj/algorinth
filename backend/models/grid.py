@@ -199,7 +199,7 @@ class Grid():
     # Turn a JSON Grid State into a Grid Object
     # Use Decorator to Call without Instance
     @classmethod
-    def from_json(cls, data):
+    def from_json(cls, data) -> "Grid":
         # Extract Dimenions & Create Empty Grid
         height = len(data)
         width = len(data[0])
