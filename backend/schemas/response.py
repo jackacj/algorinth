@@ -1,6 +1,7 @@
 # Base for Data Bodies
 from pydantic import BaseModel
 from typing import List, Dict, Any
+from uuid import UUID
 from ..models.maze import Maze
 
 # Seperate Model for the Maze Steps
@@ -18,7 +19,7 @@ class MazeSteps(BaseModel):
 
 # Maze Response Data Model
 class MazeResponse(BaseModel):
-    maze_id: str
+    maze_id: UUID
     settings: Dict
     steps: MazeSteps
     final_maze: List[List[Dict[str, Any]]]

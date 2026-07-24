@@ -1,13 +1,12 @@
 # FastAPI Imports
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
-# Pandas for Data Processing
-import pandas as pd
-import json
+# UUID Type
+from uuid import UUID
 # Maze Generation Logic
 from .services.gen_service import generate_maze
 # Database Logic
-from .services.db_service import save_maze, get_maze_by_uuid
+from .database.database import save_maze, load_maze
 # Models
 from .models.maze import Maze
 from .schemas.request import MazeGenerationRequest
@@ -42,10 +41,10 @@ async def maze_generate_request(settings: MazeGenerationRequest):
 
 # Get a Specific Maze w/ UUID
 # Response Model -> MazeResponse
-@app.get("/mazes/{uuid}", response_model = MazeResponse)
-async def get_maze_by_id(uuid: str):
+@app.get("/mazes/{id}", response_model = MazeResponse)
+async def get_maze_by_id(id: UUID):
     # Get Maze Object for UUID -> Could Be Empty
-    maze = get_maze_by_uuid(uuid)
+    maze = load_maze(id)
     
     # Return a Maze Response
     return MazeResponse.from_maze(maze)
