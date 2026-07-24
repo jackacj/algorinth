@@ -1,6 +1,6 @@
 # Postgres Python Integration w/ SQLAlchemy ORM
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
 # Domain Models
 from ..models.maze import Maze
 from ..models.maze import Grid
@@ -16,7 +16,7 @@ DATABASE_URL = (
 
 # Create the ORM Engine, Sessionmaker & Create Tables if Don't Exist
 engine = create_engine(DATABASE_URL)
-session_local = sessionmaker(bind = engine)
+session_local: Session = sessionmaker(bind = engine)
 Base.metadata.create_all(engine)
 
 # Save a Maze to DB
@@ -33,11 +33,15 @@ def save_maze(maze: Maze):
         session.commit()
 
 # Load a Maze from DB w/ Id
-def load_maze(maze_id: UUID) -> Maze:
+def load_maze(maze_id: UUID) -> Maze | None:
     # Open a Session
     with session_local() as session:
         # Retrieve ORM Maze Model from DB
         maze_model = session.get(MazeModel, maze_id)
+
+        # Return None if Not Found
+        if maze_model is None:
+            return None
 
         # Return Domain Model
         return maze_model.to_domain()

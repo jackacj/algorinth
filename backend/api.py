@@ -1,12 +1,12 @@
 # FastAPI Imports
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 # UUID Type
 from uuid import UUID
 # Maze Generation Logic
 from .services.gen_service import generate_maze
 # Database Logic
-from .database.database import save_maze, load_maze
+from .database.repository import save_maze, load_maze
 # Models
 from .models.maze import Maze
 from .schemas.request import MazeGenerationRequest
@@ -45,6 +45,13 @@ async def maze_generate_request(settings: MazeGenerationRequest):
 async def get_maze_by_id(id: UUID):
     # Get Maze Object for UUID -> Could Be Empty
     maze = load_maze(id)
+
+    # If Maze is Not Found, Return 404 Exception
+    if maze is None:
+        raise HTTPException(
+            status_code = 404,
+            detail = "Maze not found."
+        )
     
     # Return a Maze Response
     return MazeResponse.from_maze(maze)
