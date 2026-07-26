@@ -33,7 +33,7 @@ def save_maze(maze: Maze):
         session.commit()
 
 # Load a Maze from DB w/ Id
-def load_maze(maze_id: UUID) -> Maze | None:
+def get_maze(maze_id: UUID) -> Maze | None:
     # Open a Session
     with session_local() as session:
         # Retrieve ORM Maze Model from DB
@@ -45,3 +45,41 @@ def load_maze(maze_id: UUID) -> Maze | None:
 
         # Return Domain Model
         return maze_model.to_domain()
+
+# Update an Existing Maze from DB
+# Returns True if Updated, False if No Maze w/ Id Exists
+def update_maze(maze: Maze) -> bool:
+    # Open a Session
+    with session_local() as session:
+        # Retrieve ORM Maze Model from DB
+        maze_model = session.get(MazeModel, maze.id)
+
+        # Return False if Not Found
+        if maze_model is None:
+            return False
+        
+        # Update Existing ORM Maze Model w/ New Maze Details
+        maze_model.settings = maze.settings
+        maze_model.steps = maze.steps
+        maze_model.final_maze = maze.final_maze.to_json()
+
+        # Commit the Session to DB
+        session.commit()
+        return True
+
+# Delete a Maze w/ Id
+# Returns True if Deleted, False if No Maze w/ Id Exists
+def delete_maze(maze_id: UUID) -> bool:
+    # Open a Session
+    with session_local() as session:
+        # Retrieve ORM Maze Model from DB
+        maze_model = session.get(MazeModel, maze_id)
+
+        # Return False if Not Found
+        if maze_model is None:
+            return False
+
+        # Delete Maze & Commit the Session to DB
+        session.delete(maze_model)
+        session.commit()
+        return True

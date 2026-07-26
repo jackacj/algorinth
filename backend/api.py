@@ -6,7 +6,7 @@ from uuid import UUID
 # Maze Generation Logic
 from .services.gen_service import generate_maze
 # Database Logic
-from .database.repository import save_maze, load_maze
+from .database.repository import save_maze, get_maze
 # Models
 from .models.maze import Maze
 from .schemas.request import MazeGenerationRequest
@@ -42,9 +42,9 @@ async def maze_generate_request(settings: MazeGenerationRequest):
 # Get a Specific Maze w/ UUID
 # Response Model -> MazeResponse
 @app.get("/mazes/{id}", response_model = MazeResponse)
-async def get_maze_by_id(id: UUID):
+async def maze_retrieval_request(id: UUID):
     # Get Maze Object for UUID -> Could Be Empty
-    maze = load_maze(id)
+    maze = get_maze(id)
 
     # If Maze is Not Found, Return 404 Exception
     if maze is None:
