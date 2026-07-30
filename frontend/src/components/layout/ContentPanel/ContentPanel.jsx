@@ -9,7 +9,7 @@ import RequestPanel from '../../config/RequestPanel/RequestPanel'
 
 import html2canvas from 'html2canvas';
 
-export default function GridCanvas({ playClick }){
+export default function ContentPanel({ playClick, isInstant }){
     // Reference for Export
     const exportRef = useRef();
 
@@ -43,6 +43,93 @@ export default function GridCanvas({ playClick }){
         stepsPerSecond: stockStepsPerSecond
     });
     const[command, setCommand] = useState("");
+
+    // // Pseudo-Components
+
+    // Maze Panel - Visual
+    const VisualiseMazePanel = (
+        <>
+            {/* Grid Panel */}
+            <div id="gridPanel" className="section">
+                {/* UUID/Name & Export Button */}
+                <div id="gridLabel">
+                    <p>{gridId}</p>
+                </div>
+                {/* Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
+                <Grid grid={grid} />
+                <div 
+                    id="hiddenFinalGrid"
+                    ref={exportRef}    
+                >
+                    <Grid grid={finalGrid}/>
+                </div>
+            </div>
+            {/* Playback Panel */}
+            <div>
+                <PlaybackPanel
+                    playback={playback}
+                    onPressPlayback={handlePlayback}
+                    onSpeedChange={handleSpeedChange}
+                    playClick={playClick}
+                />
+            </div>
+        </>
+    );
+
+    // Maze Panel - Instant
+    const InstantMazePanel = (
+        <>
+            {/* Grid Panel */}
+            <div id="gridPanel" className="section">
+                {/* UUID/Name & Export Button */}
+                <div id="gridLabel">
+                    <p>{gridId}</p>
+                </div>
+                {/* Final Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
+                <Grid grid={finalGrid} />
+                <div 
+                    id="hiddenFinalGrid"
+                    ref={exportRef}    
+                >
+                    <Grid grid={finalGrid}/>
+                </div>
+            </div>
+        </>
+    );
+
+    // Maze Panel
+    const MazePanel = (
+        <div id="mazePanel" className="section">
+            {!isInstant && VisualiseMazePanel}
+            {isInstant && InstantMazePanel}
+        </div>
+    );
+
+    // Maze Placeholder
+    const MazePlaceholder = (
+        <div id="mazePlaceholder" className="section">
+            <div className="bounceText">
+                <span>No Maze Loaded</span>
+            </div>
+        </div>
+    );
+
+    // IO Panel
+    const IOPanel = (
+        <div id="ioPanel">
+            {/* Config Panel */}
+            <ConfigPanel
+                settings={settings}
+                onSettingsChange={handleSettingsChange}
+            />
+            {/* Request Panel */}
+            <RequestPanel
+                gridId={gridId}
+                onUUIDRequest={handleMazeRequestById}
+                onExportRequest={handleDownload}
+            />
+        </div>
+    );
 
     // // Grid Canvas Effects
 
@@ -498,57 +585,12 @@ export default function GridCanvas({ playClick }){
     // Rendering
     return (
         <div id="contentPanel">
-            {/* Maze Panel -> Conditionally Rendered */}
-            {isRunActive && (
-                <div id="mazePanel" className="section">
-                    {/* Grid Panel */}
-                    <div id="gridPanel" className="section">
-                        {/* UUID/Name & Export Button */}
-                        <div id="gridLabel">
-                            <p>{gridId}</p>
-                        </div>
-                        {/* Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
-                        <Grid grid={grid} />
-                        <div 
-                            id="hiddenFinalGrid"
-                            ref={exportRef}    
-                        >
-                            <Grid grid={finalGrid}/>
-                        </div>
-                    </div>
-                    {/* Playback Panel - Conditionally Rendered */}
-                    <div>
-                        <PlaybackPanel
-                            playback={playback}
-                            onPressPlayback={handlePlayback}
-                            onSpeedChange={handleSpeedChange}
-                            playClick={playClick}
-                        />
-                    </div>
-                </div>
-            )}
-            {!isRunActive && (
-                <div id="mazePlaceholder" className="section">
-                    <div className="bounceText">
-                        <span>No Maze Loaded</span>
-                    </div>
-                </div>
-            )}
+            {/* Maze Panel/Placeholder -> Conditionally Rendered */}
+            {isRunActive && MazePanel}
+            {!isRunActive && MazePlaceholder}
             
             {/* IO Panel */}
-            <div id="ioPanel">
-                {/* Config Panel */}
-                <ConfigPanel
-                    settings={settings}
-                    onSettingsChange={handleSettingsChange}
-                />
-                {/* Request Panel */}
-                <RequestPanel
-                    gridId={gridId}
-                    onUUIDRequest={handleMazeRequestById}
-                    onExportRequest={handleDownload}
-                />
-            </div>
+            {IOPanel}
         </div>
     );
 }

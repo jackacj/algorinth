@@ -8,8 +8,9 @@ import { useWithSound } from '../../../hooks/useWithSound'
 import click from '../../../assets/click.wav'
 
 export default function App() {
-  // Audio State for Entire App
+  // Audio & Mode State for Entire App
   const [isMute, setIsMute] = useState(false);
+  const [isInstant, setIsInstant] = useState(false);
   // 'Click' Audio Hook
   const { playSound } = useWithSound(click);
 
@@ -27,10 +28,16 @@ export default function App() {
     setIsMute(!isMute);
   }
 
+  // Toggle whether Mode is 'Instant' (True) or 'Visualise' (False)
+  function toggleMode() {
+    // Set as Inverse of Current
+    setIsInstant(!isInstant);
+  }
+
   return (
     <div className="app">
-      <TitlePanel isMute={isMute} playClick={playClick} toggleAudio={toggleAudio}/>
-      <ContentPanel playClick={playClick}/>
+      <TitlePanel isMute={isMute} isInstant={isInstant} playClick={playClick} toggleAudio={toggleAudio} toggleMode={toggleMode} />
+      <ContentPanel playClick={playClick} isInstant={isInstant} />
     </div>
   );
 }

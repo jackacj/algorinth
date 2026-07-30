@@ -187,3 +187,25 @@ input[type=range]::-moz-range-thumb {
         transform: translateY(-15px);
     }
 }
+
+/* Tooltip Styling */
+
+.tooltip {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+
+    font-size: small;
+    color: var(--colour-text-on-surface);
+    background-color: rgba(0, 0, 0, 0.1);
+
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+button:hover .tooltip {
+    opacity: 1;
+}

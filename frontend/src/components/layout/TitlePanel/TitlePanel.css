@@ -11,16 +11,47 @@
 #titleText {
   font-size: xx-large;
   font-weight: bold;
+  margin-left: 1rem;
 }
 
-/* Audio Button */
-.audioButton {
-    width: 45px;
+/* logo */
+#logo {
+    width: 50px;
+    height: 50px;
+    filter: invert(1)
+}
 
+/* Mode Text */
+#modeText {
+    font-weight: bold;
+
+    position: absolute;
+    left: 8rem;
+    margin-bottom: 6px;
+}
+
+.titleButton {
+    width: 45px;
+}
+
+.audioButton {
     position: absolute;
     left: 1rem;
 }
 
-.audioButtonFront {
+.modeButton {
+    position: absolute;
+    left: 4rem;
+}
+
+.titleButton + .titleButton {
+    margin-left: 0.5rem;
+}
+
+.titleButtonFront {
     height: 40px;
+}
+
+.titleTooltip {
+    bottom: calc(-200% - 0.5rem);
 }
