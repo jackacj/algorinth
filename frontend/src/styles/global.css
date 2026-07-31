@@ -221,3 +221,16 @@ input[type=range]::-moz-range-thumb {
 button:hover .tooltip {
     opacity: 1;
 }
+
+/* Colour Input Styling */
+input[type="color" i] {
+  border-radius: var(--border-radius);
+  inline-size: 24px;
+  block-size: 24px;
+  width: 100%;
+}
+
+input[type="color" i]::-webkit-color-swatch,
+input[type="color" i]::-moz-color-swatch {
+    border: none;
+}

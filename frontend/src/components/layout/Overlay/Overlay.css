@@ -32,8 +32,30 @@
     padding: 2rem;
 }
 
-/* Welcome Card */
-.welcomeCard {
+/* Overlay Button Row */
+.overlayButtonRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 20px;
+    gap: 0.5rem;
+}
+
+/* Overlay Input Row */
+.overlayInputRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    text-align: left;
+
+    gap: 0.5rem;
+}
+
+/* Logo Card */
+.logoCard {
     background-repeat: no-repeat;
     background-position: center;
     background-blend-mode: lighten;
@@ -79,4 +101,14 @@
     text-align: left;
     margin-left: 50px;
     margin-top: -10px;
+}
+
+.uuidInput {
+    text-align: left;
+    justify-content: center;
+    align-items: center;
+}
+
+.uuidInputField {
+    width: 100%;
 }

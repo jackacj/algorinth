@@ -97,7 +97,7 @@ export default function Overlay({ type, playClick, onClose, gridId, exportColour
             // Welcome Overlay
             case "welcome":
                 return (
-                    <div className="overlayCard welcomeCard" style={{ "background-image": `url(${logo})` }}>
+                    <div className="overlayCard logoCard" style={{ "background-image": `url(${logo})` }}>
                         <div className="welcomeHeader">
                             <h2> Welcome to Algorinth. </h2>
                         </div>
@@ -180,15 +180,20 @@ export default function Overlay({ type, playClick, onClose, gridId, exportColour
             // Loading Maze Overlay
             case "loadMaze":
                 return (
-                    <div className="overlayCard">
-                        <p> Enter a UUID for a Maze to Load </p>
+                    <div className="overlayCard logoCard" style={{ "background-image": `url(${logo})` }}>
+                        <div className="welcomeHeader">
+                            <h2> Load an Existing Maze. </h2>
+                        </div>
+                        <p> Previously generated mazes that have been saved can be retrieved using their Universally Unique Identifier (UUID). They are written in the following format: </p>
+                        <h4>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</h4>
                         {/* UUID Input */}
-                        <fieldset className="requestInput">
+                        <fieldset className="uuidInput">
                             <legend>UUID</legend>
                             <input
                                 id="uuidInputField"
                                 type="text"
                                 name="uuid"
+                                size="68"
                                 value={requestUuid}
                                 placeholder="Retrieve Maze via UUID"
                                 onChange={handleUuidChange} 
@@ -198,75 +203,96 @@ export default function Overlay({ type, playClick, onClose, gridId, exportColour
                         {error && (
                             <p class="errorMessage">{error}</p>
                         )}
-                        {/* Load Button */}
-                        <button 
-                            className="submitButton" 
-                            onClick={() => {
-                                playClick();
-                                handleUuidSubmit();
-                            }}
-                        >
-                            Load Maze
-                        </button>
-                        {/* Back Button */}
-                        <button 
-                            onClick={() => {
-                                playClick();
-                                onClose();
-                            }}
-                        >
-                            Back
-                        </button>
+                        {/* Buttons */}
+                        <div className="overlayButtonRow">
+                            {/* Load Button */}
+                            <button 
+                                className="welcomeButton pushableButton" 
+                                onClick={() => {
+                                    playClick();
+                                    handleUuidSubmit();
+                                }}
+                            >
+                                <span className="pushableButtonFront"> 
+                                    Load Maze 
+                                </span>
+                            </button>
+                            {/* Back Button */}
+                            <button
+                                className="welcomeButton pushableButton"  
+                                onClick={() => {
+                                    playClick();
+                                    onClose();
+                                }}
+                            >
+                                <span className="pushableButtonFront"> 
+                                    Back 
+                                </span>
+                            </button>
+                        </div>
                     </div>
                 )
 
             // Exporting Maze Overlay
             case "exportMaze":
                 return (
-                    <div className="overlayCard">
-                        <p> Select an Export Format for the Downloaded Maze </p>
+                    <div className="overlayCard logoCard" style={{ "background-image": `url(${logo})` }}>
+                        <div className="welcomeHeader">
+                            <h2> Export your Current Maze. </h2>
+                        </div>
+                        <p> Mazes currently loaded can have their final layout exported and downloaded in image form. Just specify your file type & cell colour: </p>
                         {/* Export Type Input */}
-                        <fieldset className="requestInput">
-                            <legend> Export Type </legend>
-                            <select
-                                id="exportTypeSelect"
-                                name="exportType"
-                                value={exportType}
-                                onChange={handleExportTypeChange}
-                            >
-                                <option value="png">Image - PNG</option>
-                                <option value="jpeg">Image - JPEG</option>
-                                <option value="webp">Image - WEBP</option>
-                            </select>
-                        </fieldset>
-                        {/* Export Colour Input */}
-                        <fieldset className="colourInput">
-                            <legend> Export Cell Colour </legend>
-                            <input type="color" value={localColour} id="exportColourSelect" onChange={handleColourChange} />
-                        </fieldset>
+                        <div className="overlayInputRow">
+                            <fieldset className="typeInput">
+                                <legend> Export Type </legend>
+                                <select
+                                    id="exportTypeSelect"
+                                    name="exportType"
+                                    value={exportType}
+                                    onChange={handleExportTypeChange}
+                                >
+                                    <option value="png">Image - PNG</option>
+                                    <option value="jpeg">Image - JPEG</option>
+                                    <option value="webp">Image - WEBP</option>
+                                </select>
+                            </fieldset>
+                            {/* Export Colour Input */}
+                            <fieldset className="colourInput">
+                                <legend> Export Cell Colour </legend>
+                                <input type="color" value={localColour} id="exportColourSelect" onChange={handleColourChange} />
+                            </fieldset>
+                        </div>
                         {/* Error Message - Conditionally Rendered*/}
                         {error && (
                             <p class="errorMessage">{error}</p>
                         )}
-                        {/* Export Button */}
-                        <button 
-                            className="submitButton" 
-                            onClick={() => {
-                                playClick();
-                                handleExportSubmit();
-                            }}
-                        >
-                            Export Maze
-                        </button>
-                        {/* Back Button */}
-                        <button 
-                            onClick={() => {
-                                playClick();
-                                onClose();
-                            }}
-                        >
-                            Back
-                        </button>
+                        {/* Buttons */}
+                        <div className="overlayButtonRow">
+                            {/* Load Button */}
+                            <button 
+                                className="welcomeButton pushableButton" 
+                                onClick={() => {
+                                    playClick();
+                                    handleExportSubmit();
+                                }}
+                            >
+                                <span className="pushableButtonFront"> 
+                                    Export Maze 
+                                </span>
+                            </button>
+                            {/* Back Button */}
+                            <button
+                                className="welcomeButton pushableButton"  
+                                onClick={() => {
+                                    playClick();
+                                    onClose();
+                                }}
+                            >
+                                <span className="pushableButtonFront"> 
+                                    Back 
+                                </span>
+                            </button>
+                        </div>
                     </div>
                 );
         }
