@@ -52,7 +52,7 @@ export default function ContentPanel({ playClick, isInstant }){
     }
 
     // Overlay State -> Type & Return Function
-    const[overlay, setOverlay] = useState("loadMaze");
+    const[overlay, setOverlay] = useState("welcome");
 
     // // Effects
 
@@ -598,6 +598,9 @@ export default function ContentPanel({ playClick, isInstant }){
             <button onClick={() => setOverlay("loadMaze")}>
                 Load Overlay
             </button>
+            <button onClick={() => setOverlay("exportMaze")}>
+                Export Overlay
+            </button>
         </div>
     );
 
@@ -621,6 +624,17 @@ export default function ContentPanel({ playClick, isInstant }){
                         type={overlay}
                         onClose={() => setOverlay(null)}
                         onLoadRequest={handleMazeRequestById}
+                    />
+                );
+
+            // Exporting Maze Overlay -> Activated by Button
+            case "exportMaze":
+                return (
+                    <Overlay 
+                        type={overlay}
+                        onClose={() => setOverlay(null)}
+                        onExportRequest={handleDownload}
+                        gridId={gridId}
                     />
                 );
             

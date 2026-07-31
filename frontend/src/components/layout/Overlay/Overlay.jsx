@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './Overlay.css'
 
-export default function Overlay({ type, onClose, onLoadRequest, onExportRequest, onSaveRequest }) {
+export default function Overlay({ type, onClose, gridId, onLoadRequest, onExportRequest, onSaveRequest }) {
     // // Local State for Overlays
 
     // 'LoadMaze' States
@@ -42,10 +42,42 @@ export default function Overlay({ type, onClose, onLoadRequest, onExportRequest,
         }
     }
 
+    // Update Export Type based on Selection
+    function handleExportTypeChange(event) {
+        // Unpack Event
+        const { name, value } = event.target
+
+        // Apply Keystroke Changes to Uuid
+        setExportType(value);
+    }
+
+    // Create an Export Request w/ Export Type
+    function handleExportSubmit() {
+        // Error Handling - Valid Loaded UUID
+        if (uuidRegex.test(gridId)) {
+            // If Valid UUID...
+            // Communicate Export Request back to Grid Canvas
+            onExportRequest({
+                "type": exportType
+            });
+
+            // Clear Error State
+            setError("");
+
+            // Close Overlay
+            onClose();
+        } else {
+            // If Invalid Loaded UUID -> No Maze Loaded
+            // Update Error State
+            setError("No Loaded Maze, Please Load a Maze via UUID or Generate a Maze before Exporting")
+        }
+    }
+
     // Overlay Content Render Function
     function overlayContent() {
         // Return Card Content based on Overlay Type
         switch(type) {
+            // Welcome Overlay
             case "welcome":
                 return (
                     <div className="overlayCard">
@@ -55,7 +87,8 @@ export default function Overlay({ type, onClose, onLoadRequest, onExportRequest,
                         </button>
                     </div>
                 );
-
+            
+            // Loading Maze Overlay
             case "loadMaze":
                 return (
                     <div className="overlayCard">
@@ -72,6 +105,10 @@ export default function Overlay({ type, onClose, onLoadRequest, onExportRequest,
                                 onChange={handleUuidChange} 
                             />
                         </fieldset>
+                        {/* Error Message - Conditionally Rendered*/}
+                        {error && (
+                            <p class="errorMessage">{error}</p>
+                        )}
                         {/* Load Button */}
                         <button 
                             className="submitButton" 
@@ -79,11 +116,49 @@ export default function Overlay({ type, onClose, onLoadRequest, onExportRequest,
                         >
                             Load Maze
                         </button>
+                        {/* Back Button */}
                         <button onClick={onClose}>
                             Back
                         </button>
                     </div>
                 )
+
+            // Exporting Maze Overlay
+            case "exportMaze":
+                return (
+                    <div className="overlayCard">
+                        <p> Select an Export Format for the Downloaded Maze </p>
+                        {/* Export Type Input */}
+                        <fieldset className="requestInput">
+                            <legend>Export Type</legend>
+                            <select
+                                id="exportTypeSelect"
+                                name="exportType"
+                                value={exportType}
+                                onChange={handleExportTypeChange}
+                            >
+                                <option value="png">Image - PNG</option>
+                                <option value="jpeg">Image - JPEG</option>
+                                <option value="webp">Image - WEBP</option>
+                            </select>
+                        </fieldset>
+                        {/* Error Message - Conditionally Rendered*/}
+                        {error && (
+                            <p class="errorMessage">{error}</p>
+                        )}
+                        {/* Export Button */}
+                        <button 
+                            className="submitButton" 
+                            onClick={() => handleExportSubmit()}
+                        >
+                            Export Maze
+                        </button>
+                        {/* Back Button */}
+                        <button onClick={onClose}>
+                            Back
+                        </button>
+                    </div>
+                );
         }
     }
 
