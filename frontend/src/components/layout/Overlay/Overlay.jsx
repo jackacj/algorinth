@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './Overlay.css'
 
-export default function Overlay({ type, onClose, gridId, onLoadRequest, onExportRequest, onSaveRequest }) {
+export default function Overlay({ type, onClose, gridId, exportColour, onLoadRequest, onExportRequest, onColourChange }) {
     // // Local State for Overlays
 
     // 'LoadMaze' States
@@ -9,6 +9,7 @@ export default function Overlay({ type, onClose, gridId, onLoadRequest, onExport
     const [error, setError] = useState("");
     // 'ExportMaze' State
     const [exportType, setExportType] = useState("png");
+    const [localColour, setLocalColour] = useState(exportColour);
 
     // Regex for Uuid Validation
     const uuidRegex = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
@@ -56,10 +57,11 @@ export default function Overlay({ type, onClose, gridId, onLoadRequest, onExport
         // Error Handling - Valid Loaded UUID
         if (uuidRegex.test(gridId)) {
             // If Valid UUID...
-            // Communicate Export Request back to Grid Canvas
+            // Make Export Request & Update Export Colour
+            onColourChange(localColour);
             onExportRequest({
                 "type": exportType
-            });
+            })
 
             // Clear Error State
             setError("");
@@ -71,6 +73,15 @@ export default function Overlay({ type, onClose, gridId, onLoadRequest, onExport
             // Update Error State
             setError("No Loaded Maze, Please Load a Maze via UUID or Generate a Maze before Exporting")
         }
+    }
+
+    // Update Export Colour w/ Keystrokes
+    function handleColourChange(event) {
+        // Unpack Event
+        const { name, value } = event.target
+
+        // Apply Keystroke Changes to Export Colour
+        setLocalColour(value);
     }
 
     // Overlay Content Render Function
@@ -130,7 +141,7 @@ export default function Overlay({ type, onClose, gridId, onLoadRequest, onExport
                         <p> Select an Export Format for the Downloaded Maze </p>
                         {/* Export Type Input */}
                         <fieldset className="requestInput">
-                            <legend>Export Type</legend>
+                            <legend> Export Type </legend>
                             <select
                                 id="exportTypeSelect"
                                 name="exportType"
@@ -141,6 +152,11 @@ export default function Overlay({ type, onClose, gridId, onLoadRequest, onExport
                                 <option value="jpeg">Image - JPEG</option>
                                 <option value="webp">Image - WEBP</option>
                             </select>
+                        </fieldset>
+                        {/* Export Colour Input */}
+                        <fieldset className="colourInput">
+                            <legend> Export Cell Colour </legend>
+                            <input type="color" value={localColour} id="exportColourSelect" onChange={handleColourChange} />
                         </fieldset>
                         {/* Error Message - Conditionally Rendered*/}
                         {error && (

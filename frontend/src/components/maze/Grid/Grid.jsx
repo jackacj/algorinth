@@ -2,7 +2,7 @@ import './Grid.css'
 import Cell from '../Cell/Cell';
 import { forwardRef } from 'react';
 
-export default function Grid({ grid }) {
+export default function Grid({ grid, cellColour }) {
     // Guard Against No Grid State
     if (!grid || grid.length === 0) {
         // Return Null or Loading Placeholder
@@ -14,6 +14,7 @@ export default function Grid({ grid }) {
     const cols = grid[0].length;
 
     // Return Grid, Visually Arranged into Columns via CSS
+    // Pass on Export Colour
     return(
         <div className="grid" style={{ gridTemplateColumns: `repeat(${cols}, 25px)` }}>
             { // Programmatically Create Grid Cells
@@ -22,6 +23,7 @@ export default function Grid({ grid }) {
                     <Cell
                         key={`${cell.row},${cell.col}`}
                         cell={cell}
+                        cellColour={cellColour}
                     />
                 ))
             )}

@@ -1,6 +1,6 @@
 import './Cell.css'
 
-export default function Cell({ cell }) {
+export default function Cell({ cell, cellColour }) {
     // Unpack Cell Data
     const { row, col, visited, paths } = cell
 
@@ -14,7 +14,7 @@ export default function Cell({ cell }) {
                 "borderRight": paths.east ? "none" : "2px solid var(--colour-cell-border)",
                 "borderLeft": paths.west ? "none" : "2px solid var(--colour-cell-border)",
                 // Highlight Cell when Visited
-                "backgroundColor": visited ? "var(--colour-cell-visited)" : "var(--colour-cell-unvisited)"
+                "backgroundColor": visited ? cellColour : "var(--colour-cell-unvisited)"
             }} 
         />
     );

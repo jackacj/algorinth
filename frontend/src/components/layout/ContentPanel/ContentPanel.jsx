@@ -51,6 +51,27 @@ export default function ContentPanel({ playClick, isInstant }){
     });
     const[command, setCommand] = useState("");
 
+    // Exporting, Cell Colour State & Effect on Startup
+    const[exportColour, setExportColour] = useState("");
+    const[pendingExport, setPendingExport] = useState(null);
+
+    // Get Initial Cell Colour Effect
+    useEffect(() => {
+        const colour = getComputedStyle(document.documentElement)
+            .getPropertyValue("--colour-cell-visited")
+            .trim();
+
+        setExportColour(colour);
+    }, []);
+
+    // Perform a Download w/ Pending Export Request Effects
+    useEffect(() => {
+        if (pendingExport) {
+            handleDownload(pendingExport);
+            setPendingExport(null);
+        }
+    }, [exportColour, pendingExport]);
+
     // Close the "Welcome" Overlay
     function handleWelcomeClose() {
         // Close Overlay
@@ -452,6 +473,18 @@ export default function ContentPanel({ playClick, isInstant }){
         }));
     }
 
+    // Exporting Colour Controls
+    function handleColourChange(newColour) {
+        // Update Cell Colour State
+        setExportColour(newColour)
+    }
+
+    // Create New Export Request
+    function handleExportRequest(request) {
+        // Update Pending Export State
+        setPendingExport(request);
+    }
+
     // Request Maze via UUID
     async function handleMazeRequestById(requestUuid) {
         try {
@@ -577,12 +610,12 @@ export default function ContentPanel({ playClick, isInstant }){
                     <p>{gridId + " - " + isMazeSaved}</p>
                 </div>
                 {/* Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
-                <Grid grid={grid} />
+                <Grid grid={grid} cellColour="var(--colour-cell-visited)" />
                 <div 
                     id="hiddenFinalGrid"
                     ref={exportRef}    
                 >
-                    <Grid grid={finalGrid}/>
+                    <Grid grid={finalGrid} cellColour={exportColour} />
                 </div>
             </div>
             {/* Playback Panel */}
@@ -607,12 +640,12 @@ export default function ContentPanel({ playClick, isInstant }){
                     <p>{gridId + " - " + isMazeSaved}</p>
                 </div>
                 {/* Final Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
-                <Grid grid={finalGrid} />
+                <Grid grid={finalGrid} cellColour="var(--colour-cell-visited)" />
                 <div 
                     id="hiddenFinalGrid"
                     ref={exportRef}    
                 >
-                    <Grid grid={finalGrid}/>
+                    <Grid grid={finalGrid} cellColour={exportColour} />
                 </div>
             </div>
         </>
@@ -645,6 +678,7 @@ export default function ContentPanel({ playClick, isInstant }){
             />
             {/* Request Buttons */}
             <div id="requestButtonRow">
+                {/* Save Buttons */}
                 <button 
                     onClick={() => handleSave({
                         "maze_id": gridId,
@@ -654,18 +688,22 @@ export default function ContentPanel({ playClick, isInstant }){
                     })}
                     disabled={!isRunActive || isMazeSaved}    
                 >
-                    <span> Save Maze </span>
+                    {isRunActive ? (isMazeSaved ? (<span> Saved </span>) : (<span> Save Maze </span>)) : (<span> Nothing to Save </span>)}
                     <FontAwesomeIcon icon={faFloppyDisk} />
                 </button>
+
+                {/* Load Maze Button */}
                 <button onClick={() => setOverlay("loadMaze")}>
                     <span> Load Maze </span>
                     <FontAwesomeIcon icon={faSpinner} />
                 </button>
+
+                {/* Export Maze Button */}
                 <button 
                     onClick={() => setOverlay("exportMaze")}
                     disabled={!isRunActive}    
                 >
-                    <span> Export Maze </span>
+                    {isRunActive ? (<span> Export Maze </span>) : (<span> Nothing to Export </span>)}
                     <FontAwesomeIcon icon={faDownload} />
                 </button>
             </div>
@@ -701,8 +739,10 @@ export default function ContentPanel({ playClick, isInstant }){
                     <Overlay 
                         type={overlay}
                         onClose={() => setOverlay(null)}
-                        onExportRequest={handleDownload}
+                        onExportRequest={handleExportRequest}
+                        onColourChange={handleColourChange}
                         gridId={gridId}
+                        exportColour={exportColour}
                     />
                 );
             
