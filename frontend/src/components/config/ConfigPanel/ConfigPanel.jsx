@@ -3,7 +3,7 @@ import './ConfigPanel.css'
 
 // Icon Imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faXmark, faGear } from '@fortawesome/free-solid-svg-icons'
 
 // Gif Imports
 import iterativeDFSGif from '../../../assets/gifs/iterativeDFS.gif'
@@ -13,7 +13,7 @@ import simplePrimGif from '../../../assets/gifs/simplePrims.gif'
 import aldousBroderGif from '../../../assets/gifs/aldousBroder.gif'
 import recursiveDivGif from '../../../assets/gifs/recursiveDiv.gif'
 
-export default function ConfigPanel({ settings, onSettingsChange }) {
+export default function ConfigPanel({ playClick, settings, onSettingsChange }) {
     // Maintain Local Settings & Error State
     const [localSettings, setLocalSettings] = useState(settings);
     const [error, setError] = useState("");
@@ -204,8 +204,11 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
                 {/* Bottom Row - Submit Button */}
                 <div id="configButtonRow">
                     {/* Submit Button */}
-                    <button id="configSubmit" type="submit">
-                        Apply Settings
+                    <button id="configSubmit" className="pushableButton" type="submit" onClick={playClick}>
+                        <div className="pushableButtonFront">
+                            <span> Generate Maze </span>
+                            <FontAwesomeIcon icon={faGear} size="lg"/>
+                        </div>
                     </button>
                 </div>
                 {/* Error Message - Conditionally Rendered*/}

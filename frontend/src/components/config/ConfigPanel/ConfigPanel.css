@@ -70,6 +70,12 @@
 /* Config Submit Button -> Entire Width of Config Submit Row */
 #configSubmit {
     width: 100%;
+    height: 50px;
+}
+
+#configSubmit div {
+    height: 45px;
+    gap: 1rem;
 }
 
 /* Margin Between Rows */

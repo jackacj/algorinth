@@ -87,6 +87,15 @@ button:disabled {
     transform: translateY(-2px); /* On Press -> Move Down */
 }
 
+.pushablebackButton:disabled {
+    background: var(--colour-background);
+    border: var(--border-width) solid var(--colour-border-on-surface);
+}
+
+.pushableButton:disabled .pushableButtonFront {
+    background: var(--colour-border-on-surface);
+}
+
 .buttonStyle {
     font: inherit;
     font-weight: bold;

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { fa1, fa2, fa3, faGear, faForwardStep, faDice, faCloud, faImage, faEye, faBoltLightning } from '@fortawesome/free-solid-svg-icons'
 
 
-export default function Overlay({ type, onClose, gridId, exportColour, onLoadRequest, onExportRequest, onColourChange }) {
+export default function Overlay({ type, playClick, onClose, gridId, exportColour, onLoadRequest, onExportRequest, onColourChange }) {
     // // Local State for Overlays
 
     // 'LoadMaze' States
@@ -165,7 +165,10 @@ export default function Overlay({ type, onClose, gridId, exportColour, onLoadReq
                         </ul>
                         <button
                             className="welcomeButton pushableButton" 
-                            onClick={onClose}
+                            onClick={() => {
+                                playClick();
+                                onClose();
+                            }}
                         >
                             <span className="pushableButtonFront">
                                 Begin Exploring
@@ -198,12 +201,20 @@ export default function Overlay({ type, onClose, gridId, exportColour, onLoadReq
                         {/* Load Button */}
                         <button 
                             className="submitButton" 
-                            onClick={() => handleUuidSubmit()}
+                            onClick={() => {
+                                playClick();
+                                handleUuidSubmit();
+                            }}
                         >
                             Load Maze
                         </button>
                         {/* Back Button */}
-                        <button onClick={onClose}>
+                        <button 
+                            onClick={() => {
+                                playClick();
+                                onClose();
+                            }}
+                        >
                             Back
                         </button>
                     </div>
@@ -240,12 +251,20 @@ export default function Overlay({ type, onClose, gridId, exportColour, onLoadReq
                         {/* Export Button */}
                         <button 
                             className="submitButton" 
-                            onClick={() => handleExportSubmit()}
+                            onClick={() => {
+                                playClick();
+                                handleExportSubmit();
+                            }}
                         >
                             Export Maze
                         </button>
                         {/* Back Button */}
-                        <button onClick={onClose}>
+                        <button 
+                            onClick={() => {
+                                playClick();
+                                onClose();
+                            }}
+                        >
                             Back
                         </button>
                     </div>

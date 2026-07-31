@@ -673,38 +673,59 @@ export default function ContentPanel({ playClick, isInstant }){
         <div id="ioPanel">
             {/* Config Panel */}
             <ConfigPanel
+                playClick={playClick}
                 settings={settings}
                 onSettingsChange={handleSettingsChange}
             />
             {/* Request Buttons */}
             <div id="requestButtonRow">
                 {/* Save Buttons */}
-                <button 
-                    onClick={() => handleSave({
-                        "maze_id": gridId,
-                        "settings": settings,
-                        "steps": playback.steps,
-                        "final_maze": finalGrid,
-                    })}
+                <button
+                    className="pushableButton" 
+                    onClick={() => {
+                        playClick(); 
+                        handleSave({
+                            "maze_id": gridId,
+                            "settings": settings,
+                            "steps": playback.steps,
+                            "final_maze": finalGrid,
+                        });
+                    }}
                     disabled={!isRunActive || isMazeSaved}    
                 >
-                    {isRunActive ? (isMazeSaved ? (<span> Saved </span>) : (<span> Save Maze </span>)) : (<span> Nothing to Save </span>)}
-                    <FontAwesomeIcon icon={faFloppyDisk} />
+                    <div className="pushableButtonFront">
+                        {isRunActive ? (isMazeSaved ? (<span> Saved </span>) : (<span> Save Maze </span>)) : (<span> Nothing to Save </span>)}
+                        <FontAwesomeIcon icon={faFloppyDisk} size="lg"/>
+                    </div>
                 </button>
 
                 {/* Load Maze Button */}
-                <button onClick={() => setOverlay("loadMaze")}>
-                    <span> Load Maze </span>
-                    <FontAwesomeIcon icon={faSpinner} />
+                <button
+                    className="pushableButton"  
+                    onClick={() => {
+                        playClick(); 
+                        setOverlay("loadMaze");
+                    }}
+                >
+                    <div className="pushableButtonFront">
+                        <span> Load Maze </span>
+                        <FontAwesomeIcon icon={faSpinner} size="lg"/>
+                    </div>
                 </button>
 
                 {/* Export Maze Button */}
-                <button 
-                    onClick={() => setOverlay("exportMaze")}
+                <button
+                    className="pushableButton" 
+                    onClick={() => {
+                        playClick(); 
+                        setOverlay("exportMaze");
+                    }}
                     disabled={!isRunActive}    
                 >
-                    {isRunActive ? (<span> Export Maze </span>) : (<span> Nothing to Export </span>)}
-                    <FontAwesomeIcon icon={faDownload} />
+                    <div className="pushableButtonFront">
+                        {isRunActive ? (<span> Export Maze </span>) : (<span> Nothing to Export </span>)}
+                        <FontAwesomeIcon icon={faDownload} size="lg"/>
+                    </div>
                 </button>
             </div>
         </div>
@@ -719,6 +740,7 @@ export default function ContentPanel({ playClick, isInstant }){
                 return (
                     <Overlay
                         type={overlay}
+                        playClick={playClick}
                         onClose={() => setOverlay(null)}
                     />
                 );
@@ -728,6 +750,7 @@ export default function ContentPanel({ playClick, isInstant }){
                 return (
                     <Overlay
                         type={overlay}
+                        playClick={playClick}
                         onClose={() => setOverlay(null)}
                         onLoadRequest={handleMazeRequestById}
                     />
@@ -738,6 +761,7 @@ export default function ContentPanel({ playClick, isInstant }){
                 return (
                     <Overlay 
                         type={overlay}
+                        playClick={playClick}
                         onClose={() => setOverlay(null)}
                         onExportRequest={handleExportRequest}
                         onColourChange={handleColourChange}

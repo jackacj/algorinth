@@ -1,7 +1,7 @@
 /* Content Panel -> Left to Right in Golden Ratio */
 #contentPanel {
     display: grid;
-    grid-template-columns: 1fr 1.618fr;
+    grid-template-columns: 1fr 1fr;
 }
 
 /* Maze Panel -> Top to Bottom w/ Focus on Upper Area */
@@ -64,4 +64,9 @@
     flex: 1;
     height: 50px;
     margin: 0.25rem;
+}
+
+#requestButtonRow button div {
+    height: 45px;
+    gap: 1rem;
 }
