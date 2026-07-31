@@ -589,17 +589,15 @@ export default function ContentPanel({ playClick, isInstant }){
                 settings={settings}
                 onSettingsChange={handleSettingsChange}
             />
-            {/* Request Panel */}
-            {/* <RequestPanel
-                gridId={gridId}
-                onUUIDRequest={handleMazeRequestById}
-                onExportRequest={handleDownload}
-            /> */}
+            {/* Request Buttons */}
+            <button onClick={() => console.log("ContentPanel.jsx", "SAVE MAZE REQUEST")}>
+                Save Maze
+            </button>
             <button onClick={() => setOverlay("loadMaze")}>
-                Load Overlay
+                Load Maze
             </button>
             <button onClick={() => setOverlay("exportMaze")}>
-                Export Overlay
+                Export Maze
             </button>
         </div>
     );
