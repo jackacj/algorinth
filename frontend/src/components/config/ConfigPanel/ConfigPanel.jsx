@@ -5,6 +5,14 @@ import './ConfigPanel.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
+// Gif Imports
+import iterativeDFSGif from '../../../assets/gifs/iterativeDFS.gif'
+import kruskalGif from '../../../assets/gifs/kruskal.gif'
+import wilsonGif from '../../../assets/gifs/wilson.gif'
+import simplePrimGif from '../../../assets/gifs/simplePrims.gif'
+import aldousBroderGif from '../../../assets/gifs/aldousBroder.gif'
+import recursiveDivGif from '../../../assets/gifs/recursiveDiv.gif'
+
 export default function ConfigPanel({ settings, onSettingsChange }) {
     // Maintain Local Settings & Error State
     const [localSettings, setLocalSettings] = useState(settings);
@@ -21,7 +29,8 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
             "useCase": "Classic Maze Puzzles and/or Video Games w/ 'Main Path'.",
             "speed": 5,
             "complexity": 1,
-            "variety": 2
+            "variety": 2,
+            "gif": iterativeDFSGif
         },
         "kruskal": {
             "title": "Randomised Kruskal's Algorithm",
@@ -30,7 +39,8 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
             "useCase": "Balanced Maze Puzzles.",
             "speed": 4,
             "complexity": 3,
-            "variety": 3
+            "variety": 3,
+            "gif": kruskalGif
         },
         "prim_simple": {
             "title": "Simplified Randomised Prim's Algorithm",
@@ -39,7 +49,8 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
             "useCase": "Exploration-heavy Experiences w/ Frequent Decision Making.",
             "speed": 4,
             "complexity": 2,
-            "variety": 3
+            "variety": 3,
+            "gif": simplePrimGif
         },
         "wilson": {
             "title": "Wilson's Algorithm (Random Walk)",
@@ -49,6 +60,7 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
             "speed": 2,
             "complexity": 4,
             "variety": 5,
+            "gif": wilsonGif
         },
         "aldous_broder": {
             "title": "Aldous-Broder Algorithm",
@@ -58,6 +70,7 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
             "speed": 1,
             "complexity": 1,
             "variety": 5,
+            "gif": aldousBroderGif
         },
         "recursive_division": {
             "title": "Recursive Division Algorithm",
@@ -67,6 +80,7 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
             "speed": 5,
             "complexity": 4,
             "variety": 2,
+            "gif": recursiveDivGif
         }
     };
 
@@ -183,7 +197,7 @@ export default function ConfigPanel({ settings, onSettingsChange }) {
                             <span>{algoToText[localSettings.algorithm].useCase}</span>
                         </div>
                         <div id="configContentImg">
-                            Image
+                            <img id="configContentGif" src={algoToText[localSettings.algorithm].gif} />
                         </div>
                     </div>
                 )}

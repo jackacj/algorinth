@@ -58,10 +58,10 @@
 #requestButtonRow {
     display: flex;
     flex-direction: row;
-    gap: 0.5rem
 }
 
 #requestButtonRow button {
     flex: 1;
     height: 50px;
+    margin: 0.25rem;
 }

@@ -8,8 +8,6 @@ body,
     width: 100%;
     min-height: 100vh;
 
-    /* background: var(--colour-background); */
-
     background-color: var(--colour-background);
     background-image: 
         linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),

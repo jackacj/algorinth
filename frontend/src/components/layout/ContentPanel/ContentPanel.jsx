@@ -40,7 +40,7 @@ export default function ContentPanel({ playClick, isInstant }){
 
     // Playback State
     // Stock Playback StepsPerSecond - Temporary
-    let stockStepsPerSecond = 5;
+    let stockStepsPerSecond = 15;
     // Initialise w/ Empty Playback & No Command
     const[playback, setPlayback] = useState({
         steps: [],
