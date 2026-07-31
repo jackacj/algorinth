@@ -7,10 +7,17 @@ import { useWithSound } from '../../../hooks/useWithSound'
 // Icon & Audio Imports
 import logo from "../../../assets/logo.svg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faVolume, faVolumeXmark, faBoltLightning, faEye } from '@fortawesome/free-solid-svg-icons'
+import { faCode, faVolume, faVolumeXmark, faBoltLightning, faEye } from '@fortawesome/free-solid-svg-icons'
 import click from '../../../assets/click.wav'
 
 export default function TitlePanel({ isMute, isInstant, playClick, toggleAudio, toggleMode }){
+    // Hardcoded GitHub URL & Link Handler
+    const GITHUB_URL = "https://github.com/jackacj/algorinth";
+
+    const handleLink = () => {
+        window.open(GITHUB_URL, '_blank');     
+    }
+
     // Handle Pressing the Audio Toggle
     function handleAudioToggle() {
         // Toggle Mute
@@ -74,6 +81,17 @@ export default function TitlePanel({ isMute, isInstant, playClick, toggleAudio, 
             </button>
             {/* Mode Text */}
             <div id="modeText">{isInstant ? "Instant Mode" : "Visualise Mode"}</div>
+            {/* GitHub Button */}
+            <button className="titleButton githubButton pushableButton"
+                onClick={handleLink}
+            >
+                <span className="titleButtonFront pushableButtonFront">
+                    <FontAwesomeIcon icon={faCode} size="lg"/>
+                </span>
+                <p className="tooltip titleTooltip">
+                    Code
+                </p>
+            </button>
         </div>
     );
 }

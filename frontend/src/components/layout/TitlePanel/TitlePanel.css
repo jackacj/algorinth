@@ -4,7 +4,6 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
     width: 100%;
 }
 
@@ -43,6 +42,11 @@
 .modeButton {
     position: absolute;
     left: 4rem;
+}
+
+.githubButton {
+    position: absolute;
+    right: 1rem;
 }
 
 .titleButton + .titleButton {
