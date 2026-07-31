@@ -31,3 +31,52 @@
 
     padding: 2rem;
 }
+
+/* Welcome Card */
+.welcomeCard {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-blend-mode: lighten;
+    background-color: #2a9d8fcc
+}
+
+/* Welcome List */
+.welcomeList {
+    text-align: left;
+    list-style: none;
+}
+
+.welcomeList li {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+    margin-right: 35px;
+}
+
+.splitList li {
+    justify-content: space-between;
+}
+
+.welcomeList li span {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.welcomeTip {
+    color: #000000;
+    border-radius: var(--border-radius);
+    background: #ffffff;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+    padding: 5px;
+}
+
+.welcomeButton span {
+    padding: 10px;
+}
+
+#welcomeListDivider {
+    text-align: left;
+    margin-left: 50px;
+    margin-top: -10px;
+}

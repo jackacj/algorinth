@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react'
 import './Overlay.css'
 
+// Icon & Logo Imports
+import logo from "../../../assets/logo.svg"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { fa1, fa2, fa3, faGear, faForwardStep, faDice, faCloud, faImage, faEye, faBoltLightning } from '@fortawesome/free-solid-svg-icons'
+
+
 export default function Overlay({ type, onClose, gridId, exportColour, onLoadRequest, onExportRequest, onColourChange }) {
     // // Local State for Overlays
 
@@ -91,10 +97,79 @@ export default function Overlay({ type, onClose, gridId, exportColour, onLoadReq
             // Welcome Overlay
             case "welcome":
                 return (
-                    <div className="overlayCard">
-                        <p>Welcome to Algorith.</p>
-                        <button onClick={onClose}>
-                            Begin Exploring
+                    <div className="overlayCard welcomeCard" style={{ "background-image": `url(${logo})` }}>
+                        <div className="welcomeHeader">
+                            <h2> Welcome to Algorinth. </h2>
+                        </div>
+                        <p> Explore procedural maze generation within this interactive visualiser webapp. </p>
+                        <h4> Features : </h4>
+                        <ul className="welcomeList">
+                            <li>
+                                <FontAwesomeIcon icon={faGear} size="lg"/>
+                                <span> 6 Unique Generation Algorithms </span> 
+                            </li>
+                            <li>
+                                <FontAwesomeIcon icon={faForwardStep} size="lg"/>
+                                <span> Step-by-step Playback </span>  
+                            </li>
+                            <li>
+                                <FontAwesomeIcon icon={faDice} size="lg"/>
+                                <span> Deterministic Generation w/ Seeds </span>  
+                            </li>
+                            <li>
+                                <FontAwesomeIcon icon={faCloud} size="lg"/>
+                                <span> Persistent Mazes w/ Save & Load </span>  
+                            </li>
+                            <li>
+                                <FontAwesomeIcon icon={faImage} size="lg"/> 
+                                <span> Exporting to Various Image Formats </span> 
+                            </li>
+                        </ul>
+                        <h4> Getting Started : </h4>
+                        <ul className="welcomeList splitList">
+                            <li>
+                                <div>
+                                    <FontAwesomeIcon icon={fa1} size="lg"/> 
+                                    <span> Select Algorithm, Dimensions & Seed </span>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <FontAwesomeIcon icon={fa2} size="lg"/> 
+                                    <span> Generate </span>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <FontAwesomeIcon icon={fa3} size="lg"/> 
+                                    <span> Watch Generation Step-by-step </span>
+                                </div>
+                                <div className="welcomeTip">
+                                    <FontAwesomeIcon icon={faEye} size="lg"/> 
+                                    <span> Visualise Mode </span>
+                                </div>
+                            </li>
+                        </ul>
+                        <p id="welcomeListDivider"> or ... </p>
+                        <ul className="welcomeList splitList">
+                            <li>
+                                <div>
+                                    <FontAwesomeIcon icon={fa3} size="lg"/> 
+                                    <span> Rapidly Discover New Mazes for your Projects </span>
+                                </div>
+                                <div className="welcomeTip">
+                                    <FontAwesomeIcon icon={faBoltLightning} size="lg"/> 
+                                    <span> Instant Mode </span>
+                                </div>
+                            </li>
+                        </ul>
+                        <button
+                            className="welcomeButton pushableButton" 
+                            onClick={onClose}
+                        >
+                            <span className="pushableButtonFront">
+                                Begin Exploring
+                            </span>
                         </button>
                     </div>
                 );
