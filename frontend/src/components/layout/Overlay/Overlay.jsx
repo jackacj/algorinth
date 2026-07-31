@@ -4,10 +4,11 @@ import './Overlay.css'
 // Icon & Logo Imports
 import logo from "../../../assets/logo.svg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { fa1, fa2, fa3, faGear, faForwardStep, faDice, faCloud, faImage, faEye, faBoltLightning } from '@fortawesome/free-solid-svg-icons'
+import { fa1, fa2, fa3, faGear, faForwardStep, faDice, faCloud, faImage, faEye, faBoltLightning, faBolt, faDiceOne, faDiceTwo, faDiceThree, faDiceFour, faDiceFive, faDiceSix, faDatabase } from '@fortawesome/free-solid-svg-icons'
+import { faReact, faPostgresql } from '@fortawesome/free-brands-svg-icons';
 
 
-export default function Overlay({ type, playClick, onClose, gridId, exportColour, onLoadRequest, onExportRequest, onColourChange }) {
+export default function Overlay({ type, playClick, onClose, gridId, exportColour, onLoadRequest, onExportRequest, onColourChange, version }) {
     // // Local State for Overlays
 
     // 'LoadMaze' States
@@ -293,6 +294,80 @@ export default function Overlay({ type, playClick, onClose, gridId, exportColour
                                 </span>
                             </button>
                         </div>
+                    </div>
+                );
+
+            // About Overlay
+            case "about":
+                return (
+                    <div className="overlayCard logoCard" style={{ "background-image": `url(${logo})` }}>
+                        <div className="welcomeHeader">
+                            <h2> Algorinth. </h2>
+                            <h4 style={{ "margin-top": "-10px" }}> Version - {version} | © 2026 by jackacj </h4>
+                        </div>
+                        <p> Algorinth is an educational maze generation visualiser that I developed as a recent computer science graduate. It was created to refine my full-stack software development skills while exploring the design and implementation of common maze generation algorithms. Alongside the algorithms themselves, the project demonstrates modern software engineering practices including clean architecture, REST API design, data persistence, and interactive visualisation. </p>
+                        <h4> Built Using : </h4>
+                        <ul className="welcomeList splitList">
+                            <li>
+                                <div>
+                                    <FontAwesomeIcon icon={faReact} size="lg"/>
+                                    <span> React + Vite </span> 
+                                </div>
+                                <div>
+                                    <span> FastApi </span>  
+                                    <FontAwesomeIcon icon={faBolt} size="lg"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div> 
+                                    <FontAwesomeIcon icon={faPostgresql} size="lg"/>
+                                    <span> PostgreSQL </span>  
+                                </div>
+                                <div>
+                                    <span> SQLalchemy </span>  
+                                    <FontAwesomeIcon icon={faDatabase} size="lg"/>
+                                </div>
+                            </li>
+                        </ul>
+                        <h4> Featured Algorithms : </h4>
+                        <ul className="welcomeList">
+                            <li>
+                                <FontAwesomeIcon icon={faDiceOne} size="lg"/>
+                                <span> Iterative Depth-First Search </span> 
+                            </li>
+                            <li>
+                                <FontAwesomeIcon icon={faDiceTwo} size="lg"/>
+                                <span> Randomised Kruskal's Algorithm </span>  
+                            </li>
+                            <li>
+                                <FontAwesomeIcon icon={faDiceThree} size="lg"/>
+                                <span> Simplified Randomised Prim's Algorithm </span>  
+                            </li>
+                            <li>
+                                <FontAwesomeIcon icon={faDiceFour} size="lg"/>
+                                <span> Wilson's Algorithm (Random Walk) </span>  
+                            </li>
+                            <li>
+                                <FontAwesomeIcon icon={faDiceFive} size="lg"/> 
+                                <span> Aldous-Broder Algorithm </span> 
+                            </li>
+                            <li>
+                                <FontAwesomeIcon icon={faDiceSix} size="lg"/> 
+                                <span> Recursive Division Algorithm </span> 
+                            </li>
+                        </ul>
+                        {/* Back Button */}
+                        <button
+                            className="welcomeButton pushableButton"  
+                            onClick={() => {
+                                playClick();
+                                onClose();
+                            }}
+                        >
+                            <span className="pushableButtonFront"> 
+                                Back 
+                            </span>
+                        </button>
                     </div>
                 );
         }

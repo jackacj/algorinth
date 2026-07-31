@@ -15,7 +15,7 @@ import html2canvas from 'html2canvas';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faXmark, faFloppyDisk, faSpinner, faDownload } from '@fortawesome/free-solid-svg-icons'
 
-export default function ContentPanel({ playClick, isInstant }){
+export default function ContentPanel({ playClick, isInstant, overlay, setOverlay, version }){
     // Reference for Export
     const exportRef = useRef();
 
@@ -71,15 +71,6 @@ export default function ContentPanel({ playClick, isInstant }){
             setPendingExport(null);
         }
     }, [exportColour, pendingExport]);
-
-    // Close the "Welcome" Overlay
-    function handleWelcomeClose() {
-        // Close Overlay
-        setOverlay(null);
-    }
-
-    // Overlay State -> Type & Return Function
-    const[overlay, setOverlay] = useState("welcome");
 
     // // Effects
 
@@ -592,12 +583,6 @@ export default function ContentPanel({ playClick, isInstant }){
         link.click();
     }
 
-    // Close the "Welcome" Overlay
-    function handleWelcomeClose() {
-        // Close Overlay
-        setOverlay(null);
-    }
-
     // // Pseudo-Components
 
     // Maze Panel - Visual
@@ -789,6 +774,17 @@ export default function ContentPanel({ playClick, isInstant }){
                         onColourChange={handleColourChange}
                         gridId={gridId}
                         exportColour={exportColour}
+                    />
+                );
+
+            // About Overlay -> Activated by Button
+            case "about":
+                return (
+                    <Overlay 
+                        type={overlay}
+                        playClick={playClick}
+                        onClose={() => setOverlay(null)}
+                        version={version}
                     />
                 );
             

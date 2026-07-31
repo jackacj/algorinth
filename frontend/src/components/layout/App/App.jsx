@@ -8,9 +8,14 @@ import { useWithSound } from '../../../hooks/useWithSound'
 import click from '../../../assets/click.wav'
 
 export default function App() {
+  // Application Version Number
+  const VERSION = "1.0.0";
+
   // Audio & Mode State for Entire App
   const [isMute, setIsMute] = useState(false);
   const [isInstant, setIsInstant] = useState(false);
+  // Overlay State, used by Both Title Panel & Content Panel
+  const [overlay, setOverlay] = useState("welcome");
   // 'Click' Audio Hook
   const { playSound } = useWithSound(click);
 
@@ -36,8 +41,8 @@ export default function App() {
 
   return (
     <div className="app">
-      <TitlePanel isMute={isMute} isInstant={isInstant} playClick={playClick} toggleAudio={toggleAudio} toggleMode={toggleMode} />
-      <ContentPanel playClick={playClick} isInstant={isInstant} />
+      <TitlePanel isMute={isMute} isInstant={isInstant} playClick={playClick} toggleAudio={toggleAudio} toggleMode={toggleMode} setOverlay={setOverlay} />
+      <ContentPanel playClick={playClick} isInstant={isInstant} overlay={overlay} setOverlay={setOverlay} version={VERSION} />
     </div>
   );
 }

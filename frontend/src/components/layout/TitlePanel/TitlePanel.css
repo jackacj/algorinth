@@ -42,6 +42,7 @@
 .modeButton {
     position: absolute;
     left: 4rem;
+    margin-left: 0.5rem;
 }
 
 .githubButton {
@@ -49,8 +50,10 @@
     right: 1rem;
 }
 
-.titleButton + .titleButton {
-    margin-left: 0.5rem;
+.aboutButton {
+    position: absolute;
+    right: 4rem;
+    margin-right: 0.5rem;
 }
 
 .titleButtonFront {

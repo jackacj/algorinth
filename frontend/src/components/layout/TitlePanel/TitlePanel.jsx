@@ -7,10 +7,11 @@ import { useWithSound } from '../../../hooks/useWithSound'
 // Icon & Audio Imports
 import logo from "../../../assets/logo.svg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCode, faVolume, faVolumeXmark, faBoltLightning, faEye } from '@fortawesome/free-solid-svg-icons'
+import { faVolume, faVolumeXmark, faBoltLightning, faEye, faBook } from '@fortawesome/free-solid-svg-icons'
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import click from '../../../assets/click.wav'
 
-export default function TitlePanel({ isMute, isInstant, playClick, toggleAudio, toggleMode }){
+export default function TitlePanel({ isMute, isInstant, playClick, toggleAudio, toggleMode, setOverlay }){
     // Hardcoded GitHub URL & Link Handler
     const GITHUB_URL = "https://github.com/jackacj/algorinth";
 
@@ -86,10 +87,24 @@ export default function TitlePanel({ isMute, isInstant, playClick, toggleAudio, 
                 onClick={handleLink}
             >
                 <span className="titleButtonFront pushableButtonFront">
-                    <FontAwesomeIcon icon={faCode} size="lg"/>
+                    <FontAwesomeIcon icon={faGithub} size="lg"/>
                 </span>
                 <p className="tooltip titleTooltip">
-                    Code
+                    GitHub
+                </p>
+            </button>
+            {/* About Button */}
+            <button className="titleButton aboutButton pushableButton"
+                onClick={() => {
+                    playClick();
+                    setOverlay("about");
+                }}
+            >
+                <span className="titleButtonFront pushableButtonFront">
+                    <FontAwesomeIcon icon={faBook} size="lg"/>
+                </span>
+                <p className="tooltip titleTooltip">
+                    About
                 </p>
             </button>
         </div>
