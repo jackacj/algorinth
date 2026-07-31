@@ -1,7 +1,7 @@
 /* Individual Cell Styling */
 .cell {
-    height: 25px;
-    width: 25px;
+    height: var(--cell-size);
+    width: var(--cell-size);
     box-sizing: border-box;
     transition-duration: 0.2s;
 }

@@ -9,7 +9,10 @@
 #configHeaderRow {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    
+    margin-top: -5px;
+    margin-bottom: -5px;
 }
 
 /* Config Input Row -> Left to Right w/ Grid */

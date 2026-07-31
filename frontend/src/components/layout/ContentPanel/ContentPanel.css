@@ -43,7 +43,7 @@
     display:flex;
     flex-direction:column;
     gap: 0.5rem;
-    align-self: flex-end;
+    align-self: flex-start;
 }
 
 /* Hidden Final Grid -> Hidden from Document Flow, Just there for Exporting */
@@ -69,4 +69,10 @@
 #requestButtonRow button div {
     height: 45px;
     gap: 1rem;
+}
+
+.gridSaveStatus {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
 }

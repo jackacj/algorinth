@@ -13,7 +13,7 @@ import html2canvas from 'html2canvas';
 
 // Icon Imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFloppyDisk, faSpinner, faDownload } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faXmark, faFloppyDisk, faSpinner, faDownload } from '@fortawesome/free-solid-svg-icons'
 
 export default function ContentPanel({ playClick, isInstant }){
     // Reference for Export
@@ -605,9 +605,20 @@ export default function ContentPanel({ playClick, isInstant }){
         <>
             {/* Grid Panel */}
             <div id="gridPanel" className="section">
-                {/* UUID/Name & Export Button */}
+                {/* Grid Label */}
                 <div id="gridLabel">
-                    <p>{gridId + " - " + isMazeSaved}</p>
+                    <p>{gridId}</p>
+                    {isMazeSaved ? (
+                        <div className="gridSaveStatus" style={{ "color": "#4fb443"}}>
+                            <FontAwesomeIcon icon={faCheck} size="lg"/>
+                            <span> Saved </span>
+                        </div>
+                        ) : (
+                        <div className="gridSaveStatus" style={{ "color": "#de061a"}}>
+                            <FontAwesomeIcon icon={faXmark} size="lg"/>
+                            <span> Unsaved </span>
+                        </div>
+                        )}
                 </div>
                 {/* Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
                 <Grid grid={grid} cellColour="var(--colour-cell-visited)" />
@@ -635,9 +646,20 @@ export default function ContentPanel({ playClick, isInstant }){
         <>
             {/* Grid Panel */}
             <div id="gridPanel" className="section">
-                {/* UUID/Name & Export Button */}
+                {/* Grid Label */}
                 <div id="gridLabel">
-                    <p>{gridId + " - " + isMazeSaved}</p>
+                    <p>{gridId}</p>
+                    {isMazeSaved ? (
+                        <div className="gridSaveStatus" style={{ "color": "#4fb443"}}>
+                            <FontAwesomeIcon icon={faCheck} size="lg"/>
+                            <span> Saved </span>
+                        </div>
+                        ) : (
+                        <div className="gridSaveStatus" style={{ "color": "#de061a"}}>
+                            <FontAwesomeIcon icon={faXmark} size="lg"/>
+                            <span> Unsaved </span>
+                        </div>
+                        )}
                 </div>
                 {/* Final Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
                 <Grid grid={finalGrid} cellColour="var(--colour-cell-visited)" />

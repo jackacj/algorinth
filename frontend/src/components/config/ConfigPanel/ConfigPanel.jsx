@@ -115,7 +115,7 @@ export default function ConfigPanel({ playClick, settings, onSettingsChange }) {
             <form onSubmit={handleSubmit}>
                 {/* Top Row - Header*/}
                 <div id="configHeaderRow">
-                    <h3> Generate </h3>
+                    <h2> Generate </h2>
                 </div>
                 <hr/>
                 {/* 2nd Row - Settings Input */}
