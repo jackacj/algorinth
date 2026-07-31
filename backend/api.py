@@ -9,7 +9,7 @@ from .services.gen_service import generate_maze
 from .database.repository import save_maze, get_maze
 # Models
 from .models.maze import Maze
-from .schemas.request import MazeGenerationRequest
+from .schemas.request import MazeGenerationRequest, MazeSaveRequest
 from .schemas.response import MazeResponse
 
 app = FastAPI()
@@ -33,11 +33,8 @@ async def maze_generate_request(settings: MazeGenerationRequest):
     # Generate a Maze based on Request Settings -> Convert Request Body to Dictionary
     maze = generate_maze(settings)
 
-    # Save Generated Maze to Database
-    save_maze(maze)
-
     # Return a Maze Response
-    return MazeResponse.from_maze(maze)
+    return MazeResponse.from_domain(maze)
 
 # Get a Specific Maze w/ UUID
 # Response Model -> MazeResponse
@@ -54,4 +51,17 @@ async def maze_retrieval_request(id: UUID):
         )
     
     # Return a Maze Response
-    return MazeResponse.from_maze(maze)
+    return MazeResponse.from_domain(maze)
+
+# Save a Specific Maze
+# Response Model -> MazeResponse
+@app.post("/mazes/{id}/save", response_model = MazeResponse)
+async def maze_save_request(id: UUID, maze_data: MazeSaveRequest):
+    # Get Maze Object from Request
+    maze = maze_data.to_domain()
+
+    # Save to Database
+    saved_maze = save_maze(maze)
+
+    # Return Updated Maze State in Maze Response
+    return MazeResponse.from_domain(saved_maze)

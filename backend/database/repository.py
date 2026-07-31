@@ -20,7 +20,7 @@ session_local: Session = sessionmaker(bind = engine)
 Base.metadata.create_all(engine)
 
 # Save a Maze to DB
-def save_maze(maze: Maze):
+def save_maze(maze: Maze) -> Maze:
     # Open a Session
     with session_local() as session:
         # Create a New ORM Maze Model from Maze
@@ -31,6 +31,10 @@ def save_maze(maze: Maze):
 
         # Commit the Session to DB
         session.commit()
+
+        # Refresh Maze Model & Return Domain Object
+        session.refresh(maze_model)
+        return maze_model.to_domain()
 
 # Load a Maze from DB w/ Id
 def get_maze(maze_id: UUID) -> Maze | None:

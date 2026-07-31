@@ -42,6 +42,7 @@
 #ioPanel {
     display:flex;
     flex-direction:column;
+    gap: 0.5rem;
     align-self: flex-end;
 }
 
@@ -51,4 +52,16 @@
     left: -10000px;
     top: 0;
     z-index: -1;
+}
+
+/* Request Button Row -> Three Buttons, Equal Size, Left to Right */
+#requestButtonRow {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem
+}
+
+#requestButtonRow button {
+    flex: 1;
+    height: 50px;
 }

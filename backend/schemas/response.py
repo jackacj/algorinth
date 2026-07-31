@@ -20,16 +20,18 @@ class MazeSteps(BaseModel):
 # Maze Response Data Model
 class MazeResponse(BaseModel):
     maze_id: UUID
+    saved: bool
     settings: Dict
     steps: MazeSteps
     final_maze: List[List[Dict[str, Any]]]
 
     # Create Model from Backend Maze Model
     @classmethod
-    def from_maze(cls, maze: Maze) -> "MazeResponse":
+    def from_domain(cls, maze: Maze) -> "MazeResponse":
         return cls(
             maze_id = maze.id,
             settings = maze.settings,
             steps = MazeSteps.from_steps(maze.steps),
-            final_maze = maze.final_maze.to_json()
+            final_maze = maze.final_maze.to_json(),
+            saved = maze.saved
         )

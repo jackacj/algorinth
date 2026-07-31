@@ -51,3 +51,28 @@ export async function requestMazeById(requestUuid) {
     // Return Response Body as JSON
     return await response.json();
 }
+
+export async function saveMaze(request) {
+    // Create Request
+    const response = await fetch(
+        // Backend Maze Save Endpoint
+        `${API_BACKEND_BASE_URL}/mazes/${request.maze_id}/save`,
+        // Request Itself
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            // Request Body
+            body: JSON.stringify(request)
+        }
+    );
+
+    // Throw Error if Request Fails
+    if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`);
+    }
+
+    // Return Response Body as JSON
+    return await response.json();
+}

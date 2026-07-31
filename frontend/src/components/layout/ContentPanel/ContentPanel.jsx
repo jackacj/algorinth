@@ -1,14 +1,19 @@
 import { useState, useEffect, useRef } from 'react'
-import { generateMaze, requestMazeById } from '../../../services/mazeApi'
+import { generateMaze, requestMazeById, saveMaze } from '../../../services/mazeApi'
 import './ContentPanel.css'
 
+// Component Imports
 import Grid from '../../maze/Grid/Grid'
 import ConfigPanel from '../../config/ConfigPanel/ConfigPanel'
 import PlaybackPanel from '../../config/PlaybackPanel/PlaybackPanel'
-import RequestPanel from '../../config/RequestPanel/RequestPanel'
 import Overlay from '../../layout/Overlay/Overlay'
 
+// Library for Converting HTML into Images
 import html2canvas from 'html2canvas';
+
+// Icon Imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFloppyDisk, faSpinner, faDownload } from '@fortawesome/free-solid-svg-icons'
 
 export default function ContentPanel({ playClick, isInstant }){
     // Reference for Export
@@ -25,12 +30,13 @@ export default function ContentPanel({ playClick, isInstant }){
         seed: ""
     });
 
-    // Grid State & "Run" State
-    // Initialise w/ Empty Grid & No "Run"
+    // Maze State & "Run" State
+    // Initialise w/ Empty Grid & No "Run" & Not Saved
     const[grid, setGrid] = useState([]);
     const[finalGrid, setFinalGrid] = useState([]);
     const[gridId, setGridId] = useState("");
     const [isRunActive, setIsRunActive] = useState(false);
+    const [isMazeSaved, setIsMazeSaved] = useState(false);
 
     // Playback State
     // Stock Playback StepsPerSecond - Temporary
@@ -262,6 +268,7 @@ export default function ContentPanel({ playClick, isInstant }){
                     ? createOpenGrid(newSettings.rows, newSettings.cols)
                     : createClosedGrid(newSettings.rows, newSettings.cols);
             const localFinalGrid = mazeRun.final_maze;
+            const isSaved = mazeRun.saved;
             
             // Update All Appropriate States
             // Grids, Playback, Run & Command
@@ -277,6 +284,7 @@ export default function ContentPanel({ playClick, isInstant }){
             setCommand("");
             setGridId(mazeId);
             setFinalGrid(localFinalGrid);
+            setIsMazeSaved(isSaved);
 
         } catch (error) {
             // If Error... Report & Update Run State
@@ -462,6 +470,7 @@ export default function ContentPanel({ playClick, isInstant }){
                     ? createOpenGrid(newSettings.rows, newSettings.cols)
                     : createClosedGrid(newSettings.rows, newSettings.cols);
             const localFinalGrid = mazeRun.final_maze;
+            const isSaved = mazeRun.saved;
             
             // Update All Appropriate States
             // Grid, Playback, Run & Command
@@ -478,6 +487,51 @@ export default function ContentPanel({ playClick, isInstant }){
             setCommand("");
             setGridId(mazeId);
             setFinalGrid(localFinalGrid);
+            setIsMazeSaved(isSaved);
+
+        } catch (error) {
+            // If Error... Report & Update Run State
+            console.error(error);
+            setIsRunActive(false);
+        }
+    }
+
+    // Save Maze to Backend
+    async function handleSave(request) {
+        try {
+            // Request a Maze Save (and Updated State) from Backend
+            const mazeRun = await saveMaze(request);
+
+            // Create Initial Settings
+            const newSettings = mazeRun.settings;
+
+            // Create Initial Grid from First Step Information
+            const mazeId = mazeRun.maze_id;
+            const steps = mazeRun.steps.list;
+            const firstStep = steps[0];
+            const initialGrid =
+                firstStep?.data?.is_open 
+                    ? createOpenGrid(newSettings.rows, newSettings.cols)
+                    : createClosedGrid(newSettings.rows, newSettings.cols);
+            const localFinalGrid = mazeRun.final_maze;
+            const isSaved = mazeRun.saved;
+            
+            // Update All Appropriate States
+            // Grid, Playback, Run & Command
+            setGrid(initialGrid);
+            setSettings(newSettings);
+            setPlayback(prev => ({
+                ...prev,
+                steps: steps,
+                currentStep: 0,
+                isAuto: false,
+                isAutoForward: true
+            }));
+            setIsRunActive(true);
+            setCommand("");
+            setGridId(mazeId);
+            setFinalGrid(localFinalGrid);
+            setIsMazeSaved(isSaved);
 
         } catch (error) {
             // If Error... Report & Update Run State
@@ -520,7 +574,7 @@ export default function ContentPanel({ playClick, isInstant }){
             <div id="gridPanel" className="section">
                 {/* UUID/Name & Export Button */}
                 <div id="gridLabel">
-                    <p>{gridId}</p>
+                    <p>{gridId + " - " + isMazeSaved}</p>
                 </div>
                 {/* Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
                 <Grid grid={grid} />
@@ -550,7 +604,7 @@ export default function ContentPanel({ playClick, isInstant }){
             <div id="gridPanel" className="section">
                 {/* UUID/Name & Export Button */}
                 <div id="gridLabel">
-                    <p>{gridId}</p>
+                    <p>{gridId + " - " + isMazeSaved}</p>
                 </div>
                 {/* Final Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
                 <Grid grid={finalGrid} />
@@ -590,15 +644,31 @@ export default function ContentPanel({ playClick, isInstant }){
                 onSettingsChange={handleSettingsChange}
             />
             {/* Request Buttons */}
-            <button onClick={() => console.log("ContentPanel.jsx", "SAVE MAZE REQUEST")}>
-                Save Maze
-            </button>
-            <button onClick={() => setOverlay("loadMaze")}>
-                Load Maze
-            </button>
-            <button onClick={() => setOverlay("exportMaze")}>
-                Export Maze
-            </button>
+            <div id="requestButtonRow">
+                <button 
+                    onClick={() => handleSave({
+                        "maze_id": gridId,
+                        "settings": settings,
+                        "steps": playback.steps,
+                        "final_maze": finalGrid,
+                    })}
+                    disabled={!isRunActive || isMazeSaved}    
+                >
+                    <span> Save Maze </span>
+                    <FontAwesomeIcon icon={faFloppyDisk} />
+                </button>
+                <button onClick={() => setOverlay("loadMaze")}>
+                    <span> Load Maze </span>
+                    <FontAwesomeIcon icon={faSpinner} />
+                </button>
+                <button 
+                    onClick={() => setOverlay("exportMaze")}
+                    disabled={!isRunActive}    
+                >
+                    <span> Export Maze </span>
+                    <FontAwesomeIcon icon={faDownload} />
+                </button>
+            </div>
         </div>
     );
 

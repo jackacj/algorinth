@@ -46,7 +46,8 @@ class MazeModel(Base):
             maze_id = self.maze_id,
             settings = self.settings,
             steps = self.steps,
-            final_maze = Grid.from_json(self.final_maze)
+            final_maze = Grid.from_json(self.final_maze),
+            saved = True
         )
 
     # Convert from Domain Model

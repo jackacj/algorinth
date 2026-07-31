@@ -61,6 +61,11 @@ button {
     transition: background-color 0.2s;
 }
 
+button:disabled {
+    background: var(--colour-background);
+    border: var(--border-width) solid var(--colour-border-on-surface);
+}
+
 /* Styling for "Pushable" Buttons */
 .pushableButton {
     padding: 0;
