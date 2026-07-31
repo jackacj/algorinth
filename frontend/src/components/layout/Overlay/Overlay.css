@@ -1,0 +1,33 @@
+/* Overall Overlay */
+#overlay {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+/* Overlay Card */
+.overlayCard {
+    width: min(700px, 90vw);
+
+    background: var(--colour-surface);
+
+    border-color: var(--colour-border-on-surface);
+    border-width: var(--border-width);
+    border-radius: var(--border-radius);
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    padding: 2rem;
+}

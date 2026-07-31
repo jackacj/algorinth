@@ -6,6 +6,7 @@ import Grid from '../../maze/Grid/Grid'
 import ConfigPanel from '../../config/ConfigPanel/ConfigPanel'
 import PlaybackPanel from '../../config/PlaybackPanel/PlaybackPanel'
 import RequestPanel from '../../config/RequestPanel/RequestPanel'
+import Overlay from '../../layout/Overlay/Overlay'
 
 import html2canvas from 'html2canvas';
 
@@ -13,7 +14,7 @@ export default function ContentPanel({ playClick, isInstant }){
     // Reference for Export
     const exportRef = useRef();
 
-    // // Grid Canvas State
+    // // State
 
     // Settings State
     // Initialise w/ Stock Settings
@@ -44,94 +45,16 @@ export default function ContentPanel({ playClick, isInstant }){
     });
     const[command, setCommand] = useState("");
 
-    // // Pseudo-Components
+    // Close the "Welcome" Overlay
+    function handleWelcomeClose() {
+        // Close Overlay
+        setOverlay(null);
+    }
 
-    // Maze Panel - Visual
-    const VisualiseMazePanel = (
-        <>
-            {/* Grid Panel */}
-            <div id="gridPanel" className="section">
-                {/* UUID/Name & Export Button */}
-                <div id="gridLabel">
-                    <p>{gridId}</p>
-                </div>
-                {/* Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
-                <Grid grid={grid} />
-                <div 
-                    id="hiddenFinalGrid"
-                    ref={exportRef}    
-                >
-                    <Grid grid={finalGrid}/>
-                </div>
-            </div>
-            {/* Playback Panel */}
-            <div>
-                <PlaybackPanel
-                    playback={playback}
-                    onPressPlayback={handlePlayback}
-                    onSpeedChange={handleSpeedChange}
-                    playClick={playClick}
-                />
-            </div>
-        </>
-    );
+    // Overlay State -> Type & Return Function
+    const[overlay, setOverlay] = useState("loadMaze");
 
-    // Maze Panel - Instant
-    const InstantMazePanel = (
-        <>
-            {/* Grid Panel */}
-            <div id="gridPanel" className="section">
-                {/* UUID/Name & Export Button */}
-                <div id="gridLabel">
-                    <p>{gridId}</p>
-                </div>
-                {/* Final Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
-                <Grid grid={finalGrid} />
-                <div 
-                    id="hiddenFinalGrid"
-                    ref={exportRef}    
-                >
-                    <Grid grid={finalGrid}/>
-                </div>
-            </div>
-        </>
-    );
-
-    // Maze Panel
-    const MazePanel = (
-        <div id="mazePanel" className="section">
-            {!isInstant && VisualiseMazePanel}
-            {isInstant && InstantMazePanel}
-        </div>
-    );
-
-    // Maze Placeholder
-    const MazePlaceholder = (
-        <div id="mazePlaceholder" className="section">
-            <div className="bounceText">
-                <span>No Maze Loaded</span>
-            </div>
-        </div>
-    );
-
-    // IO Panel
-    const IOPanel = (
-        <div id="ioPanel">
-            {/* Config Panel */}
-            <ConfigPanel
-                settings={settings}
-                onSettingsChange={handleSettingsChange}
-            />
-            {/* Request Panel */}
-            <RequestPanel
-                gridId={gridId}
-                onUUIDRequest={handleMazeRequestById}
-                onExportRequest={handleDownload}
-            />
-        </div>
-    );
-
-    // // Grid Canvas Effects
+    // // Effects
 
     // Autostep Effect
 
@@ -582,12 +505,139 @@ export default function ContentPanel({ playClick, isInstant }){
         link.click();
     }
 
+    // Close the "Welcome" Overlay
+    function handleWelcomeClose() {
+        // Close Overlay
+        setOverlay(null);
+    }
+
+    // // Pseudo-Components
+
+    // Maze Panel - Visual
+    const VisualiseMazePanel = (
+        <>
+            {/* Grid Panel */}
+            <div id="gridPanel" className="section">
+                {/* UUID/Name & Export Button */}
+                <div id="gridLabel">
+                    <p>{gridId}</p>
+                </div>
+                {/* Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
+                <Grid grid={grid} />
+                <div 
+                    id="hiddenFinalGrid"
+                    ref={exportRef}    
+                >
+                    <Grid grid={finalGrid}/>
+                </div>
+            </div>
+            {/* Playback Panel */}
+            <div>
+                <PlaybackPanel
+                    playback={playback}
+                    onPressPlayback={handlePlayback}
+                    onSpeedChange={handleSpeedChange}
+                    playClick={playClick}
+                />
+            </div>
+        </>
+    );
+
+    // Maze Panel - Instant
+    const InstantMazePanel = (
+        <>
+            {/* Grid Panel */}
+            <div id="gridPanel" className="section">
+                {/* UUID/Name & Export Button */}
+                <div id="gridLabel">
+                    <p>{gridId}</p>
+                </div>
+                {/* Final Grid -> Extra Hidden Final Grid w/ Exporting Reference */}
+                <Grid grid={finalGrid} />
+                <div 
+                    id="hiddenFinalGrid"
+                    ref={exportRef}    
+                >
+                    <Grid grid={finalGrid}/>
+                </div>
+            </div>
+        </>
+    );
+
+    // Maze Panel
+    const MazePanel = (
+        <div id="mazePanel" className="section">
+            {!isInstant && VisualiseMazePanel}
+            {isInstant && InstantMazePanel}
+        </div>
+    );
+
+    // Maze Placeholder
+    const MazePlaceholder = (
+        <div id="mazePlaceholder" className="section">
+            <div className="bounceText">
+                <span>No Maze Loaded</span>
+            </div>
+        </div>
+    );
+
+    // IO Panel
+    const IOPanel = (
+        <div id="ioPanel">
+            {/* Config Panel */}
+            <ConfigPanel
+                settings={settings}
+                onSettingsChange={handleSettingsChange}
+            />
+            {/* Request Panel */}
+            {/* <RequestPanel
+                gridId={gridId}
+                onUUIDRequest={handleMazeRequestById}
+                onExportRequest={handleDownload}
+            /> */}
+            <button onClick={() => setOverlay("loadMaze")}>
+                Load Overlay
+            </button>
+        </div>
+    );
+
+    // Overlay -> Render Function
+    function renderOverlay() {
+        // Pass Props to Overlay Component based on Current State
+        switch(overlay) {
+            // Welcome Overlay -> Displayed on Startup
+            case "welcome":
+                return (
+                    <Overlay
+                        type={overlay}
+                        onClose={() => setOverlay(null)}
+                    />
+                );
+            
+            // Loading Maze Overlay -> Activated by Button
+            case "loadMaze":
+                return (
+                    <Overlay
+                        type={overlay}
+                        onClose={() => setOverlay(null)}
+                        onLoadRequest={handleMazeRequestById}
+                    />
+                );
+            
+            // Return Null if No Overlay
+            default:
+                return null;
+        }
+    }
+
     // Rendering
     return (
         <div id="contentPanel">
+            {/* Overlay -> Conditionally Rendered */}
+            {renderOverlay()}
+
             {/* Maze Panel/Placeholder -> Conditionally Rendered */}
-            {isRunActive && MazePanel}
-            {!isRunActive && MazePlaceholder}
+            {isRunActive ? MazePanel : MazePlaceholder}
             
             {/* IO Panel */}
             {IOPanel}
