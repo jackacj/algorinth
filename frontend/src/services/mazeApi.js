@@ -1,5 +1,5 @@
 // Base URL for Backend API - Localhost for Development
-const API_BACKEND_BASE_URL = "http://localhost:8000"
+const API_BACKEND_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function generateMaze(settings) {
     // Create Request

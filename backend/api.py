@@ -1,6 +1,8 @@
 # FastAPI Imports
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+# Environment Import
+from config import FRONTEND_URL
 # UUID Type
 from uuid import UUID
 # Maze Generation Logic
@@ -17,7 +19,7 @@ app = FastAPI()
 # Give Frontend IP Permission to Communicate w/ Backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[FRONTEND_URL],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

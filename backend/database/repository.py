@@ -1,3 +1,5 @@
+# Environment Imports
+from config import DATABASE_URL
 # Postgres Python Integration w/ SQLAlchemy ORM
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
@@ -8,11 +10,6 @@ from models.maze import Grid
 from database.models import Base, MazeModel
 # UUID Type
 from uuid import UUID
-
-DATABASE_URL = (
-    # DB + Driver :// Username : Password @ Host IP : Port / DB_Name
-    "postgresql+psycopg://postgres:postgres@localhost:5433/algorinth"
-)
 
 # Create the ORM Engine, Sessionmaker & Create Tables if Don't Exist
 engine = create_engine(DATABASE_URL)
