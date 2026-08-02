@@ -1,5 +1,5 @@
-from .base import Generator
-from ..models.grid import Grid
+from generators.base import Generator
+from models.grid import Grid
 
 class Wilson_Generator(Generator):
     

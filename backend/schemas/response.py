@@ -2,7 +2,7 @@
 from pydantic import BaseModel
 from typing import List, Dict, Any
 from uuid import UUID
-from ..models.maze import Maze
+from models.maze import Maze
 
 # Seperate Model for the Maze Steps
 class MazeSteps(BaseModel):

@@ -4,13 +4,13 @@ from fastapi.middleware.cors import CORSMiddleware
 # UUID Type
 from uuid import UUID
 # Maze Generation Logic
-from .services.gen_service import generate_maze
+from services.gen_service import generate_maze
 # Database Logic
-from .database.repository import save_maze, get_maze
+from database.repository import save_maze, get_maze
 # Models
-from .models.maze import Maze
-from .schemas.request import MazeGenerationRequest, MazeSaveRequest
-from .schemas.response import MazeResponse
+from models.maze import Maze
+from schemas.request import MazeGenerationRequest, MazeSaveRequest
+from schemas.response import MazeResponse
 
 app = FastAPI()
 

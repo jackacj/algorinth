@@ -2,10 +2,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 # Domain Models
-from ..models.maze import Maze
-from ..models.maze import Grid
+from models.maze import Maze
+from models.maze import Grid
 # ORM Models
-from .models import Base, MazeModel
+from database.models import Base, MazeModel
 # UUID Type
 from uuid import UUID
 

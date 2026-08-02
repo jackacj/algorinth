@@ -8,8 +8,8 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 # Domain Models
-from ..models.maze import Grid
-from ..models.maze import Maze
+from models.maze import Grid
+from models.maze import Maze
 
 # Declare Base ORM Model -> Inherited by Other ORM Models
 class Base(DeclarativeBase):

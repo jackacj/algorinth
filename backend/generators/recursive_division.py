@@ -1,10 +1,5 @@
-from .base import Generator
-from ..models.grid import Grid
-
-"""
-"recursive_divide" may be a visually interesting event.
-May be worth coming back and creating a "super_recursive_divide" function.
-"""
+from generators.base import Generator
+from models.grid import Grid
 
 class Recursive_Division_Generator(Generator):
 

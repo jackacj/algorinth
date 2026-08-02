@@ -3,8 +3,8 @@ from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 from uuid import UUID
 # Domain Models
-from ..models.grid import Grid
-from ..models.maze import Maze
+from models.grid import Grid
+from models.maze import Maze
 
 # Maze Gen Request Data Model
 class MazeGenerationRequest(BaseModel):

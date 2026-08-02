@@ -1,9 +1,9 @@
-from .iterative_dfs import Iterative_DFS_Generator
-from .kruskal import Kruskal_Generator
-from .prim_simple import Prim_Simple_Generator
-from .wilson import Wilson_Generator
-from .aldous_broder import Aldous_Broder_Generator
-from .recursive_division import Recursive_Division_Generator
+from generators.iterative_dfs import Iterative_DFS_Generator
+from generators.kruskal import Kruskal_Generator
+from generators.prim_simple import Prim_Simple_Generator
+from generators.wilson import Wilson_Generator
+from generators.aldous_broder import Aldous_Broder_Generator
+from generators.recursive_division import Recursive_Division_Generator
 
 # Generator Registry
 GENERATORS = {

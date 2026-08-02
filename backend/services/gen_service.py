@@ -1,11 +1,11 @@
 # Annotated Python Hints
 from typing import Annotated
 # Maze Generation Logic
-from ..generators.registry import GENERATORS
-from ..recorders.step_recorder import Step_Recorder
+from generators.registry import GENERATORS
+from recorders.step_recorder import Step_Recorder
 # Models
-from ..models.maze import Maze
-from ..schemas.request import MazeGenerationRequest
+from models.maze import Maze
+from schemas.request import MazeGenerationRequest
 
 def generate_maze(settings: MazeGenerationRequest) -> Maze:
     # Unpack Request Settings

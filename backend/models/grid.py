@@ -1,5 +1,5 @@
 from typing import Annotated
-from .cell import Cell
+from models.cell import Cell
 
 # Grid Object
 class Grid():

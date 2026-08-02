@@ -1,6 +1,6 @@
-from .base import Generator
-from ..models.cell import Cell
-from ..models.grid import Grid
+from generators.base import Generator
+from models.cell import Cell
+from models.grid import Grid
 
 class Prim_Simple_Generator(Generator):
     

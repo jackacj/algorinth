@@ -1,9 +1,9 @@
 import random
 from typing import Annotated
 from abc import ABC, abstractmethod
-from ..models.cell import Cell
-from ..models.grid import Grid
-from ..recorders.step_recorder import Step_Recorder
+from models.cell import Cell
+from models.grid import Grid
+from recorders.step_recorder import Step_Recorder
 
 # Generator Object
 class Generator(ABC):

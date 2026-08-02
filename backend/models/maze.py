@@ -2,7 +2,7 @@
 import uuid
 from uuid import UUID
 # Models
-from .grid import Grid
+from models.grid import Grid
 
 # Maze Object
 class Maze():
