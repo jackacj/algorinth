@@ -385,15 +385,11 @@ export default function ContentPanel({ playClick, isInstant, overlay, setOverlay
 
     // Playback Controls
     function handlePlayback(cmd) {
-        console.log("handlePlayback:", cmd, performance.now());
-
         // Create Local Clones of 'Playback' & 'Grid' States
         let localPlayback = {
             ...playback
         };
         let localGrid = structuredClone(grid);
-
-        console.log("handlePlayback:", "CURRENT STEP BEFORE:", localPlayback.currentStep)
 
         // Select Command -> Expand In Future
         switch(cmd) {
@@ -440,8 +436,6 @@ export default function ContentPanel({ playClick, isInstant, overlay, setOverlay
                 [localPlayback, localGrid] = jumpToEnd(localPlayback, localGrid);
                 break;
         }
-
-        console.log("handlePlayback:", "CURRENT STEP BEFORE:", localPlayback.currentStep)
 
         // Set Command ,Playback & Grid States
         setGrid(localGrid);
