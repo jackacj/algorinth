@@ -1,8 +1,11 @@
+# RNG
 import random
-from typing import Annotated
+# Abstract Classes
 from abc import ABC, abstractmethod
+# Domain Models
 from models.cell import Cell
 from models.grid import Grid
+# Recording
 from recorders.step_recorder import Step_Recorder
 
 # Generator Object
