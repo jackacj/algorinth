@@ -61,6 +61,11 @@ async def http_exception_handler(request: Request, exc: HTTPException):
         content={"message": exc.detail},
     )
 
+## Readiness Check Endpoint
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
 ## '/mazes' Endpoints
 
 # Request to Generate Maze from Frontend
