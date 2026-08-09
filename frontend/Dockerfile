@@ -18,8 +18,13 @@ ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 # Build the Frontend
 RUN npm run build
 
-# Serve Compiled React Application
+# Set up Nginx
 FROM nginx:alpine
+
+# Copy Frontend Build & Nginx Configuration
 COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose Port 80 & Run Nginx
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
