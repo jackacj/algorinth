@@ -1,4 +1,14 @@
 services:
+  # How to Build the Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+    ports:
+      - "5173:80"
+
   # How to Build the Backend
   backend:
     build:
